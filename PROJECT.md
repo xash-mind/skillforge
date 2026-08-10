@@ -1,22 +1,23 @@
 # Project
 
-> Generated from `.loopforge/charter.json` during discovery and locked with the approved charter.
+> Discovery draft generated from `.loopforge/charter.json`. Not yet approved or locked.
 
 ## Vision
 
-Pending discovery.
+Make skill creation accessible to non-technical creators by turning an idea into a valid, usable skill package through a hosted web app.
 
 ## Users
 
-Pending discovery.
+- Non-technical skill creators.
 
 ## Goals
 
-Pending discovery.
+- `GOAL-001`: Enable non-technical skill creators to turn an idea into a valid skill package through a hosted web app.
 
 ## Required capabilities
 
-Pending discovery.
+- `REQ-001`: Provide the first release as a hosted web application.
+- `REQ-002`: Accept a creator's skill idea and generate a package that can be checked against the selected skill standard.
 
 ## Non-goals
 
@@ -24,12 +25,12 @@ Pending discovery.
 
 ## Constraints
 
-Pending discovery.
+The target skill standard, creation interaction, persistence model, and infrastructure are still unresolved.
 
 ## Product principles
 
-Pending discovery.
+- Use language and guidance that do not require prior skill-authoring expertise.
 
 ## Definition of complete
 
-Pending discovery.
+Pending discovery and charter approval.

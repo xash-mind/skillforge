@@ -3,18 +3,56 @@
   "project": {
     "name": "skillforge",
     "repository": "xash-mind/skillforge",
-    "summary": null
+    "summary": "A hosted web app that helps non-technical skill creators turn ideas into valid skill packages."
   },
-  "vision": null,
-  "primaryUsers": [],
-  "coreJourney": [],
-  "goals": [],
-  "requirements": [],
+  "vision": "Make skill creation accessible to non-technical creators by turning an idea into a valid, usable skill package through a hosted web app.",
+  "primaryUsers": [
+    "Non-technical skill creators"
+  ],
+  "coreJourney": [
+    "Open the hosted SkillForge web app.",
+    "Describe the intended skill without needing skill-authoring expertise.",
+    "Receive a generated skill package that conforms to the selected validity standard."
+  ],
+  "goals": [
+    {
+      "id": "GOAL-001",
+      "statement": "Enable non-technical skill creators to turn an idea into a valid skill package through a hosted web app.",
+      "mandatory": true
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "statement": "Provide the first release as a hosted web application.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-002",
+      "statement": "Accept a creator's skill idea and generate a package that can be checked against the selected skill standard.",
+      "mandatory": true
+    }
+  ],
   "nonGoals": [],
   "constraints": [],
-  "productPrinciples": [],
+  "productPrinciples": [
+    "Use language and guidance that do not require prior skill-authoring expertise."
+  ],
   "successCriteria": [],
-  "officialFacts": [],
+  "officialFacts": [
+    {
+      "statement": "The first-release problem is turning ideas into valid skill packages.",
+      "source": "Human answer to Q-001 on 2026-08-10."
+    },
+    {
+      "statement": "The primary first-release user is a non-technical skill creator.",
+      "source": "Human answer to Q-002 on 2026-08-10."
+    },
+    {
+      "statement": "The first release is a hosted web app.",
+      "source": "Human answer to Q-003 on 2026-08-10."
+    }
+  ],
   "humanAcceptancePolicy": {
     "finalApprovalRequired": false,
     "subjectiveCriterionIds": []

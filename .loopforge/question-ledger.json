@@ -6,10 +6,12 @@
       "id": "Q-001",
       "question": "What problem should SkillForge solve first?",
       "whyItMatters": "This defines the product purpose and which capabilities belong in the first release.",
-      "status": "unresolved",
-      "answer": null,
-      "source": null,
-      "followUpBlocker": "The first-release outcome is not yet defined.",
+      "status": "resolved",
+      "answer": [
+        "Turn ideas into valid skill packages"
+      ],
+      "source": "Human discovery response on 2026-08-10",
+      "followUpBlocker": null,
       "responseType": "multi_select",
       "options": [
         "Turn ideas into valid skill packages",
@@ -23,10 +25,10 @@
       "id": "Q-002",
       "question": "Who must succeed with the first release?",
       "whyItMatters": "The primary user determines the workflow, language, permissions, and usability bar.",
-      "status": "unresolved",
-      "answer": null,
-      "source": null,
-      "followUpBlocker": "The primary user is not yet defined.",
+      "status": "resolved",
+      "answer": "Non-technical skill creators",
+      "source": "Human discovery response on 2026-08-10",
+      "followUpBlocker": null,
       "responseType": "single_select",
       "options": [
         "Non-technical skill creators",
@@ -40,10 +42,10 @@
       "id": "Q-003",
       "question": "What form should the first release take?",
       "whyItMatters": "The delivery form determines architecture, deployment, and infrastructure needs.",
-      "status": "unresolved",
-      "answer": null,
-      "source": null,
-      "followUpBlocker": "The runtime and distribution model are not yet defined.",
+      "status": "resolved",
+      "answer": "Hosted web app",
+      "source": "Human discovery response on 2026-08-10",
+      "followUpBlocker": null,
       "responseType": "single_select",
       "options": [
         "Hosted web app",
@@ -52,6 +54,57 @@
         "Web app plus CLI"
       ],
       "freeTextPlaceholder": "Describe another delivery form"
+    },
+    {
+      "id": "Q-004",
+      "question": "Which skill standard must generated packages support first?",
+      "whyItMatters": "The target standard defines package structure, validation rules, and export compatibility.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "Package compatibility and validity rules are undefined.",
+      "responseType": "single_select",
+      "options": [
+        "OpenAI SKILL.md packages",
+        "Anthropic Agent Skills",
+        "Both standards",
+        "A custom internal format"
+      ],
+      "freeTextPlaceholder": "Name another target standard"
+    },
+    {
+      "id": "Q-005",
+      "question": "How should a first-time creator describe a skill?",
+      "whyItMatters": "This determines the primary creation workflow and how much structure versus conversation the interface provides.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "The core input interaction is undefined.",
+      "responseType": "single_select",
+      "options": [
+        "Guided step-by-step form",
+        "Conversational interview",
+        "Start from templates",
+        "Chat plus structured checklist"
+      ],
+      "freeTextPlaceholder": "Describe another creation flow"
+    },
+    {
+      "id": "Q-006",
+      "question": "How should drafts persist between visits?",
+      "whyItMatters": "This determines whether accounts, authentication, a database, and privacy controls are required.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "Authentication and persistence requirements are undefined.",
+      "responseType": "single_select",
+      "options": [
+        "No accounts; download immediately",
+        "Save only in the browser",
+        "Private account workspace",
+        "Workspace with optional sharing"
+      ],
+      "freeTextPlaceholder": "Describe another persistence model"
     }
   ]
 }

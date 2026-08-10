@@ -4,8 +4,16 @@
     {
       "id": "BLOCKER-001",
       "severity": "high",
-      "status": "open",
+      "status": "resolved",
       "summary": "Product purpose, primary user, and delivery form require human decisions in Q-001 through Q-003.",
+      "needsHuman": false,
+      "resolution": "Q-001 through Q-003 were answered by the human on 2026-08-10."
+    },
+    {
+      "id": "BLOCKER-002",
+      "severity": "high",
+      "status": "open",
+      "summary": "Target skill standard, first-time creation interaction, and draft persistence require human decisions in Q-004 through Q-006.",
       "needsHuman": true,
       "resolution": null
     }
