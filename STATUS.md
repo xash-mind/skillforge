@@ -2,31 +2,30 @@
 
 ## Current state
 
-LoopForge discovery is awaiting the final product-policy definitions needed to complete the charter draft.
+LoopForge discovery is awaiting the final guardrails needed to present the complete charter for approval.
 
 ## Active objective
 
-Define active-student billing, post-enrollment evidence retention, and the phase-1 AI provider boundary.
+Define platform retention limits, minor-student consent, and initial AI adapters.
 
 ## Verified progress
 
-- `Q-007`: India first with global-ready data controls.
-- `Q-008`: creation of one new Supabase project authorized after required gates.
-- `Q-009`: active-student metering plus plan and invoice tracking.
-- The connected Supabase account contains one organization and one existing unrelated project; no new project was created.
-- The charter and infrastructure plan now encode Supabase migrations, RLS, storage policy, and the non-payment billing boundary.
+- `Q-010`: authorized organizations manually mark students active.
+- `Q-011`: retention is organization-configurable within platform limits.
+- `Q-012`: each organization supplies its AI provider.
+- Billing snapshot immutability, tenant-scoped provider credentials, and configurable retention are reflected in the charter.
 - The pinned LoopForge bundle was reverified before this round.
 
 ## Blocker or uncertainty
 
-- `Q-010`: active-student billing definition
-- `Q-011`: learning-evidence retention after departure
-- `Q-012`: phase-1 AI strategy
+- `Q-013`: retention range and default
+- `Q-014`: minor-student consent authority
+- `Q-015`: initial supported AI adapters
 
 ## Next action
 
-Answer `Q-010` through `Q-012`, then continue blocker analysis.
+Answer `Q-013` through `Q-015`; then complete blocker analysis and present the charter.
 
 ## Needs human
 
-Three material policy decisions remain.
+Three final discovery guardrails remain.

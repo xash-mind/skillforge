@@ -184,10 +184,10 @@
       "id": "Q-010",
       "question": "What should count as an active student for a monthly billing period?",
       "whyItMatters": "The definition drives usage snapshots, invoice quantities, credits, and auditability.",
-      "status": "unresolved",
-      "answer": null,
-      "source": null,
-      "followUpBlocker": "The billable active-student calculation is undefined.",
+      "status": "resolved",
+      "answer": "Organization marks students active manually",
+      "source": "DECISION-0003 — explicit human response on 2026-08-10",
+      "followUpBlocker": null,
       "responseType": "single_select",
       "options": [
         "Active enrollment on billing date",
@@ -201,10 +201,10 @@
       "id": "Q-011",
       "question": "How long should learning evidence be retained after a student leaves?",
       "whyItMatters": "The default affects privacy, storage cost, deletion workflows, legal policy, and institutional recovery.",
-      "status": "unresolved",
-      "answer": null,
-      "source": null,
-      "followUpBlocker": "The default retention and deletion schedule is undefined.",
+      "status": "resolved",
+      "answer": "Organization-configurable within platform limits",
+      "source": "DECISION-0003 — explicit human response on 2026-08-10",
+      "followUpBlocker": null,
       "responseType": "single_select",
       "options": [
         "1 year",
@@ -218,10 +218,10 @@
       "id": "Q-012",
       "question": "Which phase-1 AI strategy should the production design use?",
       "whyItMatters": "The choice determines data-processing boundaries, credentials, provider contracts, observability, and failure behavior.",
-      "status": "unresolved",
-      "answer": null,
-      "source": null,
-      "followUpBlocker": "The production AI provider boundary is undefined.",
+      "status": "resolved",
+      "answer": "Each organization supplies its provider",
+      "source": "DECISION-0003 — explicit human response on 2026-08-10",
+      "followUpBlocker": null,
       "responseType": "single_select",
       "options": [
         "OpenAI first behind a provider interface",
@@ -230,6 +230,57 @@
         "No live AI until a later milestone"
       ],
       "freeTextPlaceholder": "Name another AI strategy"
+    },
+    {
+      "id": "Q-013",
+      "question": "What retention range and default should the platform enforce?",
+      "whyItMatters": "Organization choice still needs safe platform bounds, a default, predictable storage planning, and deterministic deletion schedules.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "The configurable retention limits and default are undefined.",
+      "responseType": "single_select",
+      "options": [
+        "90 days–7 years; default 3 years",
+        "1–7 years; default 3 years",
+        "1–10 years; default 5 years",
+        "No default; each organization must choose"
+      ],
+      "freeTextPlaceholder": "Specify another range and default"
+    },
+    {
+      "id": "Q-014",
+      "question": "How should consent for minor students be established at launch?",
+      "whyItMatters": "Consent determines account activation, evidence ingestion, parent access, revocation, and the audit trail for sensitive student data.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "The minor-consent authority and activation rule are undefined.",
+      "responseType": "single_select",
+      "options": [
+        "Parent approves before student activation",
+        "Institution records consent before activation",
+        "Institution attests consent; parent approval optional",
+        "Configurable by region and organization"
+      ],
+      "freeTextPlaceholder": "Define another consent rule"
+    },
+    {
+      "id": "Q-015",
+      "question": "Which organization-supplied AI integrations must the MVP support?",
+      "whyItMatters": "The supported adapters define configuration UX, key validation, data-processing disclosures, contract tests, and provider-specific failure handling.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "The initial AI adapter support list is undefined.",
+      "responseType": "single_select",
+      "options": [
+        "OpenAI only",
+        "OpenAI and Anthropic",
+        "OpenAI-compatible endpoints",
+        "Multiple adapters through a plug-in framework"
+      ],
+      "freeTextPlaceholder": "Name the required providers"
     }
   ]
 }

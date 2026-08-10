@@ -8,58 +8,33 @@ SkillForge is a mobile-first, multi-tenant AI-powered Learning Operating System 
 
 ## Users
 
-- Platform Owner
-- Organization Owner
-- Branch Manager
-- Teacher
-- Student
-- Parent
+Platform Owner, Organization Owner, Branch Manager, Teacher, Student, and Parent.
 
-## Goals
-
-- Run daily work through a guided class lifecycle.
-- Build an evolving Learning Graph from complete learning evidence.
-- Let AI assist while teachers retain final academic authority.
-- Support secure multi-tenant, multi-branch, multi-subject operations.
-- Make the next action clear on mobile and desktop.
-- Support a per-active-student commercial model.
-
-## Required teacher workflow
+## Core workflow
 
 Start Class → Mark Attendance → Upload Transcript → Upload Resources → Assign Homework → Review AI → Publish Class
 
-## Required capabilities
+## Learning model
 
-### Foundation
+Transcripts, notes, work, assessments, attendance, observations, and syllabus objectives become traceable learning evidence in a continuously evolving Learning Graph. AI drafts findings; teachers decide what is published.
 
-Authentication, organizations, branches, roles, students, teachers, parents, RBAC, tenant isolation, and audit logging.
+## Billing
 
-### Academic and teaching
+Authorized organization users manually activate or deactivate billable students. Changes are audited, monthly usage is snapshotted, and closed periods remain immutable except through authorized adjustments. The MVP includes plan and invoice tracking but not live payment collection.
 
-Syllabuses, subjects, classes, timetables, attendance, lesson sessions, assignments, homework, evidence capture, and uploads.
+## Governance
 
-### Learning engine
+India-first controls are designed for later regional configuration. Organizations select retention within platform-enforced limits. Consent, retention, export, deletion, residency, and policy changes are versioned and auditable.
 
-Transcript ingestion, student notes, evidence normalization, Learning Graph, phase-1 AI analysis, gap detection, progress drafts, and teacher approval.
+## AI
 
-### Dashboards
+Each organization supplies its own provider configuration. Credentials remain tenant-scoped and server-only behind a provider interface. AI output remains a draft until teacher approval.
 
-Organization, teacher, student, and parent workflows with role-specific information and next actions.
+## Infrastructure
 
-### Billing
-
-Reproducible active-student metering plus plan, usage, and invoice tracking. Live payment collection is outside the current MVP.
-
-## Governance and infrastructure
-
-- India-first student-data governance with configurable controls for later regions
 - One new Supabase project after charter approval, explicit organization selection, and cost confirmation
+- Versioned migrations, RLS, storage policies, authentication integration, and background processing
 - One canonical Vercel project at https://skillforge-bay-three.vercel.app
-- Versioned migrations, RLS, storage policies, authentication integration, and auditability
-
-## Non-goals for phase 1
-
-Traditional LMS-first delivery, automatic AI academic publication, phase-2 content generation, phase-3 tutoring, live payment collection, and duplicate production projects.
 
 ## Definition of complete
 

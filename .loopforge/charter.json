@@ -133,7 +133,7 @@
     },
     {
       "id": "REQ-016",
-      "statement": "Meter active students reproducibly and provide authorized plan, usage, and invoice tracking without requiring live payment collection.",
+      "statement": "Allow authorized organization users to manually activate or deactivate billable students, preserve an audit trail, and generate immutable monthly usage snapshots for plan and invoice tracking.",
       "mandatory": true
     },
     {
@@ -158,12 +158,17 @@
     },
     {
       "id": "REQ-021",
-      "statement": "Support India-first student-data governance through versioned, configurable consent, retention, export, deletion, residency, and policy controls that can adapt to later regions.",
+      "statement": "Support India-first student-data governance through versioned, organization-configurable consent and retention policies within platform limits, plus export, deletion, residency, and policy controls adaptable to later regions.",
       "mandatory": true
     },
     {
       "id": "REQ-022",
       "statement": "Use one Supabase backend with versioned Postgres migrations, RLS, storage policies, authentication integration, and tenant-aware server boundaries.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-023",
+      "statement": "Let each organization configure its own supported AI provider through tenant-scoped server-side credentials and a provider interface with validation, observability, retries, and safe failure handling.",
       "mandatory": true
     }
   ],
@@ -239,6 +244,16 @@
       "id": "CONSTRAINT-008",
       "statement": "Use exactly one new Supabase project for the product after charter approval, organization selection, and explicit cost confirmation.",
       "mandatory": true
+    },
+    {
+      "id": "CONSTRAINT-009",
+      "statement": "Closed billing-period usage snapshots are immutable; later activation changes affect only open or future periods unless an authorized adjustment is recorded.",
+      "mandatory": true
+    },
+    {
+      "id": "CONSTRAINT-010",
+      "statement": "Organization-supplied AI credentials remain tenant-scoped, encrypted or provider-secret-managed, server-only, and absent from browser payloads, logs, and evidence.",
+      "mandatory": true
     }
   ],
   "productPrinciples": [
@@ -311,13 +326,15 @@
     },
     {
       "id": "SUCCESS-004",
-      "statement": "AI phase-1 output is always a draft and cannot become visible as an academic decision without an authorized teacher approval action.",
+      "statement": "Organization-supplied AI processing remains tenant-isolated, produces drafts only, and cannot publish an academic decision without an authorized teacher approval action.",
       "mandatory": true,
       "verificationMethod": "Workflow, authorization, and negative-path tests",
       "requiredEvidence": [
+        "AI provider configuration isolation tests",
         "AI draft-state test output",
         "Unauthorized publish rejection",
-        "Teacher approval audit record"
+        "Teacher approval audit record",
+        "Provider failure and retry evidence"
       ],
       "humanPerspectives": [
         "Teacher",
@@ -389,14 +406,15 @@
     },
     {
       "id": "SUCCESS-008",
-      "statement": "Active-student usage, plans, and invoices are computed reproducibly, remain auditable, and are visible only to authorized organization and platform users.",
+      "statement": "Authorized manual student activation produces reproducible immutable monthly usage snapshots, plans, and invoices with auditable adjustments and no cross-tenant visibility.",
       "mandatory": true,
       "verificationMethod": "Billing-domain unit and integration tests",
       "requiredEvidence": [
-        "Approved active-student definition",
-        "Usage snapshot and invoice calculation tests",
-        "Authorized plan and invoice browser journey",
-        "Adjustment and audit-history evidence"
+        "Approved active-student rule",
+        "Activation authorization and audit tests",
+        "Usage snapshot immutability tests",
+        "Invoice calculation tests",
+        "Authorized plan and invoice browser journey"
       ],
       "humanPerspectives": [
         "Organization owner",
@@ -448,7 +466,7 @@
     },
     {
       "id": "SUCCESS-011",
-      "statement": "Student-data consent, retention, export, deletion, residency, and audit controls implement the approved India-first policy through region-configurable mechanisms.",
+      "statement": "Student-data consent, organization-configurable retention within approved platform limits, export, deletion, residency, and audit controls implement the India-first global-ready policy.",
       "mandatory": true,
       "verificationMethod": "Policy review, permission tests, and lifecycle tests",
       "requiredEvidence": [
@@ -508,6 +526,18 @@
     {
       "statement": "MVP billing includes active-student metering plus plan and invoice tracking.",
       "source": "DECISION-0002 — human answer to Q-009 on 2026-08-10."
+    },
+    {
+      "statement": "Authorized organization users manually mark students active for billing.",
+      "source": "DECISION-0003 — human answer to Q-010 on 2026-08-10."
+    },
+    {
+      "statement": "Learning-evidence retention is organization-configurable within platform limits.",
+      "source": "DECISION-0003 — human answer to Q-011 on 2026-08-10."
+    },
+    {
+      "statement": "Each organization supplies its own phase-1 AI provider configuration.",
+      "source": "DECISION-0003 — human answer to Q-012 on 2026-08-10."
     }
   ],
   "humanAcceptancePolicy": {

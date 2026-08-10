@@ -44,24 +44,48 @@
     {
       "id": "BLOCKER-006",
       "severity": "high",
-      "status": "open",
+      "status": "resolved",
       "summary": "The billable definition of an active student is undefined (Q-010).",
-      "needsHuman": true,
-      "resolution": null
+      "needsHuman": false,
+      "resolution": "Resolved by Q-010: authorized organization users manually mark students active."
     },
     {
       "id": "BLOCKER-007",
       "severity": "critical",
-      "status": "open",
+      "status": "resolved",
       "summary": "The default post-enrollment learning-evidence retention schedule is undefined (Q-011).",
-      "needsHuman": true,
-      "resolution": null
+      "needsHuman": false,
+      "resolution": "Resolved by Q-011: retention is organization-configurable within platform limits."
     },
     {
       "id": "BLOCKER-008",
       "severity": "high",
-      "status": "open",
+      "status": "resolved",
       "summary": "The production phase-1 AI provider and data-processing boundary are undefined (Q-012).",
+      "needsHuman": false,
+      "resolution": "Resolved by Q-012: each organization supplies its AI provider."
+    },
+    {
+      "id": "BLOCKER-009",
+      "severity": "critical",
+      "status": "open",
+      "summary": "The platform retention range and default are undefined (Q-013).",
+      "needsHuman": true,
+      "resolution": null
+    },
+    {
+      "id": "BLOCKER-010",
+      "severity": "critical",
+      "status": "open",
+      "summary": "The consent authority and activation rule for minor students are undefined (Q-014).",
+      "needsHuman": true,
+      "resolution": null
+    },
+    {
+      "id": "BLOCKER-011",
+      "severity": "high",
+      "status": "open",
+      "summary": "The MVP's initial organization-supplied AI adapter list is undefined (Q-015).",
       "needsHuman": true,
       "resolution": null
     }
