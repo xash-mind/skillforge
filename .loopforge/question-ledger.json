@@ -1,5 +1,57 @@
 {
   "schemaVersion": 1,
   "mode": "new",
-  "questions": []
+  "questions": [
+    {
+      "id": "Q-001",
+      "question": "What problem should SkillForge solve first?",
+      "whyItMatters": "This defines the product purpose and which capabilities belong in the first release.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "The first-release outcome is not yet defined.",
+      "responseType": "multi_select",
+      "options": [
+        "Turn ideas into valid skill packages",
+        "Test and improve existing skills",
+        "Organize and share skills",
+        "Install or run skills safely"
+      ],
+      "freeTextPlaceholder": "Describe a different first outcome"
+    },
+    {
+      "id": "Q-002",
+      "question": "Who must succeed with the first release?",
+      "whyItMatters": "The primary user determines the workflow, language, permissions, and usability bar.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "The primary user is not yet defined.",
+      "responseType": "single_select",
+      "options": [
+        "Non-technical skill creators",
+        "Developers and agent builders",
+        "Internal teams and administrators",
+        "People who consume or install skills"
+      ],
+      "freeTextPlaceholder": "Describe the primary user"
+    },
+    {
+      "id": "Q-003",
+      "question": "What form should the first release take?",
+      "whyItMatters": "The delivery form determines architecture, deployment, and infrastructure needs.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "The runtime and distribution model are not yet defined.",
+      "responseType": "single_select",
+      "options": [
+        "Hosted web app",
+        "Local command-line tool",
+        "Reusable SDK or API",
+        "Web app plus CLI"
+      ],
+      "freeTextPlaceholder": "Describe another delivery form"
+    }
+  ]
 }

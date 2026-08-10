@@ -1,4 +1,13 @@
 {
   "schemaVersion": 1,
-  "blockers": []
+  "blockers": [
+    {
+      "id": "BLOCKER-001",
+      "severity": "high",
+      "status": "open",
+      "summary": "Product purpose, primary user, and delivery form require human decisions in Q-001 through Q-003.",
+      "needsHuman": true,
+      "resolution": null
+    }
+  ]
 }

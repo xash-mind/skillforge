@@ -1,17 +1,19 @@
 {
   "schemaVersion": 1,
   "mode": "new",
-  "status": "active",
-  "phase": "DISCOVERING",
+  "status": "awaiting_human",
+  "phase": "AWAITING_HUMAN",
   "iteration": 0,
   "activeTaskId": null,
   "activeChangeRequestId": null,
-  "lastVerifiedCommit": null,
-  "lastRunId": null,
+  "lastVerifiedCommit": "697d96eee8d93085e832ffb8acb6320cf30ef107",
+  "lastRunId": "RUN-0001",
   "repairAttemptsForRootCause": 0,
   "completionCandidate": false,
-  "criticalBlockers": [],
-  "nextAction": "Run adaptive discovery questionnaire",
+  "criticalBlockers": [
+    "BLOCKER-001"
+  ],
+  "nextAction": "Collect human answers for Q-001 through Q-003, update the discovery ledger, and continue blocker analysis.",
   "needsHuman": true,
-  "updatedAt": "2026-08-10T11:42:28.393Z"
+  "updatedAt": "2026-08-10T11:44:56.273Z"
 }
