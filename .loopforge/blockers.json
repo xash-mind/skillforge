@@ -12,8 +12,32 @@
     {
       "id": "BLOCKER-002",
       "severity": "high",
-      "status": "open",
+      "status": "resolved",
       "summary": "Target skill standard, first-time creation interaction, and draft persistence require human decisions in Q-004 through Q-006.",
+      "needsHuman": false,
+      "resolution": "Superseded by the authoritative product directive DECISION-0001 on 2026-08-10."
+    },
+    {
+      "id": "BLOCKER-003",
+      "severity": "critical",
+      "status": "open",
+      "summary": "Launch jurisdiction and student-data consent, retention, deletion, and residency requirements are undefined (Q-007).",
+      "needsHuman": true,
+      "resolution": null
+    },
+    {
+      "id": "BLOCKER-004",
+      "severity": "high",
+      "status": "open",
+      "summary": "The persistent backend provider and provisioning authority are undefined (Q-008).",
+      "needsHuman": true,
+      "resolution": null
+    },
+    {
+      "id": "BLOCKER-005",
+      "severity": "medium",
+      "status": "open",
+      "summary": "The MVP billing boundary is undefined beyond per-active-student pricing (Q-009).",
       "needsHuman": true,
       "resolution": null
     }

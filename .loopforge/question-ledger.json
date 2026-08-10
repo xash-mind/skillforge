@@ -6,7 +6,7 @@
       "id": "Q-001",
       "question": "What problem should SkillForge solve first?",
       "whyItMatters": "This defines the product purpose and which capabilities belong in the first release.",
-      "status": "resolved",
+      "status": "superseded",
       "answer": [
         "Turn ideas into valid skill packages"
       ],
@@ -19,13 +19,19 @@
         "Organize and share skills",
         "Install or run skills safely"
       ],
-      "freeTextPlaceholder": "Describe a different first outcome"
+      "freeTextPlaceholder": "Describe a different first outcome",
+      "previousStatus": "resolved",
+      "previousAnswer": [
+        "Turn ideas into valid skill packages"
+      ],
+      "supersededBy": "DECISION-0001",
+      "supersededAt": "2026-08-10T12:18:36.917Z"
     },
     {
       "id": "Q-002",
       "question": "Who must succeed with the first release?",
       "whyItMatters": "The primary user determines the workflow, language, permissions, and usability bar.",
-      "status": "resolved",
+      "status": "superseded",
       "answer": "Non-technical skill creators",
       "source": "Human discovery response on 2026-08-10",
       "followUpBlocker": null,
@@ -36,15 +42,19 @@
         "Internal teams and administrators",
         "People who consume or install skills"
       ],
-      "freeTextPlaceholder": "Describe the primary user"
+      "freeTextPlaceholder": "Describe the primary user",
+      "previousStatus": "resolved",
+      "previousAnswer": "Non-technical skill creators",
+      "supersededBy": "DECISION-0001",
+      "supersededAt": "2026-08-10T12:18:36.917Z"
     },
     {
       "id": "Q-003",
       "question": "What form should the first release take?",
       "whyItMatters": "The delivery form determines architecture, deployment, and infrastructure needs.",
       "status": "resolved",
-      "answer": "Hosted web app",
-      "source": "Human discovery response on 2026-08-10",
+      "answer": "Hosted web app deployed to https://skillforge-bay-three.vercel.app",
+      "source": "DECISION-0001 — explicit human directive on 2026-08-10",
       "followUpBlocker": null,
       "responseType": "single_select",
       "options": [
@@ -53,16 +63,17 @@
         "Reusable SDK or API",
         "Web app plus CLI"
       ],
-      "freeTextPlaceholder": "Describe another delivery form"
+      "freeTextPlaceholder": "Describe another delivery form",
+      "previousAnswer": "Hosted web app"
     },
     {
       "id": "Q-004",
       "question": "Which skill standard must generated packages support first?",
       "whyItMatters": "The target standard defines package structure, validation rules, and export compatibility.",
-      "status": "unresolved",
+      "status": "superseded",
       "answer": null,
       "source": null,
-      "followUpBlocker": "Package compatibility and validity rules are undefined.",
+      "followUpBlocker": null,
       "responseType": "single_select",
       "options": [
         "OpenAI SKILL.md packages",
@@ -70,16 +81,20 @@
         "Both standards",
         "A custom internal format"
       ],
-      "freeTextPlaceholder": "Name another target standard"
+      "freeTextPlaceholder": "Name another target standard",
+      "previousStatus": "unresolved",
+      "previousAnswer": null,
+      "supersededBy": "DECISION-0001",
+      "supersededAt": "2026-08-10T12:18:36.917Z"
     },
     {
       "id": "Q-005",
       "question": "How should a first-time creator describe a skill?",
       "whyItMatters": "This determines the primary creation workflow and how much structure versus conversation the interface provides.",
-      "status": "unresolved",
+      "status": "superseded",
       "answer": null,
       "source": null,
-      "followUpBlocker": "The core input interaction is undefined.",
+      "followUpBlocker": null,
       "responseType": "single_select",
       "options": [
         "Guided step-by-step form",
@@ -87,16 +102,20 @@
         "Start from templates",
         "Chat plus structured checklist"
       ],
-      "freeTextPlaceholder": "Describe another creation flow"
+      "freeTextPlaceholder": "Describe another creation flow",
+      "previousStatus": "unresolved",
+      "previousAnswer": null,
+      "supersededBy": "DECISION-0001",
+      "supersededAt": "2026-08-10T12:18:36.917Z"
     },
     {
       "id": "Q-006",
       "question": "How should drafts persist between visits?",
       "whyItMatters": "This determines whether accounts, authentication, a database, and privacy controls are required.",
-      "status": "unresolved",
+      "status": "superseded",
       "answer": null,
       "source": null,
-      "followUpBlocker": "Authentication and persistence requirements are undefined.",
+      "followUpBlocker": null,
       "responseType": "single_select",
       "options": [
         "No accounts; download immediately",
@@ -104,7 +123,62 @@
         "Private account workspace",
         "Workspace with optional sharing"
       ],
-      "freeTextPlaceholder": "Describe another persistence model"
+      "freeTextPlaceholder": "Describe another persistence model",
+      "previousStatus": "unresolved",
+      "previousAnswer": null,
+      "supersededBy": "DECISION-0001",
+      "supersededAt": "2026-08-10T12:18:36.917Z"
+    },
+    {
+      "id": "Q-007",
+      "question": "Which jurisdiction should govern the first release's student-data and consent controls?",
+      "whyItMatters": "SkillForge handles minors, transcripts, attendance, and learning records; jurisdiction changes consent, retention, deletion, and data-residency requirements.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "Student-data governance and consent requirements cannot be safely defined.",
+      "responseType": "single_select",
+      "options": [
+        "India-first operations",
+        "India first, global-ready controls",
+        "Global launch",
+        "Another jurisdiction"
+      ],
+      "freeTextPlaceholder": "Name the launch jurisdiction"
+    },
+    {
+      "id": "Q-008",
+      "question": "How should database, authentication, and file storage be provisioned?",
+      "whyItMatters": "The locked MVP requires persistent multi-tenant data, accounts, and uploads, so one reproducible backend must be selected without exposing secrets.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "The managed backend and provisioning authority are undefined.",
+      "responseType": "single_select",
+      "options": [
+        "Connect an existing Supabase project",
+        "Authorize one Supabase project to be created",
+        "Defer cloud backend until the schema milestone",
+        "Use another backend provider"
+      ],
+      "freeTextPlaceholder": "Name the provider or project"
+    },
+    {
+      "id": "Q-009",
+      "question": "What should billing include in the MVP?",
+      "whyItMatters": "Per-active-student pricing is locked, but metering, invoicing, and payment collection require different data, integrations, and verification.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "The billing boundary and need for a payment provider are undefined.",
+      "responseType": "single_select",
+      "options": [
+        "Active-student metering only",
+        "Metering plus plan and invoice tracking",
+        "Live subscription payments",
+        "Defer billing UI"
+      ],
+      "freeTextPlaceholder": "Describe the billing boundary"
     }
   ]
 }

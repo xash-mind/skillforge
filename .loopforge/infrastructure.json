@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
   "deployment": {
-    "required": null,
-    "provider": null,
-    "projectName": null,
-    "canonicalProductionUrl": null,
+    "required": true,
+    "provider": "Vercel",
+    "projectName": "skillforge-bay-three",
+    "canonicalProductionUrl": "https://skillforge-bay-three.vercel.app",
     "productionBranch": "main",
-    "productionApprovalRequired": true,
+    "productionApprovalRequired": false,
     "previewPolicy": "one coherent branch or pull-request preview per meaningful iteration",
     "duplicateProductionProjectsAllowed": false
   },
   "database": {
-    "required": null,
+    "required": true,
     "provider": null,
     "projectRef": null,
-    "provisioning": "undecided",
+    "provisioning": "awaiting human choice Q-008",
     "migrationsPath": null,
     "previewIsolation": "local or shared development project; never one project per preview"
   }

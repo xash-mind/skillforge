@@ -2,28 +2,31 @@
 
 ## Current state
 
-LoopForge discovery is awaiting the second human answer round.
+LoopForge discovery is awaiting decisions required for sensitive student data and production infrastructure.
 
 ## Active objective
 
-Define package compatibility, the first-time creation interaction, and draft persistence.
+Resolve launch jurisdiction, backend provisioning, and the MVP billing boundary.
 
 ## Verified progress
 
-- `Q-001`: Turn ideas into valid skill packages.
-- `Q-002`: Non-technical skill creators.
-- `Q-003`: Hosted web app.
-- The draft charter now reflects these human-provided facts.
-- The pinned LoopForge bundle was reverified before this round.
+- The earlier skill-package concept has been superseded without rewriting prior run history.
+- The full SkillForge Learning Operating System directive is recorded as `DECISION-0001`.
+- The unlocked charter draft now covers the class lifecycle, Learning Graph, roles, dashboards, MVP, AI roadmap boundaries, architecture constraints, and measurable success criteria.
+- LoopForge 1.0.0 and the pinned new-mode bundle were reverified.
+- The connected Vercel team was inspected and currently has no projects.
+- The single future Vercel production identity is reserved in project state as `skillforge-bay-three`.
 
 ## Blocker or uncertainty
 
-Discovery questions `Q-004` through `Q-006` are unresolved.
+- `Q-007`: launch jurisdiction and student-data governance
+- `Q-008`: backend provider and provisioning authority
+- `Q-009`: MVP billing boundary
 
 ## Next action
 
-Answer the current discovery questions.
+Answer `Q-007` through `Q-009`, then continue adaptive discovery.
 
 ## Needs human
 
-Choose the target skill standard, creation interaction, and persistence model.
+Three material product/infrastructure decisions remain before the charter can be presented for approval.

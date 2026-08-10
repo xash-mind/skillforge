@@ -1,60 +1,488 @@
 {
   "schemaVersion": 1,
   "project": {
-    "name": "skillforge",
+    "name": "SkillForge",
     "repository": "xash-mind/skillforge",
-    "summary": "A hosted web app that helps non-technical skill creators turn ideas into valid skill packages."
+    "summary": "A mobile-first, multi-tenant AI-powered Learning Operating System for tuition centres and coaching institutes."
   },
-  "vision": "Make skill creation accessible to non-technical creators by turning an idea into a valid, usable skill package through a hosted web app.",
+  "vision": "Make the complete class lifecycle operationally simple while turning every lesson artifact into structured, teacher-governed learning evidence that improves decisions for institutions, teachers, students, and parents.",
   "primaryUsers": [
-    "Non-technical skill creators"
+    "Platform owners",
+    "Tuition-centre and coaching-institute organization owners",
+    "Branch managers",
+    "Teachers",
+    "Students",
+    "Parents"
   ],
   "coreJourney": [
-    "Open the hosted SkillForge web app.",
-    "Describe the intended skill without needing skill-authoring expertise.",
-    "Receive a generated skill package that conforms to the selected validity standard."
+    "An organization owner configures branches, subjects, syllabuses, users, classes, and timetables.",
+    "A teacher opens the next class workflow and starts the lesson session.",
+    "The teacher marks attendance and uploads the transcript, resources, student notes, and assigned work.",
+    "SkillForge organizes the class artifacts as structured learning evidence and updates the Learning Graph.",
+    "AI analyzes evidence, compares notes and objectives, detects possible learning gaps, and drafts progress findings.",
+    "The teacher reviews, edits, approves, or rejects every academic recommendation before publication.",
+    "Approved outcomes become visible through role-appropriate organization, teacher, student, and parent dashboards."
   ],
   "goals": [
     {
       "id": "GOAL-001",
-      "statement": "Enable non-technical skill creators to turn an idea into a valid skill package through a hosted web app.",
+      "statement": "Center daily product use on a guided end-to-end class lifecycle rather than disconnected menus.",
+      "mandatory": true
+    },
+    {
+      "id": "GOAL-002",
+      "statement": "Build a continuously evolving Learning Graph from complete student learning evidence rather than isolated grades.",
+      "mandatory": true
+    },
+    {
+      "id": "GOAL-003",
+      "statement": "Use AI to assist teachers while keeping teachers the final authority over all published academic decisions.",
+      "mandatory": true
+    },
+    {
+      "id": "GOAL-004",
+      "statement": "Support secure multi-tenant organizations with multiple branches, subjects, and role-specific operations.",
+      "mandatory": true
+    },
+    {
+      "id": "GOAL-005",
+      "statement": "Make the next required action immediately clear on mobile and desktop for every role.",
+      "mandatory": true
+    },
+    {
+      "id": "GOAL-006",
+      "statement": "Support a commercial model based on active students.",
       "mandatory": true
     }
   ],
   "requirements": [
     {
       "id": "REQ-001",
-      "statement": "Provide the first release as a hosted web application.",
+      "statement": "Provide authentication for Platform Owner, Organization Owner, Branch Manager, Teacher, Student, and Parent roles.",
       "mandatory": true
     },
     {
       "id": "REQ-002",
-      "statement": "Accept a creator's skill idea and generate a package that can be checked against the selected skill standard.",
+      "statement": "Enforce strong role-based permissions, tenant isolation, branch scoping, and auditable privileged actions at trusted boundaries.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-003",
+      "statement": "Manage organizations, branches, role assignments, students, teachers, parents, and their permitted relationships.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-004",
+      "statement": "Manage syllabus libraries, custom syllabuses, subjects, classes, and timetables across branches.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-005",
+      "statement": "Guide teachers through Start Class, Mark Attendance, Upload Transcript, Upload Resources, Assign Homework, Review AI, and Publish Class.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-006",
+      "statement": "Record attendance, lesson sessions, assignments, homework, worksheets, quizzes, exams, teacher observations, and file uploads.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-007",
+      "statement": "Ingest lesson transcripts and student notes with visible processing, failure, retry, and recovery states.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-008",
+      "statement": "Normalize learning evidence and connect it to students, lessons, syllabus objectives, subjects, classes, branches, and organizations.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-009",
+      "statement": "Maintain a Learning Graph that traces progress and gaps back to source evidence.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-010",
+      "statement": "Analyze transcripts, compare notes, detect potential learning gaps, and draft progress summaries during AI roadmap phase 1.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-011",
+      "statement": "Require explicit teacher review and approval before AI-derived academic findings or progress updates are published.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-012",
+      "statement": "Provide an organization dashboard for institutional analytics, branch management, teacher oversight, curriculum progress, billing, and permissions.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-013",
+      "statement": "Provide a teacher dashboard for daily work, student management, attendance, uploads, assignments, AI review, and approvals.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-014",
+      "statement": "Provide a student dashboard for lessons, homework, notes, feedback, and approved progress.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-015",
+      "statement": "Provide a parent dashboard for approved progress summaries, homework, attendance, teacher updates, and suggested support.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-016",
+      "statement": "Meter active students in a reproducible way for the locked per-active-student commercial model.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-017",
+      "statement": "Use modular domain boundaries and an extensible AI pipeline so roadmap modules can be added without major rewrites.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-018",
+      "statement": "Provide a mobile-first, responsive, accessible interface with clear next actions and usable failure recovery.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-019",
+      "statement": "Version database schema, tenant policies, storage rules, background processing, and configuration in the repository.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-020",
+      "statement": "Deploy one canonical production identity at https://skillforge-bay-three.vercel.app when the release gate passes.",
       "mandatory": true
     }
   ],
-  "nonGoals": [],
-  "constraints": [],
-  "productPrinciples": [
-    "Use language and guidance that do not require prior skill-authoring expertise."
+  "nonGoals": [
+    {
+      "id": "NONGOAL-001",
+      "statement": "SkillForge will not behave primarily as a traditional course-content LMS.",
+      "mandatory": true
+    },
+    {
+      "id": "NONGOAL-002",
+      "statement": "AI will not automatically publish grades, progress judgements, learning gaps, or other academic decisions.",
+      "mandatory": true
+    },
+    {
+      "id": "NONGOAL-003",
+      "statement": "AI worksheet, lesson-plan, quiz, and homework generation are outside the phase-1 MVP.",
+      "mandatory": true
+    },
+    {
+      "id": "NONGOAL-004",
+      "statement": "The personalized AI tutor, adaptive revision, and long-term learning companion are outside the phase-1 MVP.",
+      "mandatory": true
+    },
+    {
+      "id": "NONGOAL-005",
+      "statement": "The MVP will not create duplicate production projects or production aliases for testing.",
+      "mandatory": true
+    }
   ],
-  "successCriteria": [],
+  "constraints": [
+    {
+      "id": "CONSTRAINT-001",
+      "statement": "All organization-scoped data and actions must be isolated by tenant and, where applicable, branch.",
+      "mandatory": true
+    },
+    {
+      "id": "CONSTRAINT-002",
+      "statement": "The product must be mobile-first and keep the next action obvious for every role.",
+      "mandatory": true
+    },
+    {
+      "id": "CONSTRAINT-003",
+      "statement": "Teachers remain the final authority for academic publication and progress approval.",
+      "mandatory": true
+    },
+    {
+      "id": "CONSTRAINT-004",
+      "statement": "The architecture must use modular feature boundaries, domain-driven organization, strong RBAC, audit logging, and an extensible AI pipeline.",
+      "mandatory": true
+    },
+    {
+      "id": "CONSTRAINT-005",
+      "statement": "Secrets and privileged credentials must remain outside source code, logs, chat, and evidence.",
+      "mandatory": true
+    },
+    {
+      "id": "CONSTRAINT-006",
+      "statement": "Production uses exactly one Vercel project and the canonical URL https://skillforge-bay-three.vercel.app.",
+      "mandatory": true
+    },
+    {
+      "id": "CONSTRAINT-007",
+      "statement": "Sensitive student and minor data requires explicit jurisdiction, consent, retention, export, and deletion controls before production acceptance.",
+      "mandatory": true
+    }
+  ],
+  "productPrinciples": [
+    "Organize the experience around workflows, not menus.",
+    "Show every user what they need to do next.",
+    "Treat complete learning evidence as the primary source of truth.",
+    "Preserve traceability from progress claims back to source evidence.",
+    "AI recommends; teachers decide and publish.",
+    "Design for mobile use during real classes.",
+    "Prefer extensible modules over speculative rewrites."
+  ],
+  "successCriteria": [
+    {
+      "id": "SUCCESS-001",
+      "statement": "A teacher can complete the full guided class lifecycle from Start Class through Publish Class without leaving the workflow.",
+      "mandatory": true,
+      "verificationMethod": "Automated browser journey plus explicit owner acceptance",
+      "requiredEvidence": [
+        "Browser recording bound to the exact preview commit",
+        "Teacher-flow state-transition test",
+        "Owner acceptance"
+      ],
+      "humanPerspectives": [
+        "Teacher",
+        "First-time user",
+        "Mobile user",
+        "Owner or client"
+      ],
+      "actualHumanAcceptanceRequired": true,
+      "status": "pending"
+    },
+    {
+      "id": "SUCCESS-002",
+      "statement": "No role can read or mutate another tenant's protected data, and branch-scoped roles cannot escape permitted branches.",
+      "mandatory": true,
+      "verificationMethod": "Database policy, API authorization, and adversarial integration tests",
+      "requiredEvidence": [
+        "Tenant-isolation test output",
+        "RBAC matrix test output",
+        "Denied-access evidence"
+      ],
+      "humanPerspectives": [
+        "Organization owner",
+        "Branch manager",
+        "Privacy-sensitive user",
+        "Adversarial user",
+        "Maintainer"
+      ],
+      "actualHumanAcceptanceRequired": false,
+      "status": "pending"
+    },
+    {
+      "id": "SUCCESS-003",
+      "statement": "Learning evidence from transcripts, notes, attendance, work, observations, and syllabus objectives can be traced into the Learning Graph and back to its source.",
+      "mandatory": true,
+      "verificationMethod": "Integration and data-lineage tests",
+      "requiredEvidence": [
+        "Migration and schema verification",
+        "Evidence-ingestion test output",
+        "Learning Graph lineage query results"
+      ],
+      "humanPerspectives": [
+        "Teacher",
+        "Student",
+        "Parent",
+        "Maintainer"
+      ],
+      "actualHumanAcceptanceRequired": false,
+      "status": "pending"
+    },
+    {
+      "id": "SUCCESS-004",
+      "statement": "AI phase-1 output is always a draft and cannot become visible as an academic decision without an authorized teacher approval action.",
+      "mandatory": true,
+      "verificationMethod": "Workflow, authorization, and negative-path tests",
+      "requiredEvidence": [
+        "AI draft-state test output",
+        "Unauthorized publish rejection",
+        "Teacher approval audit record"
+      ],
+      "humanPerspectives": [
+        "Teacher",
+        "Student",
+        "Parent",
+        "Adversarial user",
+        "Privacy-sensitive user"
+      ],
+      "actualHumanAcceptanceRequired": false,
+      "status": "pending"
+    },
+    {
+      "id": "SUCCESS-005",
+      "statement": "Organization, teacher, student, and parent dashboards expose only role-appropriate information and make the next action immediately understandable.",
+      "mandatory": true,
+      "verificationMethod": "Role-specific browser journeys and human acceptance",
+      "requiredEvidence": [
+        "Four dashboard journey recordings",
+        "Role visibility assertions",
+        "Owner acceptance"
+      ],
+      "humanPerspectives": [
+        "Organization owner",
+        "Teacher",
+        "Student",
+        "Parent",
+        "First-time user"
+      ],
+      "actualHumanAcceptanceRequired": true,
+      "status": "pending"
+    },
+    {
+      "id": "SUCCESS-006",
+      "statement": "Multi-branch, multi-subject organizations can configure syllabuses, classes, timetables, users, and assignments without cross-branch leakage.",
+      "mandatory": true,
+      "verificationMethod": "Integration tests and admin browser journey",
+      "requiredEvidence": [
+        "Multi-branch fixture results",
+        "Admin journey recording",
+        "Cross-branch denial results"
+      ],
+      "humanPerspectives": [
+        "Organization owner",
+        "Branch manager",
+        "Administrator",
+        "Maintainer"
+      ],
+      "actualHumanAcceptanceRequired": false,
+      "status": "pending"
+    },
+    {
+      "id": "SUCCESS-007",
+      "statement": "Attendance, transcript ingestion, uploads, and AI processing provide usable loading, empty, invalid, failure, retry, and recovery states.",
+      "mandatory": true,
+      "verificationMethod": "Browser, upload, queue, and failure-injection tests",
+      "requiredEvidence": [
+        "Failure-state journey recordings",
+        "Upload validation results",
+        "Retry and idempotency test output"
+      ],
+      "humanPerspectives": [
+        "Teacher",
+        "Failure-state user",
+        "Support and operations person",
+        "Mobile user"
+      ],
+      "actualHumanAcceptanceRequired": false,
+      "status": "pending"
+    },
+    {
+      "id": "SUCCESS-008",
+      "statement": "Active-student usage is computed reproducibly and is visible to authorized organization users for the approved MVP billing boundary.",
+      "mandatory": true,
+      "verificationMethod": "Billing-domain unit and integration tests",
+      "requiredEvidence": [
+        "Active-student calculation test output",
+        "Authorized billing-view journey",
+        "Audit evidence"
+      ],
+      "humanPerspectives": [
+        "Organization owner",
+        "Platform owner",
+        "Maintainer"
+      ],
+      "actualHumanAcceptanceRequired": false,
+      "status": "pending"
+    },
+    {
+      "id": "SUCCESS-009",
+      "statement": "The application passes relevant static analysis, automated tests, production build, accessibility checks, and representative small-screen journeys from a clean setup.",
+      "mandatory": true,
+      "verificationMethod": "Clean install, CI, build, accessibility, and responsive browser verification",
+      "requiredEvidence": [
+        "Clean setup log",
+        "Static and test output",
+        "Production build log",
+        "Accessibility report",
+        "Mobile screenshots or recording"
+      ],
+      "humanPerspectives": [
+        "First-time user",
+        "Accessibility user",
+        "Mobile user",
+        "Maintainer"
+      ],
+      "actualHumanAcceptanceRequired": false,
+      "status": "pending"
+    },
+    {
+      "id": "SUCCESS-010",
+      "statement": "The canonical production URL serves the exact accepted commit after preview verification and has a documented rollback path.",
+      "mandatory": true,
+      "verificationMethod": "Preview and production deployment verification",
+      "requiredEvidence": [
+        "Preview URL and commit SHA",
+        "Production deployment ID and commit SHA",
+        "Canonical URL browser verification",
+        "Rollback procedure"
+      ],
+      "humanPerspectives": [
+        "Owner or client",
+        "Support and operations person",
+        "Maintainer"
+      ],
+      "actualHumanAcceptanceRequired": false,
+      "status": "pending"
+    },
+    {
+      "id": "SUCCESS-011",
+      "statement": "Student-data consent, retention, export, deletion, and audit controls satisfy the human-approved launch jurisdiction and policy.",
+      "mandatory": true,
+      "verificationMethod": "Policy review, permission tests, and lifecycle tests",
+      "requiredEvidence": [
+        "Approved data-governance decision",
+        "Data lifecycle test output",
+        "Deletion/export evidence",
+        "Audit log evidence"
+      ],
+      "humanPerspectives": [
+        "Privacy-sensitive user",
+        "Parent",
+        "Student",
+        "Organization owner",
+        "Maintainer"
+      ],
+      "actualHumanAcceptanceRequired": true,
+      "status": "pending"
+    }
+  ],
   "officialFacts": [
     {
-      "statement": "The first-release problem is turning ideas into valid skill packages.",
-      "source": "Human answer to Q-001 on 2026-08-10."
+      "statement": "The product name is SkillForge.",
+      "source": "DECISION-0001 — human directive on 2026-08-10."
     },
     {
-      "statement": "The primary first-release user is a non-technical skill creator.",
-      "source": "Human answer to Q-002 on 2026-08-10."
+      "statement": "The primary market is tuition centres and coaching institutes.",
+      "source": "DECISION-0001 — human directive on 2026-08-10."
     },
     {
-      "statement": "The first release is a hosted web app.",
-      "source": "Human answer to Q-003 on 2026-08-10."
+      "statement": "SkillForge is an AI-powered Learning Operating System, not a traditional LMS.",
+      "source": "DECISION-0001 — human directive on 2026-08-10."
+    },
+    {
+      "statement": "The product is multi-tenant, multi-branch, multi-subject, mobile-first, and priced per active student.",
+      "source": "DECISION-0001 — human directive on 2026-08-10."
+    },
+    {
+      "statement": "Teachers always retain final authority over academic publication.",
+      "source": "DECISION-0001 — human directive on 2026-08-10."
+    },
+    {
+      "statement": "The class lifecycle and complete learning evidence are the central operating model.",
+      "source": "DECISION-0001 — human directive on 2026-08-10."
+    },
+    {
+      "statement": "The required production URL is https://skillforge-bay-three.vercel.app.",
+      "source": "DECISION-0001 — human directive on 2026-08-10."
     }
   ],
   "humanAcceptancePolicy": {
-    "finalApprovalRequired": false,
-    "subjectiveCriterionIds": []
+    "finalApprovalRequired": true,
+    "subjectiveCriterionIds": [
+      "SUCCESS-001",
+      "SUCCESS-005",
+      "SUCCESS-011"
+    ]
   }
 }
