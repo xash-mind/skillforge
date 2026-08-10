@@ -158,7 +158,7 @@
     },
     {
       "id": "REQ-021",
-      "statement": "Support India-first student-data governance through versioned, organization-configurable consent and retention policies within platform limits, plus export, deletion, residency, and policy controls adaptable to later regions.",
+      "statement": "Support India-first global-ready governance through versioned regional policy definitions; require every organization to select an allowed retention policy and consent basis before minor accounts or learning-evidence processing are enabled; provide export, deletion, residency, and audit controls.",
       "mandatory": true
     },
     {
@@ -168,7 +168,12 @@
     },
     {
       "id": "REQ-023",
-      "statement": "Let each organization configure its own supported AI provider through tenant-scoped server-side credentials and a provider interface with validation, observability, retries, and safe failure handling.",
+      "statement": "Provide a stable AI adapter plug-in contract with multiple contract-tested adapters, tenant-scoped organization configuration, server-side secret references, capability metadata, observability, retries, normalized failures, and teacher-controlled publication.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-024",
+      "statement": "Block minor-student activation and learning-evidence ingestion until the organization records a consent method allowed by the active regional policy, with versioned evidence, revocation, and audit history.",
       "mandatory": true
     }
   ],
@@ -237,7 +242,7 @@
     },
     {
       "id": "CONSTRAINT-007",
-      "statement": "Student-data controls must launch India first while keeping consent, retention, export, deletion, residency, and policy behavior configurable for later regions.",
+      "statement": "Student-data behavior launches India first but is driven by versioned regional policy; the platform provides no universal retention or consent default, and every organization must make an allowed, auditable selection.",
       "mandatory": true
     },
     {
@@ -253,6 +258,16 @@
     {
       "id": "CONSTRAINT-010",
       "statement": "Organization-supplied AI credentials remain tenant-scoped, encrypted or provider-secret-managed, server-only, and absent from browser payloads, logs, and evidence.",
+      "mandatory": true
+    },
+    {
+      "id": "CONSTRAINT-011",
+      "statement": "An organization cannot activate a minor student or ingest learning evidence until its active regional consent and retention selections are complete.",
+      "mandatory": true
+    },
+    {
+      "id": "CONSTRAINT-012",
+      "statement": "The AI framework must prove adapter portability through one contract suite and at least two adapter implementations; provider-specific logic cannot leak into the learning domain.",
       "mandatory": true
     }
   ],
@@ -326,15 +341,16 @@
     },
     {
       "id": "SUCCESS-004",
-      "statement": "Organization-supplied AI processing remains tenant-isolated, produces drafts only, and cannot publish an academic decision without an authorized teacher approval action.",
+      "statement": "At least two organization-configurable AI adapters pass one contract suite, remain tenant-isolated, normalize provider failures, produce drafts only, and cannot publish an academic decision without teacher approval.",
       "mandatory": true,
       "verificationMethod": "Workflow, authorization, and negative-path tests",
       "requiredEvidence": [
-        "AI provider configuration isolation tests",
-        "AI draft-state test output",
+        "AI adapter contract test output for at least two adapters",
+        "Tenant-isolated provider configuration tests",
+        "Secret non-exposure review",
+        "Provider failure and retry evidence",
         "Unauthorized publish rejection",
-        "Teacher approval audit record",
-        "Provider failure and retry evidence"
+        "Teacher approval audit record"
       ],
       "humanPerspectives": [
         "Teacher",
@@ -466,14 +482,17 @@
     },
     {
       "id": "SUCCESS-011",
-      "statement": "Student-data consent, organization-configurable retention within approved platform limits, export, deletion, residency, and audit controls implement the India-first global-ready policy.",
+      "statement": "The India-first regional policy engine requires each organization to select allowed consent and retention settings, blocks minor activation and evidence ingestion until selection, and verifies export, deletion, residency, revocation, and audit behavior.",
       "mandatory": true,
       "verificationMethod": "Policy review, permission tests, and lifecycle tests",
       "requiredEvidence": [
-        "Approved data-governance decision",
-        "Data lifecycle test output",
-        "Deletion/export evidence",
-        "Audit log evidence"
+        "Approved India-first regional policy configuration",
+        "Organization onboarding policy-selection journey",
+        "Minor activation denial before consent configuration",
+        "Consent evidence and revocation tests",
+        "Retention execution tests",
+        "Deletion and export evidence",
+        "Audit history evidence"
       ],
       "humanPerspectives": [
         "Privacy-sensitive user",
@@ -538,6 +557,18 @@
     {
       "statement": "Each organization supplies its own phase-1 AI provider configuration.",
       "source": "DECISION-0003 — human answer to Q-012 on 2026-08-10."
+    },
+    {
+      "statement": "The platform has no universal retention default; every organization must choose an option permitted by its regional policy.",
+      "source": "DECISION-0004 — human answer to Q-013 on 2026-08-10."
+    },
+    {
+      "statement": "Minor-student consent is configurable by region and organization.",
+      "source": "DECISION-0004 — human answer to Q-014 on 2026-08-10."
+    },
+    {
+      "statement": "Phase-1 AI supports multiple organization-supplied providers through a plug-in adapter framework.",
+      "source": "DECISION-0004 — human answer to Q-015 on 2026-08-10."
     }
   ],
   "humanAcceptancePolicy": {

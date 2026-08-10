@@ -2,30 +2,29 @@
 
 ## Current state
 
-LoopForge discovery is awaiting the final guardrails needed to present the complete charter for approval.
+Discovery is complete. The complete charter is awaiting explicit human approval.
 
 ## Active objective
 
-Define platform retention limits, minor-student consent, and initial AI adapters.
+Review and approve or revise the generated charter.
 
 ## Verified progress
 
-- `Q-010`: authorized organizations manually mark students active.
-- `Q-011`: retention is organization-configurable within platform limits.
-- `Q-012`: each organization supplies its AI provider.
-- Billing snapshot immutability, tenant-scoped provider credentials, and configurable retention are reflected in the charter.
-- The pinned LoopForge bundle was reverified before this round.
+- All discovery questions are resolved or explicitly superseded.
+- Four human decision records preserve the authoritative product direction.
+- The charter defines 6 goals, 24 mandatory requirements, 12 constraints, 6 non-goals, and 11 success criteria.
+- Architecture, roadmap, implementation plan, initial task backlog, infrastructure plan, and completion evidence plan are committed.
+- LoopForge 1.0.0 and the pinned new-mode bundle were reverified.
+- No product code or cloud infrastructure has been created before approval.
 
 ## Blocker or uncertainty
 
-- `Q-013`: retention range and default
-- `Q-014`: minor-student consent authority
-- `Q-015`: initial supported AI adapters
+`BLOCKER-012`: mandatory charter approval.
 
 ## Next action
 
-Answer `Q-013` through `Q-015`; then complete blocker analysis and present the charter.
+Approve the charter as written or request specific revisions.
 
 ## Needs human
 
-Three final discovery guardrails remain.
+Explicit charter approval is required before hash-locking and implementation.

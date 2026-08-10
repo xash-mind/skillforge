@@ -2,20 +2,18 @@
   "schemaVersion": 1,
   "mode": "new",
   "status": "awaiting_human",
-  "phase": "AWAITING_HUMAN",
+  "phase": "AWAITING_CHARTER_APPROVAL",
   "iteration": 0,
   "activeTaskId": null,
   "activeChangeRequestId": null,
-  "lastVerifiedCommit": "9d813bf3575ee04d6e982ad01ee3da4ef597a15e",
-  "lastRunId": "RUN-0005",
+  "lastVerifiedCommit": "9a0621d3133830cb2703abc8f0182ea536d358eb",
+  "lastRunId": "RUN-0006",
   "repairAttemptsForRootCause": 0,
   "completionCandidate": false,
   "criticalBlockers": [
-    "BLOCKER-009",
-    "BLOCKER-010",
-    "BLOCKER-011"
+    "BLOCKER-012"
   ],
-  "nextAction": "Collect human answers for Q-013 through Q-015, complete blocker analysis, and prepare the final charter draft.",
+  "nextAction": "Human reviews the complete charter and explicitly approves it or requests revisions.",
   "needsHuman": true,
-  "updatedAt": "2026-08-10T14:51:50.500Z"
+  "updatedAt": "2026-08-10T15:03:03.159Z"
 }

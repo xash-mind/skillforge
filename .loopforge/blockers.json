@@ -68,24 +68,32 @@
     {
       "id": "BLOCKER-009",
       "severity": "critical",
-      "status": "open",
+      "status": "resolved",
       "summary": "The platform retention range and default are undefined (Q-013).",
-      "needsHuman": true,
-      "resolution": null
+      "needsHuman": false,
+      "resolution": "Resolved by Q-013: no universal default; each organization selects an allowed regional retention policy."
     },
     {
       "id": "BLOCKER-010",
       "severity": "critical",
-      "status": "open",
+      "status": "resolved",
       "summary": "The consent authority and activation rule for minor students are undefined (Q-014).",
-      "needsHuman": true,
-      "resolution": null
+      "needsHuman": false,
+      "resolution": "Resolved by Q-014: consent is configurable by region and organization, with activation gated on a recorded allowed method."
     },
     {
       "id": "BLOCKER-011",
       "severity": "high",
-      "status": "open",
+      "status": "resolved",
       "summary": "The MVP's initial organization-supplied AI adapter list is undefined (Q-015).",
+      "needsHuman": false,
+      "resolution": "Resolved by Q-015: multiple organization-supplied adapters through a plug-in framework."
+    },
+    {
+      "id": "BLOCKER-012",
+      "severity": "critical",
+      "status": "open",
+      "summary": "The complete generated charter requires explicit human approval before it can be hash-locked and implementation can begin.",
       "needsHuman": true,
       "resolution": null
     }
