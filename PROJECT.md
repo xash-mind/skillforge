@@ -1,6 +1,6 @@
 # SkillForge
 
-> LoopForge discovery draft. Product decisions in `.loopforge/decisions/DECISION-0001-product-directive.md` are human-locked; this generated charter is not yet protocol-approved or hash-locked.
+> LoopForge discovery draft. Product decisions in `.loopforge/decisions/` are human-provided and authoritative; this generated charter is not yet protocol-approved or hash-locked.
 
 ## Vision
 
@@ -17,12 +17,12 @@ SkillForge is a mobile-first, multi-tenant AI-powered Learning Operating System 
 
 ## Goals
 
-- `GOAL-001`: Center work on a guided class lifecycle rather than disconnected menus.
-- `GOAL-002`: Build an evolving Learning Graph from complete learning evidence.
-- `GOAL-003`: Let AI assist while teachers retain final academic authority.
-- `GOAL-004`: Support secure multi-tenant, multi-branch, multi-subject operations.
-- `GOAL-005`: Make the next action immediately clear on mobile and desktop.
-- `GOAL-006`: Support per-active-student commercial operation.
+- Run daily work through a guided class lifecycle.
+- Build an evolving Learning Graph from complete learning evidence.
+- Let AI assist while teachers retain final academic authority.
+- Support secure multi-tenant, multi-branch, multi-subject operations.
+- Make the next action clear on mobile and desktop.
+- Support a per-active-student commercial model.
 
 ## Required teacher workflow
 
@@ -34,13 +34,9 @@ Start Class → Mark Attendance → Upload Transcript → Upload Resources → A
 
 Authentication, organizations, branches, roles, students, teachers, parents, RBAC, tenant isolation, and audit logging.
 
-### Academic
+### Academic and teaching
 
-Syllabus library, custom syllabuses, subjects, classes, and timetable.
-
-### Teaching
-
-Attendance, lesson sessions, assignments, homework, evidence capture, and file uploads.
+Syllabuses, subjects, classes, timetables, attendance, lesson sessions, assignments, homework, evidence capture, and uploads.
 
 ### Learning engine
 
@@ -48,34 +44,22 @@ Transcript ingestion, student notes, evidence normalization, Learning Graph, pha
 
 ### Dashboards
 
-Organization, teacher, student, and parent experiences organized around role-specific workflows and next actions.
+Organization, teacher, student, and parent workflows with role-specific information and next actions.
+
+### Billing
+
+Reproducible active-student metering plus plan, usage, and invoice tracking. Live payment collection is outside the current MVP.
+
+## Governance and infrastructure
+
+- India-first student-data governance with configurable controls for later regions
+- One new Supabase project after charter approval, explicit organization selection, and cost confirmation
+- One canonical Vercel project at https://skillforge-bay-three.vercel.app
+- Versioned migrations, RLS, storage policies, authentication integration, and auditability
 
 ## Non-goals for phase 1
 
-- Traditional LMS-first course delivery
-- Automatic AI publication of academic decisions
-- Phase-2 content generation
-- Phase-3 personalized tutoring
-- Duplicate production projects
-
-## Constraints
-
-- Multi-tenant and branch isolation
-- Mobile-first and accessible
-- Teacher-controlled academic publication
-- Modular domain boundaries and extensible AI pipeline
-- Reproducible database, storage, jobs, and configuration
-- One canonical Vercel project at https://skillforge-bay-three.vercel.app
-- Human-approved student-data governance before production
-
-## Product principles
-
-- Workflows over menus
-- The next action is always obvious
-- Complete evidence over isolated grades
-- Trace every conclusion to its evidence
-- AI recommends; teachers decide
-- Design for real classroom use
+Traditional LMS-first delivery, automatic AI academic publication, phase-2 content generation, phase-3 tutoring, live payment collection, and duplicate production projects.
 
 ## Definition of complete
 

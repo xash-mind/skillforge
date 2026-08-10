@@ -1,0 +1,33 @@
+{
+  "id": "EVIDENCE-0002",
+  "runId": "RUN-0004",
+  "taskId": null,
+  "workingTreeCommit": "f308abba719f1c71891f77f336a21283de98184c",
+  "environment": "Connected Supabase account",
+  "procedure": "Listed organizations and existing projects after the human authorized creation of one new SkillForge project.",
+  "timestamp": "2026-08-10T14:38:41.616Z",
+  "result": "PASS",
+  "observations": {
+    "organizations": [
+      {
+        "id": "prwghjumnwiajyjgejee",
+        "slug": "prwghjumnwiajyjgejee",
+        "name": "xash-mind's Org"
+      }
+    ],
+    "existingProjects": [
+      {
+        "id": "vswwvjutkdgggcdlwqid",
+        "name": "xash-mind's Project",
+        "region": "ap-northeast-1",
+        "status": "ACTIVE_HEALTHY"
+      }
+    ],
+    "requestedAction": "Create one separate SkillForge project after all required gates."
+  },
+  "limitations": [
+    "No organization was selected for the new project because Supabase requires explicit human selection.",
+    "Project cost has not been fetched or confirmed.",
+    "No project was created because the LoopForge charter is not yet approved."
+  ]
+}

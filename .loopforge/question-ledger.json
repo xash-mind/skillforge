@@ -133,10 +133,10 @@
       "id": "Q-007",
       "question": "Which jurisdiction should govern the first release's student-data and consent controls?",
       "whyItMatters": "SkillForge handles minors, transcripts, attendance, and learning records; jurisdiction changes consent, retention, deletion, and data-residency requirements.",
-      "status": "unresolved",
-      "answer": null,
-      "source": null,
-      "followUpBlocker": "Student-data governance and consent requirements cannot be safely defined.",
+      "status": "resolved",
+      "answer": "India first, global-ready controls",
+      "source": "DECISION-0002 — explicit human response on 2026-08-10",
+      "followUpBlocker": null,
       "responseType": "single_select",
       "options": [
         "India-first operations",
@@ -150,10 +150,10 @@
       "id": "Q-008",
       "question": "How should database, authentication, and file storage be provisioned?",
       "whyItMatters": "The locked MVP requires persistent multi-tenant data, accounts, and uploads, so one reproducible backend must be selected without exposing secrets.",
-      "status": "unresolved",
-      "answer": null,
-      "source": null,
-      "followUpBlocker": "The managed backend and provisioning authority are undefined.",
+      "status": "resolved",
+      "answer": "Authorize one Supabase project to be created",
+      "source": "DECISION-0002 — explicit human response on 2026-08-10",
+      "followUpBlocker": null,
       "responseType": "single_select",
       "options": [
         "Connect an existing Supabase project",
@@ -167,10 +167,10 @@
       "id": "Q-009",
       "question": "What should billing include in the MVP?",
       "whyItMatters": "Per-active-student pricing is locked, but metering, invoicing, and payment collection require different data, integrations, and verification.",
-      "status": "unresolved",
-      "answer": null,
-      "source": null,
-      "followUpBlocker": "The billing boundary and need for a payment provider are undefined.",
+      "status": "resolved",
+      "answer": "Metering plus plan and invoice tracking",
+      "source": "DECISION-0002 — explicit human response on 2026-08-10",
+      "followUpBlocker": null,
       "responseType": "single_select",
       "options": [
         "Active-student metering only",
@@ -179,6 +179,57 @@
         "Defer billing UI"
       ],
       "freeTextPlaceholder": "Describe the billing boundary"
+    },
+    {
+      "id": "Q-010",
+      "question": "What should count as an active student for a monthly billing period?",
+      "whyItMatters": "The definition drives usage snapshots, invoice quantities, credits, and auditability.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "The billable active-student calculation is undefined.",
+      "responseType": "single_select",
+      "options": [
+        "Active enrollment on billing date",
+        "Any active enrollment during the month",
+        "Attendance or submitted work during the month",
+        "Organization marks students active manually"
+      ],
+      "freeTextPlaceholder": "Define another billing rule"
+    },
+    {
+      "id": "Q-011",
+      "question": "How long should learning evidence be retained after a student leaves?",
+      "whyItMatters": "The default affects privacy, storage cost, deletion workflows, legal policy, and institutional recovery.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "The default retention and deletion schedule is undefined.",
+      "responseType": "single_select",
+      "options": [
+        "1 year",
+        "3 years",
+        "7 years",
+        "Organization-configurable within platform limits"
+      ],
+      "freeTextPlaceholder": "Specify another retention period"
+    },
+    {
+      "id": "Q-012",
+      "question": "Which phase-1 AI strategy should the production design use?",
+      "whyItMatters": "The choice determines data-processing boundaries, credentials, provider contracts, observability, and failure behavior.",
+      "status": "unresolved",
+      "answer": null,
+      "source": null,
+      "followUpBlocker": "The production AI provider boundary is undefined.",
+      "responseType": "single_select",
+      "options": [
+        "OpenAI first behind a provider interface",
+        "Provider-neutral and choose later",
+        "Each organization supplies its provider",
+        "No live AI until a later milestone"
+      ],
+      "freeTextPlaceholder": "Name another AI strategy"
     }
   ]
 }

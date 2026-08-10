@@ -133,7 +133,7 @@
     },
     {
       "id": "REQ-016",
-      "statement": "Meter active students in a reproducible way for the locked per-active-student commercial model.",
+      "statement": "Meter active students reproducibly and provide authorized plan, usage, and invoice tracking without requiring live payment collection.",
       "mandatory": true
     },
     {
@@ -154,6 +154,16 @@
     {
       "id": "REQ-020",
       "statement": "Deploy one canonical production identity at https://skillforge-bay-three.vercel.app when the release gate passes.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-021",
+      "statement": "Support India-first student-data governance through versioned, configurable consent, retention, export, deletion, residency, and policy controls that can adapt to later regions.",
+      "mandatory": true
+    },
+    {
+      "id": "REQ-022",
+      "statement": "Use one Supabase backend with versioned Postgres migrations, RLS, storage policies, authentication integration, and tenant-aware server boundaries.",
       "mandatory": true
     }
   ],
@@ -181,6 +191,11 @@
     {
       "id": "NONGOAL-005",
       "statement": "The MVP will not create duplicate production projects or production aliases for testing.",
+      "mandatory": true
+    },
+    {
+      "id": "NONGOAL-006",
+      "statement": "Live subscription payment collection and payment-processor integration are outside the current MVP.",
       "mandatory": true
     }
   ],
@@ -217,7 +232,12 @@
     },
     {
       "id": "CONSTRAINT-007",
-      "statement": "Sensitive student and minor data requires explicit jurisdiction, consent, retention, export, and deletion controls before production acceptance.",
+      "statement": "Student-data controls must launch India first while keeping consent, retention, export, deletion, residency, and policy behavior configurable for later regions.",
+      "mandatory": true
+    },
+    {
+      "id": "CONSTRAINT-008",
+      "statement": "Use exactly one new Supabase project for the product after charter approval, organization selection, and explicit cost confirmation.",
       "mandatory": true
     }
   ],
@@ -369,13 +389,14 @@
     },
     {
       "id": "SUCCESS-008",
-      "statement": "Active-student usage is computed reproducibly and is visible to authorized organization users for the approved MVP billing boundary.",
+      "statement": "Active-student usage, plans, and invoices are computed reproducibly, remain auditable, and are visible only to authorized organization and platform users.",
       "mandatory": true,
       "verificationMethod": "Billing-domain unit and integration tests",
       "requiredEvidence": [
-        "Active-student calculation test output",
-        "Authorized billing-view journey",
-        "Audit evidence"
+        "Approved active-student definition",
+        "Usage snapshot and invoice calculation tests",
+        "Authorized plan and invoice browser journey",
+        "Adjustment and audit-history evidence"
       ],
       "humanPerspectives": [
         "Organization owner",
@@ -427,7 +448,7 @@
     },
     {
       "id": "SUCCESS-011",
-      "statement": "Student-data consent, retention, export, deletion, and audit controls satisfy the human-approved launch jurisdiction and policy.",
+      "statement": "Student-data consent, retention, export, deletion, residency, and audit controls implement the approved India-first policy through region-configurable mechanisms.",
       "mandatory": true,
       "verificationMethod": "Policy review, permission tests, and lifecycle tests",
       "requiredEvidence": [
@@ -475,6 +496,18 @@
     {
       "statement": "The required production URL is https://skillforge-bay-three.vercel.app.",
       "source": "DECISION-0001 — human directive on 2026-08-10."
+    },
+    {
+      "statement": "Student-data governance launches India first with global-ready configurable controls.",
+      "source": "DECISION-0002 — human answer to Q-007 on 2026-08-10."
+    },
+    {
+      "statement": "SkillForge is authorized to create exactly one new Supabase project after LoopForge and cost-confirmation gates.",
+      "source": "DECISION-0002 — human answer to Q-008 on 2026-08-10."
+    },
+    {
+      "statement": "MVP billing includes active-student metering plus plan and invoice tracking.",
+      "source": "DECISION-0002 — human answer to Q-009 on 2026-08-10."
     }
   ],
   "humanAcceptancePolicy": {

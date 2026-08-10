@@ -2,31 +2,31 @@
 
 ## Current state
 
-LoopForge discovery is awaiting decisions required for sensitive student data and production infrastructure.
+LoopForge discovery is awaiting the final product-policy definitions needed to complete the charter draft.
 
 ## Active objective
 
-Resolve launch jurisdiction, backend provisioning, and the MVP billing boundary.
+Define active-student billing, post-enrollment evidence retention, and the phase-1 AI provider boundary.
 
 ## Verified progress
 
-- The earlier skill-package concept has been superseded without rewriting prior run history.
-- The full SkillForge Learning Operating System directive is recorded as `DECISION-0001`.
-- The unlocked charter draft now covers the class lifecycle, Learning Graph, roles, dashboards, MVP, AI roadmap boundaries, architecture constraints, and measurable success criteria.
-- LoopForge 1.0.0 and the pinned new-mode bundle were reverified.
-- The connected Vercel team was inspected and currently has no projects.
-- The single future Vercel production identity is reserved in project state as `skillforge-bay-three`.
+- `Q-007`: India first with global-ready data controls.
+- `Q-008`: creation of one new Supabase project authorized after required gates.
+- `Q-009`: active-student metering plus plan and invoice tracking.
+- The connected Supabase account contains one organization and one existing unrelated project; no new project was created.
+- The charter and infrastructure plan now encode Supabase migrations, RLS, storage policy, and the non-payment billing boundary.
+- The pinned LoopForge bundle was reverified before this round.
 
 ## Blocker or uncertainty
 
-- `Q-007`: launch jurisdiction and student-data governance
-- `Q-008`: backend provider and provisioning authority
-- `Q-009`: MVP billing boundary
+- `Q-010`: active-student billing definition
+- `Q-011`: learning-evidence retention after departure
+- `Q-012`: phase-1 AI strategy
 
 ## Next action
 
-Answer `Q-007` through `Q-009`, then continue adaptive discovery.
+Answer `Q-010` through `Q-012`, then continue blocker analysis.
 
 ## Needs human
 
-Three material product/infrastructure decisions remain before the charter can be presented for approval.
+Three material policy decisions remain.

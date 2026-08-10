@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "id": "RUN-0004",
+  "mode": "new",
+  "iteration": 0,
+  "objective": "Record governance, Supabase authorization, and MVP billing decisions, then identify the remaining policy blockers.",
+  "taskId": null,
+  "changeRequestId": null,
+  "startingCommit": "f308abba719f1c71891f77f336a21283de98184c",
+  "endingCommit": "f308abba719f1c71891f77f336a21283de98184c",
+  "implementation": [
+    "Resolved Q-007 as India first with global-ready student-data controls.",
+    "Resolved Q-008 as authorization to create one new Supabase project after required gates.",
+    "Resolved Q-009 as active-student metering plus plan and invoice tracking.",
+    "Updated the charter, project rendering, infrastructure plan, and blocker ledger.",
+    "Inspected the connected Supabase organizations and existing projects without mutating Supabase.",
+    "Opened Q-010 through Q-012 for billing definition, retention, and AI strategy."
+  ],
+  "verification": [
+    {
+      "name": "Protocol integrity",
+      "result": "pass",
+      "evidence": [
+        "The pinned new-mode bundle SHA-256 matched cceb8ae670d8c622d11b7f42d9ea2bff6affb2078f703a719b0c3e245bfe9e52."
+      ]
+    },
+    {
+      "name": "Answer capture",
+      "result": "pass",
+      "evidence": [
+        "The human explicitly answered Q-007, Q-008, and Q-009 on 2026-08-10."
+      ]
+    },
+    {
+      "name": "Supabase discovery",
+      "result": "pass",
+      "evidence": [
+        "EVIDENCE-0002 records one connected organization and one existing project; no mutation occurred."
+      ]
+    },
+    {
+      "name": "Discovery completion",
+      "result": "inconclusive",
+      "evidence": [
+        "Q-010 through Q-012 remain unresolved."
+      ]
+    }
+  ],
+  "humanPerspectiveResults": [
+    {
+      "perspective": "Owner or client",
+      "result": "pass",
+      "evidence": [
+        "The human selected governance, backend provisioning, and billing boundaries."
+      ],
+      "proxy": false
+    },
+    {
+      "perspective": "Privacy-sensitive user",
+      "result": "inconclusive",
+      "evidence": [
+        "The post-enrollment retention schedule remains unresolved in Q-011."
+      ],
+      "proxy": true
+    },
+    {
+      "perspective": "Organization owner",
+      "result": "inconclusive",
+      "evidence": [
+        "The active-student billing calculation remains unresolved in Q-010."
+      ],
+      "proxy": true
+    },
+    {
+      "perspective": "Teacher, student, and parent",
+      "result": "inconclusive",
+      "evidence": [
+        "The AI data-processing strategy remains unresolved in Q-012."
+      ],
+      "proxy": true
+    }
+  ],
+  "decisions": [
+    "Design governance controls for India first and later regional configuration.",
+    "Plan exactly one new Supabase project, without creating it before charter, organization, and cost gates.",
+    "Include plans and invoices but exclude live payment collection from the MVP."
+  ],
+  "problems": [
+    "The active-student calculation is undefined.",
+    "The retention schedule after a student leaves is undefined.",
+    "The phase-1 AI provider boundary is undefined."
+  ],
+  "outcome": "blocked",
+  "nextAction": "Collect human answers to Q-010 through Q-012 and continue adaptive discovery.",
+  "startedAt": "2026-08-10T12:18:36.917Z",
+  "endedAt": "2026-08-10T14:38:41.616Z"
+}

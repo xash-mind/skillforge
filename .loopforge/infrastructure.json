@@ -12,10 +12,10 @@
   },
   "database": {
     "required": true,
-    "provider": null,
+    "provider": "Supabase",
     "projectRef": null,
-    "provisioning": "awaiting human choice Q-008",
-    "migrationsPath": null,
-    "previewIsolation": "local or shared development project; never one project per preview"
+    "provisioning": "authorized to create one project after charter approval, organization selection, and explicit cost confirmation",
+    "migrationsPath": "supabase/migrations",
+    "previewIsolation": "local Supabase for migrations and tests; one shared development project only if later approved; never one project per preview"
   }
 }
