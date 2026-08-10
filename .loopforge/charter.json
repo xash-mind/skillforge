@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "skillforge",
+    "repository": "xash-mind/skillforge",
+    "summary": null
+  },
+  "vision": null,
+  "primaryUsers": [],
+  "coreJourney": [],
+  "goals": [],
+  "requirements": [],
+  "nonGoals": [],
+  "constraints": [],
+  "productPrinciples": [],
+  "successCriteria": [],
+  "officialFacts": [],
+  "humanAcceptancePolicy": {
+    "finalApprovalRequired": false,
+    "subjectiveCriterionIds": []
+  }
+}

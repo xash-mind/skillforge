@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "deployment": {
+    "required": null,
+    "provider": null,
+    "projectName": null,
+    "canonicalProductionUrl": null,
+    "productionBranch": "main",
+    "productionApprovalRequired": true,
+    "previewPolicy": "one coherent branch or pull-request preview per meaningful iteration",
+    "duplicateProductionProjectsAllowed": false
+  },
+  "database": {
+    "required": null,
+    "provider": null,
+    "projectRef": null,
+    "provisioning": "undecided",
+    "migrationsPath": null,
+    "previewIsolation": "local or shared development project; never one project per preview"
+  }
+}

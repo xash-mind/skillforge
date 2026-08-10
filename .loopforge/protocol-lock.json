@@ -1,0 +1,9 @@
+{
+  "loopforgeVersion": "1.0.0",
+  "sourceRepository": "xash-mind/LoopForge",
+  "sourceRef": "main",
+  "sourceCommit": "4acadb5e75acd0ebd5bcbd1f1d522c710bd6722d",
+  "modeBundle": "dist/loopforge-new.bundle.md",
+  "bundleSha256": "cceb8ae670d8c622d11b7f42d9ea2bff6affb2078f703a719b0c3e245bfe9e52",
+  "lockedAt": "2026-08-10T11:42:28.393Z"
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "mode": "new",
+  "status": "active",
+  "phase": "DISCOVERING",
+  "iteration": 0,
+  "activeTaskId": null,
+  "activeChangeRequestId": null,
+  "lastVerifiedCommit": null,
+  "lastRunId": null,
+  "repairAttemptsForRootCause": 0,
+  "completionCandidate": false,
+  "criticalBlockers": [],
+  "nextAction": "Run adaptive discovery questionnaire",
+  "needsHuman": true,
+  "updatedAt": "2026-08-10T11:42:28.393Z"
+}
