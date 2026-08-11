@@ -92,8 +92,16 @@
     {
       "id": "BLOCKER-012",
       "severity": "critical",
-      "status": "open",
+      "status": "resolved",
       "summary": "The complete generated charter requires explicit human approval before it can be hash-locked and implementation can begin.",
+      "needsHuman": false,
+      "resolution": "The human explicitly approved the complete charter as written on 2026-08-11; the validated lock was merged in commit 8e5d5e6e25111b6557280f0c564689858ac5daac."
+    },
+    {
+      "id": "BLOCKER-013",
+      "severity": "critical",
+      "status": "open",
+      "summary": "Supabase provisioning requires explicit selection of the target organization and then exact cost confirmation before the one authorized SkillForge project can be created.",
       "needsHuman": true,
       "resolution": null
     }
