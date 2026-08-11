@@ -20,10 +20,13 @@ Select the Supabase organization, fetch the exact project cost, obtain explicit 
 - Supabase exposes one eligible organization: `xash-mind's Org` (`prwghjumnwiajyjgejee`), currently on the free plan.
 - The existing project `xash-mind's Project` is unrelated and has not been modified or selected.
 - No new Supabase project has been created.
+- GitHub's Vercel check reports an existing `skillforge` project (`prj_IWxn6mdD5LaB9hc4KtuMujtDoNQ8`) and preview, while the connected Vercel API currently returns no accessible projects. No additional Vercel project was created.
 
 ## Blocker or uncertainty
 
 `BLOCKER-013`: the human must explicitly select the Supabase organization. After selection, Supabase requires the exact current project cost to be fetched, repeated, and confirmed before creation.
+
+`BLOCKER-014`: the existing Vercel project identity/access discrepancy must be reconciled before any Vercel project creation, preventing accidental duplication.
 
 ## Next action
 
