@@ -2,34 +2,38 @@
 
 ## Current state
 
-The approved and hash-locked SkillForge charter is in implementation. TASK-001 is verified on commit `cfc36b43236cff80ceb189a6f97f673777fab74d`; TASK-002 is selected and ready.
+The approved and hash-locked SkillForge charter is in implementation. TASK-001 and TASK-002 are verified; TASK-003 is selected and ready.
 
 ## Verified progress
 
-- A production Next.js 16.3.0 App Router foundation is implemented.
-- Eleven domain boundaries form a framework-independent modular monolith.
-- Environment validation, strict TypeScript, ESLint architecture rules, Prettier, Vitest, and GitHub Actions are configured.
-- Loading, error, global-error, not-found, unauthorized, and forbidden experiences are present.
-- A source-only clean install and the full verification command passed.
-- 3 test files and 9 tests passed.
+- The production Next.js 16.3.0 modular foundation remains reproducible.
+- Live Supabase project `qvrqitirdxmckdqmysqu` contains trusted organization, branch, membership, role, and audit structures.
+- Every exposed identity and tenancy table has explicit grants, forced RLS, and purpose-specific policies.
+- Composite foreign keys reject cross-tenant branch and membership references.
+- Platform-owner grants and policy helpers remain outside the exposed schema.
+- Supabase SSR authentication verifies tokens and authorizes the workspace from trusted database rows.
+- The rollback-safe adversarial suite passed 7 named security assertions before and after live migration.
+- Supabase security advisor reports 0 findings; no missing foreign-key index findings remain.
+- A clean source-only install and full verification passed 8 test files and 27 tests plus the production build.
 - The production dependency audit reported 0 vulnerabilities at high severity or above.
-- GitHub quality run 31479682532 passed on the exact verified commit.
-- Supabase project `qvrqitirdxmckdqmysqu` remains `ACTIVE_HEALTHY` in `ap-south-1`; no schema or student data has yet been added.
+- GitHub quality run 31483479380 passed on exact implementation commit `3c64795f4a5dbee9fd3ceac65ba23d04567b60a8`.
 
 ## Active objective
 
-Implement Supabase organizations, branches, trusted profiles and memberships, role assignments, row-level security, authentication integration, and append-only audit events.
+Implement branch-scoped subjects, syllabuses, versioned objectives, classes, enrollments, and timetables with an organization-admin workflow.
 
 ## Blocker or uncertainty
 
-`BLOCKER-014` remains open for Vercel identity and access reconciliation. PR #16 preview deployments failed, but the existing project and its build logs are unavailable through the connected Vercel API. No duplicate project may be created.
+`BLOCKER-014` remains open for Vercel project identity and access reconciliation. PR #16 and PR #17 previews failed, but the existing project and logs are unavailable through the connected Vercel API. No duplicate project may be created.
 
-Browser screenshot and runtime accessibility evidence were unavailable in the sandbox. This remains pending for the production release task and does not replace the static accessibility proxy evidence recorded for TASK-001.
+`BLOCKER-015` records that checked-in Auth configuration disables public sign-up, while the available Supabase connection cannot inspect or push the hosted Auth setting. Untrusted Auth identities still receive no tenant membership or data access.
+
+Browser screenshot and runtime accessibility evidence remain pending for a later browser/release task.
 
 ## Next action
 
-Implement TASK-002, apply reproducible Supabase migrations to the single authorized project, and prove tenant and branch escape attempts fail.
+Implement TASK-003 and prove two-branch, multi-subject operation, objective traceability, timetable integrity, and rejection of cross-branch assignments and reads.
 
 ## Needs human
 
-No current human input is required for TASK-002.
+No current human input is required for TASK-003.
