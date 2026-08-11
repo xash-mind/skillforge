@@ -4,7 +4,7 @@
     {
       "id": "TASK-001",
       "title": "Establish production project architecture and reproducible application scaffold",
-      "status": "backlog",
+      "status": "ready",
       "priority": "critical",
       "supports": [
         "GOAL-004",
