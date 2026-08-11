@@ -5,7 +5,8 @@ It organizes work around the complete class lifecycle and turns lessons, notes, 
 attendance, and teacher observations into structured learning evidence. AI can recommend; teachers
 remain the final academic authority.
 
-This repository currently contains the reproducible production scaffold and domain boundary map.
+This repository contains the reproducible production scaffold, Supabase tenancy and authorization
+foundation, and cookie-based authentication boundary.
 
 ## Prerequisites
 
@@ -21,9 +22,12 @@ cp .env.example .env.local
 npm run dev
 ```
 
-The Supabase variables are optional for the foundation scaffold, but they must be supplied as a
-pair. Only the public URL and publishable key belong in `NEXT_PUBLIC_*` variables. Never expose a
-service-role key to the browser.
+The Supabase variables must be supplied as a pair for authentication routes. Only the public URL and
+publishable key belong in `NEXT_PUBLIC_*` variables. Never expose a service-role or secret key to
+the browser.
+
+The checked-in example points to the single authorized SkillForge project in `ap-south-1` and uses
+its browser-safe publishable key. Local `.env*` files remain ignored.
 
 ## Verification
 
@@ -58,9 +62,45 @@ implementations.
 See [ADR 0001](docs/adr/0001-modular-nextjs-foundation.md) for the decision, boundary map, and
 tradeoffs.
 
-Global loading, error, not-found, sign-in-required, and access-restricted experiences are scaffolded
-from the start. The last two are ordinary routes until authorization is implemented, avoiding an
-experimental runtime dependency in the production foundation.
+See [ADR 0002](docs/adr/0002-supabase-tenancy-and-authorization.md) for the trusted-membership,
+role, RLS, audit, and authentication design.
+
+Global loading, error, not-found, sign-in-required, and access-restricted experiences are present.
+Supabase's SSR client refreshes sessions in the Next.js proxy. Protected pages verify the token with
+`getClaims()` and rely on database membership rows under RLS for authorization.
+
+## Database workflow
+
+The committed Supabase directory contains local configuration, ordered migrations, and a rollback-
+safe adversarial SQL suite:
+
+```text
+supabase/
+├── config.toml
+├── migrations/
+│   ├── 20260811102512_tenancy_auth_rbac_audit.sql
+│   └── 20260811102701_tenancy_advisor_repairs.sql
+└── tests/001_tenancy_rbac_rls.sql
+```
+
+Create migration filenames with the pinned/current Supabase CLI, then review and apply SQL through a
+controlled migration workflow. Against a disposable or approved database, the adversarial suite can
+be executed with `psql -v ON_ERROR_STOP=1 -f supabase/tests/001_tenancy_rbac_rls.sql`; it opens a
+transaction and rolls back every fixture.
+
+The live project has both migrations recorded. Its security advisor is clean. Performance-advisor
+foreign-key findings are repaired; unused-index notices are expected while every product table is
+empty and should be re-evaluated after representative traffic exists.
+
+## Authentication trust model
+
+- Public self-registration and anonymous sign-in are disabled in checked-in configuration.
+- Accounts are created or invited by an authorized administrator.
+- User-editable metadata may supply a display name, but never a permission.
+- Organization and branch memberships plus role assignments are the authorization source of truth.
+- Platform-owner grants are private and require deliberate privileged bootstrap for an identified
+  Auth user; no account or credential is seeded.
+- Audit events are append-only, including for privileged database roles.
 
 ## Environment contract
 

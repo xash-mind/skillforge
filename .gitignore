@@ -31,3 +31,8 @@ next-env.d.ts
 
 # Vercel
 .vercel
+
+# Supabase local state (migrations and config remain committed)
+/supabase/.branches/
+/supabase/.temp/
+/.supabase/
