@@ -1,6 +1,6 @@
 # SkillForge Architecture
 
-Status: charter-review draft
+Status: approved implementation direction
 
 ## Shape
 
