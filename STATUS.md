@@ -2,32 +2,34 @@
 
 ## Current state
 
-The SkillForge charter is approved and hash-locked. The human selected the Supabase organization, and the exact project cost was fetched. Execution is awaiting the mandatory cost acknowledgement before project creation.
+The SkillForge charter is approved and locked. The single authorized Supabase project is active and healthy. LoopForge is ready to implement `TASK-001`.
 
 ## Active objective
 
-Confirm the Supabase quote and create exactly one SkillForge project in the selected organization.
+Establish the production project architecture and reproducible Next.js application scaffold.
 
 ## Verified progress
 
-- Human charter approval and immutable hashes remain valid.
-- LoopForge 1.0.0 and the pinned new-mode bundle remain unchanged and verified.
-- Selected Supabase organization: `xash-mind's Org` (`prwghjumnwiajyjgejee`), plan `free`.
-- Supabase quoted a new project at `$0 monthly` on 2026-08-11.
-- The existing unrelated Supabase project `vswwvjutkdgggcdlwqid` remains untouched.
-- No new Supabase project has been created.
-- GitHub reports an existing Vercel project named `skillforge`; duplicate Vercel creation remains prohibited until that identity is reconciled.
+- Protocol and charter integrity checks pass.
+- Supabase organization: `xash-mind's Org` (`prwghjumnwiajyjgejee`).
+- Supabase project: `skillforge` (`qvrqitirdxmckdqmysqu`).
+- Region: `ap-south-1`.
+- Status: `ACTIVE_HEALTHY`.
+- Confirmed project quote: `$0 monthly`.
+- API URL: `https://qvrqitirdxmckdqmysqu.supabase.co`.
+- The existing unrelated Supabase project remains untouched.
+- No schema migrations, privileged credentials, or student data have been added.
+- `TASK-001` is selected and ready.
+- GitHub reports an existing Vercel project named `skillforge`; duplicate creation remains prohibited until its access and canonical name are reconciled.
 
 ## Blocker or uncertainty
 
-`BLOCKER-013`: explicit acknowledgement of the fetched `$0 monthly` Supabase project cost is required.
-
-`BLOCKER-014`: the existing Vercel project identity/access discrepancy must be reconciled before Vercel provisioning.
+`BLOCKER-014` remains open for later Vercel identity reconciliation. It does not block the local application scaffold because `TASK-001` explicitly excludes cloud-resource creation and production deployment.
 
 ## Next action
 
-Confirm the `$0 monthly` Supabase quote. On confirmation, create exactly one project in `xash-mind's Org`.
+Create the TASK-001 tracking issue, implement the reproducible application foundation, and verify clean install, static checks, tests, and production build.
 
 ## Needs human
 
-Yes — Supabase requires explicit cost confirmation, including when the quoted amount is zero.
+No current human input is required for TASK-001.
