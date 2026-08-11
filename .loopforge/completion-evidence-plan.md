@@ -1,6 +1,6 @@
 # Completion Evidence Plan
 
-This plan is derived from the unlocked charter and becomes binding only after charter approval.
+This plan is binding under the approved, hash-locked charter.
 
 | Criterion | Primary verification | Required bound evidence |
 |---|---|---|
