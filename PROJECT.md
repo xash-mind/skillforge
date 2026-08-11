@@ -1,6 +1,6 @@
 # SkillForge
 
-> Complete LoopForge charter draft. Review the canonical machine-readable charter in `.loopforge/charter.json`. This document is not immutable until explicit human approval creates `.loopforge/charter.lock.json`.
+> Approved and hash-locked LoopForge charter. The canonical machine-readable truth is `.loopforge/charter.json`; its integrity is recorded in `.loopforge/charter.lock.json`.
 
 ## Source boundary
 
