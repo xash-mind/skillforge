@@ -1,6 +1,6 @@
 # SkillForge Roadmap
 
-Status: charter-review draft
+Status: approved implementation roadmap
 
 ## Milestone 0 — Charter and infrastructure gates
 
