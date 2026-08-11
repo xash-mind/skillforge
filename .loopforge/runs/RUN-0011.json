@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "id": "RUN-0011",
+  "mode": "new",
+  "iteration": 1,
+  "objective": "Establish and verify the reproducible production application foundation for SkillForge.",
+  "taskId": "TASK-001",
+  "changeRequestId": null,
+  "startingCommit": "474b780293740b2e0d48082da59978e2475046c4",
+  "endingCommit": "cfc36b43236cff80ceb189a6f97f673777fab74d",
+  "implementation": [
+    "Created a production Next.js App Router application with strict TypeScript, validated environment configuration, deterministic scripts, and a locked dependency graph.",
+    "Defined eleven framework-independent domain boundaries and enforced their independence from Next.js, React, UI, and provider implementations.",
+    "Added a mobile-first SkillForge product shell plus loading, error, global-error, not-found, unauthorized, and forbidden experiences.",
+    "Added unit and component tests, a clean-install verification workflow, GitHub Actions quality gate, architecture documentation, and a CI formatting-scope repair."
+  ],
+  "verification": [
+    {
+      "name": "Protocol and charter integrity",
+      "result": "pass",
+      "evidence": [
+        "Pinned LoopForge commit 4acadb5e75acd0ebd5bcbd1f1d522c710bd6722d and bundle SHA-256 cceb8ae670d8c622d11b7f42d9ea2bff6affb2078f703a719b0c3e245bfe9e52 remained unchanged.",
+        "Charter hash d8882e0bb6773d14f2dbf64ad57ae2652ce5f6ff1841b295b0b0bd4d02a46dca and PROJECT.md hash 1db57ff803922b02262e88809190cdb17bff0fc0649de1a9f32d8c7232f698b9 matched their approved locks."
+      ]
+    },
+    {
+      "name": "Clean-clone install",
+      "result": "pass",
+      "evidence": [
+        "A source-only clean directory installed 451 packages with npm ci from package-lock.json.",
+        "The clean and working lockfiles both hashed to 6d6fb6994928938f6d2b2abaeb57879014a3aa8780c8068eaa51607aa44337e9."
+      ]
+    },
+    {
+      "name": "Static analysis",
+      "result": "pass",
+      "evidence": [
+        "Prettier, ESLint with zero warnings, Next route type generation, and strict TypeScript all passed locally and in GitHub Actions."
+      ]
+    },
+    {
+      "name": "Unit and component tests",
+      "result": "pass",
+      "evidence": [
+        "Vitest passed 3 files and 9 tests, including environment validation, architecture boundaries, and product-shell behavior."
+      ]
+    },
+    {
+      "name": "Production build",
+      "result": "pass",
+      "evidence": [
+        "Next.js 16.3.0 production build completed successfully in both the working tree and clean source-only directory."
+      ]
+    },
+    {
+      "name": "GitHub CI",
+      "result": "pass",
+      "evidence": [
+        "Quality gate run 31479682532 completed successfully for commit cfc36b43236cff80ceb189a6f97f673777fab74d."
+      ]
+    },
+    {
+      "name": "Dependency audit",
+      "result": "pass",
+      "evidence": [
+        "npm audit --omit=dev --audit-level=high reported 0 vulnerabilities."
+      ]
+    },
+    {
+      "name": "HTTP smoke",
+      "result": "pass",
+      "evidence": [
+        "The home, forbidden, and unauthorized routes returned HTTP 200; an unknown route returned HTTP 404; expected homepage content was present; no application server errors were observed."
+      ]
+    }
+  ],
+  "humanPerspectiveResults": [
+    {
+      "perspective": "Primary user",
+      "result": "pass",
+      "evidence": [
+        "The shell presents the teacher-controlled class lifecycle as the central product workflow."
+      ],
+      "proxy": true
+    },
+    {
+      "perspective": "First-time user",
+      "result": "pass",
+      "evidence": [
+        "The first screen explains what SkillForge is, what evidence it uses, and the next class-lifecycle steps without requiring menu discovery."
+      ],
+      "proxy": true
+    },
+    {
+      "perspective": "Owner or client",
+      "result": "pass",
+      "evidence": [
+        "The implementation preserves the locked Learning Operating System identity, multi-role scope, and teacher-authority principle."
+      ],
+      "proxy": true
+    },
+    {
+      "perspective": "Maintainer",
+      "result": "pass",
+      "evidence": [
+        "Reproducible scripts, CI, an ADR, strict boundaries, exact dependencies, and a clean-install proof are present."
+      ],
+      "proxy": true
+    },
+    {
+      "perspective": "Failure-state user",
+      "result": "pass",
+      "evidence": [
+        "Loading, recoverable error, global error, not-found, sign-in-required, and access-restricted experiences are implemented."
+      ],
+      "proxy": true
+    },
+    {
+      "perspective": "Accessibility user",
+      "result": "pass",
+      "evidence": [
+        "Static proxy review verified landmarks, labeled sections, focus-visible treatment, reduced-motion support, semantic links and buttons, and ordinary navigable auth fallback routes."
+      ],
+      "proxy": true
+    }
+  ],
+  "decisions": [
+    "Use one Next.js App Router deployable organized as a modular monolith.",
+    "Keep domain entry points independent from frameworks, UI, and provider implementations, with both lint and test enforcement.",
+    "Use ordinary unauthorized and forbidden routes until authentication is implemented instead of depending on experimental authorization interrupts.",
+    "Treat LoopForge protocol records and generated charter documents as outside Prettier ownership while continuing to format application documentation."
+  ],
+  "problems": [
+    "BLOCKER-014 remains open: Vercel preview deployments for PR #16 failed, but the connected Vercel API and unauthenticated browser cannot access the existing project or its logs.",
+    "A browser screenshot and runtime accessibility audit could not be captured in the sandbox; visual production verification remains pending under SUCCESS-009 and TASK-009."
+  ],
+  "outcome": "verified",
+  "nextAction": "Implement TASK-002 on a focused branch and verify the Supabase tenancy and authorization foundation.",
+  "startedAt": "2026-08-11T09:16:15.410Z",
+  "endedAt": "2026-08-11T10:05:35.829Z"
+}
