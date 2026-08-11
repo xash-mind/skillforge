@@ -1,6 +1,6 @@
 # SkillForge Implementation Plan
 
-Status: charter-review draft
+Status: approved implementation plan
 
 ## Ordering
 
