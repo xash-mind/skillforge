@@ -101,7 +101,7 @@
       "id": "BLOCKER-013",
       "severity": "critical",
       "status": "open",
-      "summary": "Supabase provisioning requires explicit selection of the target organization and then exact cost confirmation before the one authorized SkillForge project can be created.",
+      "summary": "The human selected xash-mind's Org and Supabase quoted $0 monthly; explicit cost confirmation remains required before the one authorized SkillForge project can be created.",
       "needsHuman": true,
       "resolution": null
     },
