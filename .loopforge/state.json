@@ -3,15 +3,15 @@
   "mode": "new",
   "status": "active",
   "phase": "READY",
-  "iteration": 1,
-  "activeTaskId": "TASK-002",
+  "iteration": 2,
+  "activeTaskId": "TASK-003",
   "activeChangeRequestId": null,
-  "lastVerifiedCommit": "cfc36b43236cff80ceb189a6f97f673777fab74d",
-  "lastRunId": "RUN-0011",
+  "lastVerifiedCommit": "3c64795f4a5dbee9fd3ceac65ba23d04567b60a8",
+  "lastRunId": "RUN-0012",
   "repairAttemptsForRootCause": 0,
   "completionCandidate": false,
   "criticalBlockers": [],
-  "nextAction": "Implement TASK-002: Supabase tenancy, authentication, RBAC, row-level security, and append-only audit controls, then verify tenant and branch escape attempts fail.",
+  "nextAction": "Implement TASK-003: academic structure, enrollment, timetables, branch-scoped authorization, and organization-admin workflows, then prove cross-branch assignments and reads fail.",
   "needsHuman": false,
-  "updatedAt": "2026-08-11T10:05:35.829Z"
+  "updatedAt": "2026-08-11T10:46:32.161Z"
 }

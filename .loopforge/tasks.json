@@ -74,7 +74,7 @@
     {
       "id": "TASK-002",
       "title": "Implement Supabase tenancy, authentication, RBAC, and audit foundation",
-      "status": "ready",
+      "status": "completed",
       "priority": "critical",
       "supports": [
         "GOAL-004",
@@ -158,7 +158,7 @@
     {
       "id": "TASK-003",
       "title": "Implement academic structure and enrollment domains",
-      "status": "backlog",
+      "status": "ready",
       "priority": "high",
       "supports": [
         "GOAL-004",

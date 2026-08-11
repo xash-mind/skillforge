@@ -1,5 +1,6 @@
 import { BrandMark } from "@/components/brand-mark";
 import { moduleCatalog } from "@/modules/catalog";
+import Link from "next/link";
 
 const classLifecycle = [
   { step: "01", label: "Start class", detail: "Open today’s guided session" },
@@ -26,7 +27,9 @@ export default function Home() {
     <main>
       <header className="site-header">
         <BrandMark />
-        <span className="site-header__badge">Foundation preview</span>
+        <Link className="site-header__badge" href="/auth/sign-in">
+          Sign in
+        </Link>
       </header>
 
       <section className="hero" aria-labelledby="hero-title">

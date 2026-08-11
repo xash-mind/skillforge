@@ -109,7 +109,15 @@
       "id": "BLOCKER-014",
       "severity": "high",
       "status": "open",
-      "summary": "GitHub's Vercel integration reports an existing project named skillforge (prj_IWxn6mdD5LaB9hc4KtuMujtDoNQ8), but the connected Vercel API cannot list or access it. PR #16 preview deployments failed and their build logs require project access; reconcile and align this project with the locked skillforge-bay-three identity before release, and do not create a duplicate.",
+      "summary": "GitHub's Vercel integration reports an existing project named skillforge (prj_IWxn6mdD5LaB9hc4KtuMujtDoNQ8), but the connected Vercel API cannot list or access it. PR #16 and PR #17 preview deployments failed and their build logs require project access; reconcile and align this project with the locked skillforge-bay-three identity before release, and do not create a duplicate.",
+      "needsHuman": false,
+      "resolution": null
+    },
+    {
+      "id": "BLOCKER-015",
+      "severity": "high",
+      "status": "open",
+      "summary": "The repository disables public sign-up and anonymous sign-in in supabase/config.toml, but the available Supabase connection cannot inspect or update hosted Auth settings. Reconcile the hosted Auth configuration before production release; untrusted Auth identities currently receive no tenant membership or data access.",
       "needsHuman": false,
       "resolution": null
     }
