@@ -37,3 +37,56 @@ jobs:
 
       - name: Run deterministic quality gate
         run: npm run verify
+
+      - name: Run academic admin browser smoke
+        env:
+          SKILLFORGE_BROWSER_SMOKE: "1"
+        run: |
+          npm start -- --hostname 127.0.0.1 --port 3000 > /tmp/skillforge-next.log 2>&1 &
+          APP_PID=$!
+          trap 'kill "$APP_PID" 2>/dev/null || true' EXIT
+
+          READY=0
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:3000/__browser__/academic > /dev/null; then
+              READY=1
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$READY" -ne 1 ]; then
+            cat /tmp/skillforge-next.log
+            exit 1
+          fi
+
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || true)"
+          if [ -z "$CHROME" ]; then
+            echo "Chrome is unavailable on this runner."
+            exit 1
+          fi
+
+          "$CHROME" --headless=new --no-sandbox --disable-gpu \
+            --dump-dom http://127.0.0.1:3000/__browser__/academic \
+            > /tmp/academic-admin.html
+          grep -q 'data-browser-smoke="academic-admin"' /tmp/academic-admin.html
+          grep -q 'Publish syllabus' /tmp/academic-admin.html
+          grep -q 'Create class and timetable' /tmp/academic-admin.html
+          grep -q 'Main Campus' /tmp/academic-admin.html
+          grep -q 'West Campus' /tmp/academic-admin.html
+
+          "$CHROME" --headless=new --no-sandbox --disable-gpu \
+            --window-size=390,844 \
+            --screenshot=/tmp/academic-admin-mobile.png \
+            http://127.0.0.1:3000/__browser__/academic
+          test -s /tmp/academic-admin-mobile.png
+
+      - name: Upload academic browser evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: academic-admin-browser-evidence
+          path: |
+            /tmp/academic-admin.html
+            /tmp/academic-admin-mobile.png
+          if-no-files-found: error
+          retention-days: 14
