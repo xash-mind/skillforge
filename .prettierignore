@@ -1,0 +1,13 @@
+.next
+coverage
+node_modules
+package-lock.json
+
+# LoopForge owns these protocol records and generated charter documents.
+.loopforge
+AGENTS.md
+IMPLEMENTATION_PLAN.md
+PROJECT.md
+ROADMAP.md
+STATUS.md
+docs/*.md

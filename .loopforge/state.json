@@ -3,15 +3,15 @@
   "mode": "new",
   "status": "active",
   "phase": "READY",
-  "iteration": 0,
-  "activeTaskId": "TASK-001",
+  "iteration": 1,
+  "activeTaskId": "TASK-002",
   "activeChangeRequestId": null,
-  "lastVerifiedCommit": "dc72f4a3cd39c0d33f805037daa62b95005ac7cd",
-  "lastRunId": "RUN-0010",
+  "lastVerifiedCommit": "cfc36b43236cff80ceb189a6f97f673777fab74d",
+  "lastRunId": "RUN-0011",
   "repairAttemptsForRootCause": 0,
   "completionCandidate": false,
   "criticalBlockers": [],
-  "nextAction": "Create the TASK-001 tracking issue, then implement and verify the reproducible Next.js application scaffold without creating additional cloud resources.",
+  "nextAction": "Implement TASK-002: Supabase tenancy, authentication, RBAC, row-level security, and append-only audit controls, then verify tenant and branch escape attempts fail.",
   "needsHuman": false,
-  "updatedAt": "2026-08-11T09:16:15.410Z"
+  "updatedAt": "2026-08-11T10:05:35.829Z"
 }

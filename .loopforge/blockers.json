@@ -109,7 +109,7 @@
       "id": "BLOCKER-014",
       "severity": "high",
       "status": "open",
-      "summary": "GitHub's Vercel integration reports an existing project named skillforge (prj_IWxn6mdD5LaB9hc4KtuMujtDoNQ8), but the connected Vercel API cannot list or access it; the project must be reconciled and renamed or otherwise aligned with the locked skillforge-bay-three identity before creating any Vercel project.",
+      "summary": "GitHub's Vercel integration reports an existing project named skillforge (prj_IWxn6mdD5LaB9hc4KtuMujtDoNQ8), but the connected Vercel API cannot list or access it. PR #16 preview deployments failed and their build logs require project access; reconcile and align this project with the locked skillforge-bay-three identity before release, and do not create a duplicate.",
       "needsHuman": false,
       "resolution": null
     }

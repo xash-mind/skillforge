@@ -4,7 +4,7 @@
     {
       "id": "TASK-001",
       "title": "Establish production project architecture and reproducible application scaffold",
-      "status": "ready",
+      "status": "completed",
       "priority": "critical",
       "supports": [
         "GOAL-004",
@@ -74,7 +74,7 @@
     {
       "id": "TASK-002",
       "title": "Implement Supabase tenancy, authentication, RBAC, and audit foundation",
-      "status": "backlog",
+      "status": "ready",
       "priority": "critical",
       "supports": [
         "GOAL-004",
