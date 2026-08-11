@@ -2,29 +2,33 @@
 
 ## Current state
 
-Discovery is complete. The complete charter is awaiting explicit human approval.
+The complete SkillForge charter is approved, schema-validated, and hash-locked. LoopForge reached the required Supabase organization-selection gate before provisioning infrastructure.
 
 ## Active objective
 
-Review and approve or revise the generated charter.
+Select the Supabase organization, fetch the exact project cost, obtain explicit cost confirmation, and create exactly one project.
 
 ## Verified progress
 
-- All discovery questions are resolved or explicitly superseded.
-- Four human decision records preserve the authoritative product direction.
-- The charter defines 6 goals, 24 mandatory requirements, 12 constraints, 6 non-goals, and 11 success criteria.
-- Architecture, roadmap, implementation plan, initial task backlog, infrastructure plan, and completion evidence plan are committed.
-- LoopForge 1.0.0 and the pinned new-mode bundle were reverified.
-- No product code or cloud infrastructure has been created before approval.
+- Human charter approval was recorded in `DECISION-0005`.
+- The charter contains 6 goals, 24 mandatory requirements, 12 constraints, 6 non-goals, and 11 success criteria.
+- Charter schema validation passed.
+- Charter SHA-256: `d8882e0bb6773d14f2dbf64ad57ae2652ce5f6ff1841b295b0b0bd4d02a46dca`.
+- PROJECT.md SHA-256: `1db57ff803922b02262e88809190cdb17bff0fc0649de1a9f32d8c7232f698b9`.
+- The lock and approved planning package were merged in `8e5d5e6e25111b6557280f0c564689858ac5daac`.
+- The pinned LoopForge 1.0.0 new-mode bundle still matches its recorded SHA-256.
+- Supabase exposes one eligible organization: `xash-mind's Org` (`prwghjumnwiajyjgejee`), currently on the free plan.
+- The existing project `xash-mind's Project` is unrelated and has not been modified or selected.
+- No new Supabase project has been created.
 
 ## Blocker or uncertainty
 
-`BLOCKER-012`: mandatory charter approval.
+`BLOCKER-013`: the human must explicitly select the Supabase organization. After selection, Supabase requires the exact current project cost to be fetched, repeated, and confirmed before creation.
 
 ## Next action
 
-Approve the charter as written or request specific revisions.
+Select `xash-mind's Org` for the new SkillForge project or defer provisioning.
 
 ## Needs human
 
-Explicit charter approval is required before hash-locking and implementation.
+Yes — account ownership and cost confirmation are mandatory human gates.

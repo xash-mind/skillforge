@@ -2,18 +2,18 @@
   "schemaVersion": 1,
   "mode": "new",
   "status": "awaiting_human",
-  "phase": "AWAITING_CHARTER_APPROVAL",
+  "phase": "AWAITING_HUMAN",
   "iteration": 0,
   "activeTaskId": null,
   "activeChangeRequestId": null,
-  "lastVerifiedCommit": "9a0621d3133830cb2703abc8f0182ea536d358eb",
-  "lastRunId": "RUN-0006",
+  "lastVerifiedCommit": "8e5d5e6e25111b6557280f0c564689858ac5daac",
+  "lastRunId": "RUN-0007",
   "repairAttemptsForRootCause": 0,
   "completionCandidate": false,
   "criticalBlockers": [
-    "BLOCKER-012"
+    "BLOCKER-013"
   ],
-  "nextAction": "Human reviews the complete charter and explicitly approves it or requests revisions.",
+  "nextAction": "Human selects the Supabase organization; LoopForge then fetches and presents the exact project cost for explicit confirmation before creating one SkillForge project.",
   "needsHuman": true,
-  "updatedAt": "2026-08-10T15:03:03.159Z"
+  "updatedAt": "2026-08-11T06:55:53.878Z"
 }
