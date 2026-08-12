@@ -5,22 +5,62 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   export:
     runs-on: ubuntu-24.04
     steps:
-      - name: Check out source
+      - name: Check out recovery branch
         uses: actions/checkout@v6
-
-      - name: Archive exact source
-        run: git archive --format=tar.gz --output=/tmp/skillforge-source.tgz HEAD
-
-      - name: Upload exact source
-        uses: actions/upload-artifact@v4
         with:
-          name: agent-source
-          path: /tmp/skillforge-source.tgz
-          if-no-files-found: error
-          retention-days: 1
+          ref: ${{ github.head_ref }}
+
+      - name: Use pinned Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Commit exact TASK-003 formatting repair
+        run: |
+          npx prettier --write \
+            docs/adr/0003-academic-lineage-and-branch-scoping.md \
+            src/app/__browser__/academic/layout.tsx \
+            src/app/__browser__/academic/page.tsx \
+            'src/app/workspace/[organizationSlug]/academic/academic.css' \
+            'src/app/workspace/[organizationSlug]/academic/actions.ts' \
+            'src/app/workspace/[organizationSlug]/academic/page.tsx' \
+            src/app/workspace/page.tsx \
+            src/modules/academic/domain/academic-access.ts \
+            src/types/database.ts
+          if git diff --quiet -- \
+            docs/adr/0003-academic-lineage-and-branch-scoping.md \
+            src/app/__browser__/academic/layout.tsx \
+            src/app/__browser__/academic/page.tsx \
+            'src/app/workspace/[organizationSlug]/academic/academic.css' \
+            'src/app/workspace/[organizationSlug]/academic/actions.ts' \
+            'src/app/workspace/[organizationSlug]/academic/page.tsx' \
+            src/app/workspace/page.tsx \
+            src/modules/academic/domain/academic-access.ts \
+            src/types/database.ts; then
+            echo 'No formatting changes required.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            docs/adr/0003-academic-lineage-and-branch-scoping.md \
+            src/app/__browser__/academic/layout.tsx \
+            src/app/__browser__/academic/page.tsx \
+            'src/app/workspace/[organizationSlug]/academic/academic.css' \
+            'src/app/workspace/[organizationSlug]/academic/actions.ts' \
+            'src/app/workspace/[organizationSlug]/academic/page.tsx' \
+            src/app/workspace/page.tsx \
+            src/modules/academic/domain/academic-access.ts \
+            src/types/database.ts
+          git commit -m 'style: format TASK-003 implementation'
+          git push origin HEAD:${{ github.head_ref }}
