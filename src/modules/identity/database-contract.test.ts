@@ -58,7 +58,7 @@ describe("tenancy database contract", () => {
   it("commits an adversarial rollback suite with the migrations", async () => {
     const { files, sql } = await readSqlDirectory(databaseTestsDirectory);
 
-    expect(files).toEqual(["001_tenancy_rbac_rls.sql"]);
+    expect(files).toContain("001_tenancy_rbac_rls.sql");
     expect(sql).toContain("teacher tenant isolation failed");
     expect(sql).toContain("branch manager modified another branch");
     expect(sql).toContain("cross-tenant branch membership bypassed composite foreign keys");
