@@ -35,37 +35,6 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
-      - name: Generate exact TASK-003 formatting repair
-        run: |
-          npx prettier --write \
-            docs/adr/0003-academic-lineage-and-branch-scoping.md \
-            src/app/__browser__/academic/layout.tsx \
-            src/app/__browser__/academic/page.tsx \
-            'src/app/workspace/[organizationSlug]/academic/academic.css' \
-            'src/app/workspace/[organizationSlug]/academic/actions.ts' \
-            'src/app/workspace/[organizationSlug]/academic/page.tsx' \
-            src/app/workspace/page.tsx \
-            src/modules/academic/domain/academic-access.ts \
-            src/types/database.ts
-          tar -czf /tmp/task003-formatted.tgz \
-            docs/adr/0003-academic-lineage-and-branch-scoping.md \
-            src/app/__browser__/academic/layout.tsx \
-            src/app/__browser__/academic/page.tsx \
-            'src/app/workspace/[organizationSlug]/academic/academic.css' \
-            'src/app/workspace/[organizationSlug]/academic/actions.ts' \
-            'src/app/workspace/[organizationSlug]/academic/page.tsx' \
-            src/app/workspace/page.tsx \
-            src/modules/academic/domain/academic-access.ts \
-            src/types/database.ts
-
-      - name: Upload exact TASK-003 formatting repair
-        uses: actions/upload-artifact@v4
-        with:
-          name: task003-formatted
-          path: /tmp/task003-formatted.tgz
-          if-no-files-found: error
-          retention-days: 1
-
       - name: Run deterministic quality gate
         run: npm run verify
 
