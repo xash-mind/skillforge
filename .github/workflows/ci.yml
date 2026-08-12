@@ -26,6 +26,17 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v6
 
+      - name: Archive exact recovery source
+        run: git archive --format=tar.gz --output=/tmp/skillforge-source.tgz HEAD
+
+      - name: Upload exact recovery source
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-source
+          path: /tmp/skillforge-source.tgz
+          if-no-files-found: error
+          retention-days: 1
+
       - name: Use pinned Node.js
         uses: actions/setup-node@v6
         with:
