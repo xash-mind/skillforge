@@ -23,10 +23,7 @@ jobs:
       - name: Materialize remaining TASK-004 artifacts
         run: |
           xz -dc .tmp/task004-remaining.tar.xz | tar -xf -
-          npx prettier --write \
-            src/types/database.ts \
-            supabase/migrations/20260812065000_teacher_class_lifecycle.sql \
-            supabase/tests/003_teacher_class_lifecycle_rls.sql
+          npx prettier --write src/types/database.ts
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add src/types/database.ts \
