@@ -43,8 +43,6 @@ for (let attempt = 0; attempt < 40; attempt += 1) {
   if (result.result.value === "complete") break;
   await new Promise((resolve) => setTimeout(resolve, 100));
 }
-await send("Runtime.evaluate", { expression: "document.body.focus()" });
-
 const expected = [
   "title",
   "start",
@@ -57,9 +55,26 @@ const expected = [
   "publish",
 ];
 const observed = [];
-for (const expectedKey of expected) {
+
+const firstFocus = await send("Runtime.evaluate", {
+  expression: `(() => {
+    const first = document.querySelector('[data-keyboard-order="title"]');
+    if (!(first instanceof HTMLElement)) return '';
+    first.focus();
+    return document.activeElement?.dataset?.keyboardOrder ?? '';
+  })()`,
+  returnByValue: true,
+});
+observed.push(firstFocus.result.value);
+if (firstFocus.result.value !== expected[0]) {
+  throw new Error(
+    `Could not establish keyboard start control: ${firstFocus.result.value || "<none>"}`,
+  );
+}
+
+for (const expectedKey of expected.slice(1)) {
   await send("Input.dispatchKeyEvent", {
-    type: "keyDown",
+    type: "rawKeyDown",
     key: "Tab",
     code: "Tab",
     windowsVirtualKeyCode: 9,

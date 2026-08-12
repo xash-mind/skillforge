@@ -101,6 +101,22 @@ where class_row.code = 'LIFE-MATH-A';
 
 select set_config('request.jwt.claim.sub', '30000000-0000-0000-0000-000000000003', true);
 
+do $$
+begin
+  begin
+    insert into public.lesson_sessions (
+      organization_id, branch_id, class_id, state, published_at, created_by
+    )
+    select class_row.organization_id, class_row.branch_id, class_row.id, 'published',
+           statement_timestamp(), '30000000-0000-0000-0000-000000000003'
+    from public.classes class_row
+    where class_row.code = 'LIFE-MATH-A';
+    raise exception 'teacher inserted a pre-published lesson session';
+  exception when check_violation then null;
+  end;
+end;
+$$;
+
 select public.start_lesson_session(
   (select id from public.classes where code = 'LIFE-MATH-A'),
   'Lifecycle verification class'
@@ -177,35 +193,86 @@ begin
     raise exception 'west teacher inserted main upload metadata';
   exception when insufficient_privilege then null;
   end;
+
+  begin
+    insert into storage.objects (bucket_id, name, owner_id) values (
+      'classroom-evidence',
+      current_setting('app.lifecycle.organization_id') || '/' ||
+        current_setting('app.lifecycle.branch_id') || '/' ||
+        current_setting('app.lifecycle.class_id') || '/' ||
+        current_setting('app.lifecycle.session_id') || '/forged-west.txt',
+      '30000000-0000-0000-0000-000000000004'
+    );
+    raise exception 'west teacher wrote into main classroom storage';
+  exception when insufficient_privilege then null;
+  end;
 end;
 $$;
 
 select set_config('request.jwt.claim.sub', '30000000-0000-0000-0000-000000000003', true);
 
+do $$
+begin
+  begin
+    insert into public.lesson_uploads (
+      organization_id, branch_id, class_id, lesson_session_id, kind, storage_path,
+      original_name, mime_type, size_bytes, status, uploaded_at, created_by
+    )
+    select session.organization_id, session.branch_id, session.class_id, session.id,
+           'transcript',
+           session.organization_id || '/' || session.branch_id || '/' || session.class_id || '/' || session.id || '/forged.txt',
+           'forged.txt', 'text/plain', 10, 'uploaded', statement_timestamp(),
+           '30000000-0000-0000-0000-000000000003'
+    from public.lesson_sessions session;
+    raise exception 'teacher forged uploaded metadata without a storage object';
+  exception when check_violation then null;
+  end;
+end;
+$$;
+
 insert into public.lesson_uploads (
   organization_id, branch_id, class_id, lesson_session_id, kind, storage_path,
-  original_name, mime_type, size_bytes, status, uploaded_at, created_by
+  original_name, mime_type, size_bytes, status, created_by
 )
 select session.organization_id, session.branch_id, session.class_id, session.id, fixture.kind,
        session.organization_id || '/' || session.branch_id || '/' || session.class_id || '/' || session.id || '/' || fixture.filename,
-       fixture.filename, fixture.mime_type, 100, 'uploaded', statement_timestamp(),
+       fixture.filename, fixture.mime_type, 100, 'pending',
        '30000000-0000-0000-0000-000000000003'
 from public.lesson_sessions session
 cross join (values ('transcript', 'transcript.txt', 'text/plain'), ('resource', 'notes.pdf', 'application/pdf')) as fixture(kind, filename, mime_type);
 
+insert into storage.objects (bucket_id, name, owner_id)
+select 'classroom-evidence', upload.storage_path, '30000000-0000-0000-0000-000000000003'
+from public.lesson_uploads upload
+where upload.original_name in ('transcript.txt', 'notes.pdf');
+
+update public.lesson_uploads
+set status = 'uploaded', uploaded_at = statement_timestamp()
+where original_name in ('transcript.txt', 'notes.pdf');
+
 insert into public.lesson_uploads (
   organization_id, branch_id, class_id, lesson_session_id, kind, storage_path,
-  original_name, mime_type, size_bytes, status, failure_message, retry_count, created_by
+  original_name, mime_type, size_bytes, status, created_by
 )
 select session.organization_id, session.branch_id, session.class_id, session.id, 'resource',
        session.organization_id || '/' || session.branch_id || '/' || session.class_id || '/' || session.id || '/retry.pdf',
-       'retry.pdf', 'application/pdf', 100, 'failed', 'Upload failed. Choose the file again and retry.', 0,
+       'retry.pdf', 'application/pdf', 100, 'pending',
        '30000000-0000-0000-0000-000000000003'
 from public.lesson_sessions session;
 
 update public.lesson_uploads
-set status = 'pending', failure_message = null, retry_count = retry_count + 1
+set status = 'failed', failure_message = 'Upload failed. Choose the file again and retry.'
 where original_name = 'retry.pdf';
+
+update public.lesson_uploads
+set status = 'pending', failure_message = null, retry_count = retry_count + 1,
+    storage_path = regexp_replace(storage_path, 'retry\.pdf$', 'retry-1.pdf')
+where original_name = 'retry.pdf';
+
+insert into storage.objects (bucket_id, name, owner_id)
+select 'classroom-evidence', upload.storage_path, '30000000-0000-0000-0000-000000000003'
+from public.lesson_uploads upload
+where upload.original_name = 'retry.pdf';
 
 update public.lesson_uploads
 set status = 'uploaded', uploaded_at = statement_timestamp()
@@ -215,6 +282,16 @@ select public.advance_lesson_session(
   (select id from public.lesson_sessions where class_id = (select id from public.classes where code = 'LIFE-MATH-A')),
   'attendance_marked', 'evidence_uploaded'
 );
+
+do $$
+begin
+  begin
+    update public.attendance_records set status = 'late';
+    raise exception 'attendance changed after evidence progression';
+  exception when check_violation then null;
+  end;
+end;
+$$;
 
 insert into public.homework_assignments (
   organization_id, branch_id, class_id, lesson_session_id, title, instructions, created_by
@@ -227,10 +304,30 @@ select public.advance_lesson_session(
   (select id from public.lesson_sessions where class_id = (select id from public.classes where code = 'LIFE-MATH-A')),
   'evidence_uploaded', 'homework_assigned'
 );
+
+do $$
+begin
+  begin
+    update public.lesson_uploads set retry_count = retry_count + 1 where original_name = 'retry.pdf';
+    raise exception 'lesson evidence changed after homework progression';
+  exception when check_violation then null;
+  end;
+end;
+$$;
 select public.advance_lesson_session(
   (select id from public.lesson_sessions where class_id = (select id from public.classes where code = 'LIFE-MATH-A')),
   'homework_assigned', 'ai_review_ready'
 );
+
+do $$
+begin
+  begin
+    update public.homework_assignments set title = 'tampered after review';
+    raise exception 'homework changed after review progression';
+  exception when check_violation then null;
+  end;
+end;
+$$;
 
 do $$
 declare session_id bigint;
@@ -252,6 +349,16 @@ select public.advance_lesson_session(
   (select id from public.lesson_sessions where class_id = (select id from public.classes where code = 'LIFE-MATH-A')),
   'teacher_reviewed', 'published'
 );
+
+do $$
+begin
+  begin
+    update public.lesson_sessions set title = 'tampered after publish';
+    raise exception 'published lesson session was mutable';
+  exception when check_violation then null;
+  end;
+end;
+$$;
 
 do $$
 declare final_state text; review_user uuid; retry_count_value integer;
