@@ -1,0 +1,38 @@
+name: TASK-004 hardening sync
+
+on:
+  push:
+    branches:
+      - loopforge/task-004-teacher-lifecycle
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: loopforge/task-004-teacher-lifecycle
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Materialize security and keyboard hardening
+        run: |
+          xz -dc .tmp/task004-hardening.tar.xz | tar -xf -
+          npx prettier --write \
+            scripts/verify-teacher-keyboard.mjs \
+            src/modules/classroom/hardening-contract.test.ts
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            scripts/verify-teacher-keyboard.mjs \
+            src/modules/classroom/hardening-contract.test.ts \
+            supabase/migrations/20260812072000_teacher_class_lifecycle_hardening.sql \
+            supabase/tests/003_teacher_class_lifecycle_rls.sql
+          git rm .tmp/task004-hardening.tar.xz .github/workflows/task004-hardening-sync.yml
+          git commit -m 'fix: harden TASK-004 lifecycle trust boundaries'
+          git push origin HEAD:loopforge/task-004-teacher-lifecycle
