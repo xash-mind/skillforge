@@ -3,15 +3,15 @@
   "mode": "new",
   "status": "active",
   "phase": "READY",
-  "iteration": 2,
-  "activeTaskId": "TASK-003",
+  "iteration": 3,
+  "activeTaskId": "TASK-004",
   "activeChangeRequestId": null,
-  "lastVerifiedCommit": "3c64795f4a5dbee9fd3ceac65ba23d04567b60a8",
-  "lastRunId": "RUN-0012",
+  "lastVerifiedCommit": "632b418b00e7c953efb308bdc49480532a8877c7",
+  "lastRunId": "RUN-0013",
   "repairAttemptsForRootCause": 0,
   "completionCandidate": false,
   "criticalBlockers": [],
-  "nextAction": "Implement TASK-003: academic structure, enrollment, timetables, branch-scoped authorization, and organization-admin workflows, then prove cross-branch assignments and reads fail.",
+  "nextAction": "Implement TASK-004: the guided teacher class lifecycle with attendance, uploads and retry recovery, homework, AI-review placeholder, explicit teacher review, publish gate, and mobile-first verification.",
   "needsHuman": false,
-  "updatedAt": "2026-08-11T10:46:32.161Z"
+  "updatedAt": "2026-08-12T06:36:12Z"
 }

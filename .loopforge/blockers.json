@@ -109,7 +109,7 @@
       "id": "BLOCKER-014",
       "severity": "high",
       "status": "open",
-      "summary": "GitHub's Vercel integration reports an existing project named skillforge (prj_IWxn6mdD5LaB9hc4KtuMujtDoNQ8), but the connected Vercel API cannot list or access it. PR #16 and PR #17 preview deployments failed and their build logs require project access; reconcile and align this project with the locked skillforge-bay-three identity before release, and do not create a duplicate.",
+      "summary": "The historical Vercel integration identifies SkillForge as project prj_IWxn6mdD5LaB9hc4KtuMujtDoNQ8 under team team_BPsOfcrNMh4WJBgbw8eMcXuN (current connected team slug xash-mind0). The connected team currently lists zero projects; direct project and historical deployment lookups return 404, while listing deployments for that project ID returns 403. This does not conclusively prove deletion, so creating a replacement could duplicate the intended project. Recover access/linkage before release and preserve the canonical destination skillforge-bay-three.vercel.app.",
       "needsHuman": false,
       "resolution": null
     },
