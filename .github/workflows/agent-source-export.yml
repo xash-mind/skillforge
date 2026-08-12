@@ -1,0 +1,26 @@
+name: Agent source export
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+
+      - name: Archive exact source
+        run: git archive --format=tar.gz --output=/tmp/skillforge-source.tgz HEAD
+
+      - name: Upload exact source
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-source
+          path: /tmp/skillforge-source.tgz
+          if-no-files-found: error
+          retention-days: 1
