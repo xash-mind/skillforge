@@ -81,8 +81,8 @@ export default async function TeacherClassesPage({ params }: PageProps) {
         <p className="eyebrow">Teacher workflow · {organization.name}</p>
         <h1 id="teacher-classes-title">Your live classes, one guided step at a time.</h1>
         <p>
-          Start a class, record attendance, upload evidence, assign homework, review the placeholder,
-          and publish only after your explicit review.
+          Start a class, record attendance, upload evidence, assign homework, review the
+          placeholder, and publish only after your explicit review.
         </p>
       </section>
       {classes.length ? (
@@ -109,7 +109,8 @@ export default async function TeacherClassesPage({ params }: PageProps) {
         <aside className="teacher-empty">
           <strong>No active class assignment yet.</strong>
           <p>
-            An organization owner or branch manager must assign you to a class before it appears here.
+            An organization owner or branch manager must assign you to a class before it appears
+            here.
           </p>
         </aside>
       )}

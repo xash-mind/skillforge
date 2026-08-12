@@ -148,14 +148,21 @@ export default async function TeacherClassPage({ params, searchParams }: PagePro
           .order("created_at", { ascending: false })
           .limit(1),
       ])
-    : [{ data: [], error: null }, { data: [], error: null }, { data: [], error: null }];
+    : [
+        { data: [], error: null },
+        { data: [], error: null },
+        { data: [], error: null },
+      ];
 
   if (attendanceResult.error || uploadsResult.error || homeworkResult.error) {
     throw new Error("The current class evidence could not be loaded safely.");
   }
 
   const attendanceByMembership = new Map(
-    (attendanceResult.data ?? []).map((record) => [record.organization_membership_id, record.status]),
+    (attendanceResult.data ?? []).map((record) => [
+      record.organization_membership_id,
+      record.status,
+    ]),
   );
   const uploads = uploadsResult.data ?? [];
   const homework = (homeworkResult.data ?? [])[0];
@@ -355,7 +362,9 @@ export default async function TeacherClassPage({ params, searchParams }: PagePro
                       {upload.status}
                       {upload.retry_count ? ` · ${upload.retry_count} retries` : ""}
                     </span>
-                    {upload.failure_message ? <span role="alert">{upload.failure_message}</span> : null}
+                    {upload.failure_message ? (
+                      <span role="alert">{upload.failure_message}</span>
+                    ) : null}
                   </div>
                   {upload.status === "failed" && sessionState === "attendance_marked" ? (
                     <form

@@ -113,7 +113,11 @@ export async function startClassAction(formData: FormData) {
     title_input: title,
   });
   if (error) fail(organizationSlug, classId, error);
-  succeed(organizationSlug, classId, "Class started. Record attendance for every enrolled student.");
+  succeed(
+    organizationSlug,
+    classId,
+    "Class started. Record attendance for every enrolled student.",
+  );
 }
 
 export async function saveAttendanceAction(formData: FormData) {
@@ -237,7 +241,11 @@ export async function confirmTeacherReviewAction(formData: FormData) {
     "ai_review_ready",
     "teacher_reviewed",
   );
-  succeed(resolved.organizationSlug, resolved.classId, "Teacher review recorded. Publish is now unlocked.");
+  succeed(
+    resolved.organizationSlug,
+    resolved.classId,
+    "Teacher review recorded. Publish is now unlocked.",
+  );
 }
 
 export async function publishSessionAction(formData: FormData) {
@@ -249,5 +257,9 @@ export async function publishSessionAction(formData: FormData) {
     "teacher_reviewed",
     "published",
   );
-  succeed(resolved.organizationSlug, resolved.classId, "Class session published after teacher review.");
+  succeed(
+    resolved.organizationSlug,
+    resolved.classId,
+    "Class session published after teacher review.",
+  );
 }

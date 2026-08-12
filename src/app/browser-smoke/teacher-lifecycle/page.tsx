@@ -120,7 +120,8 @@ export default function TeacherLifecycleBrowserFixturePage() {
           <p>Publish remains locked until explicit teacher review.</p>
         </div>
         <label className="teacher-checkbox">
-          <input data-keyboard-order="review" type="checkbox" />I reviewed the class evidence and homework.
+          <input data-keyboard-order="review" type="checkbox" />I reviewed the class evidence and
+          homework.
         </label>
       </section>
 

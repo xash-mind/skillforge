@@ -33,7 +33,9 @@ describe("teacher class lifecycle database contract", () => {
     ]) {
       expect(sql).toContain(`alter table public.${table} enable row level security;`);
       expect(sql).toContain(`alter table public.${table} force row level security;`);
-      expect(sql).toContain(`revoke all on table public.${table} from public, anon, authenticated;`);
+      expect(sql).toContain(
+        `revoke all on table public.${table} from public, anon, authenticated;`,
+      );
     }
     expect(sql).toContain("'classroom-evidence'");
     expect(sql).toContain("classroom_evidence_insert_teacher");

@@ -15,8 +15,7 @@ const allowedMimeTypes = new Set([
 export type ClassroomUploadKind = "transcript" | "resource";
 
 export type ClassroomUploadValidation =
-  | { ok: true; safeFilename: string }
-  | { ok: false; message: string };
+  { ok: true; safeFilename: string } | { ok: false; message: string };
 
 export function safeClassroomFilename(filename: string): string {
   const normalized = filename
@@ -44,7 +43,8 @@ export function validateClassroomUpload(file: Pick<File, "name" | "size" | "type
   if (!allowedMimeTypes.has(file.type)) {
     return {
       ok: false,
-      message: "Use PDF, text, Word, PowerPoint, image, MP3, MP4 audio, or WAV for this class evidence.",
+      message:
+        "Use PDF, text, Word, PowerPoint, image, MP3, MP4 audio, or WAV for this class evidence.",
     } as const;
   }
 

@@ -13,13 +13,21 @@ describe("classroom upload policy", () => {
   });
 
   it("rejects empty, oversized, and unsupported uploads with recovery messages", () => {
-    expect(validateClassroomUpload({ name: "empty.txt", size: 0, type: "text/plain" })).toMatchObject({
+    expect(
+      validateClassroomUpload({ name: "empty.txt", size: 0, type: "text/plain" }),
+    ).toMatchObject({
       ok: false,
     });
     expect(
-      validateClassroomUpload({ name: "huge.pdf", size: 11 * 1024 * 1024, type: "application/pdf" }),
+      validateClassroomUpload({
+        name: "huge.pdf",
+        size: 11 * 1024 * 1024,
+        type: "application/pdf",
+      }),
     ).toMatchObject({ ok: false });
-    expect(validateClassroomUpload({ name: "script.exe", size: 10, type: "application/x-msdownload" })).toMatchObject({
+    expect(
+      validateClassroomUpload({ name: "script.exe", size: 10, type: "application/x-msdownload" }),
+    ).toMatchObject({
       ok: false,
     });
   });
