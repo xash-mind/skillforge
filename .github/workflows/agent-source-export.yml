@@ -25,42 +25,50 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
-      - name: Commit exact TASK-003 formatting repair
+      - name: Apply and verify strict TASK-003 type repair
         run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          actions = Path('src/app/workspace/[organizationSlug]/academic/actions.ts')
+          text = actions.read_text()
+          text = text.replace('"use server";\n\n', '"use server";\n\nimport type { Route } from "next";\n')
+          text = text.replace('function academicPath(organizationSlug: string, kind: "error" | "notice", message: string): string {', 'function academicPath(organizationSlug: string, kind: "error" | "notice", message: string): Route {')
+          text = text.replace('  return `/workspace/${organizationSlug}/academic?${new URLSearchParams({ [kind]: message })}`;\n}', '  return `/workspace/${organizationSlug}/academic?${new URLSearchParams({ [kind]: message })}` as Route;\n}')
+          actions.write_text(text)
+
+          page = Path('src/app/workspace/[organizationSlug]/academic/page.tsx')
+          text = page.read_text()
+          for name in ('branches', 'syllabuses', 'versions', 'objectives', 'subjects', 'classes', 'classObjectives', 'timetableEntries', 'roleAssignments', 'memberships'):
+              text = text.replace(f'  const {name} = {name if name not in ("classObjectives", "timetableEntries", "roleAssignments") else {"classObjectives":"classObjectivesResult","timetableEntries":"timetableResult","roleAssignments":"roleAssignmentsResult"}[name]}Result.data;\n' if name not in ('timetableEntries',) else '  const timetableEntries = timetableResult.data;\n', '')
+          replacements = {
+              '  const branches = branchesResult.data;\n': '  const branches = branchesResult.data ?? [];\n',
+              '  const syllabuses = syllabusesResult.data;\n': '  const syllabuses = syllabusesResult.data ?? [];\n',
+              '  const versions = versionsResult.data;\n': '  const versions = versionsResult.data ?? [];\n',
+              '  const objectives = objectivesResult.data;\n': '  const objectives = objectivesResult.data ?? [];\n',
+              '  const subjects = subjectsResult.data;\n': '  const subjects = subjectsResult.data ?? [];\n',
+              '  const classes = classesResult.data;\n': '  const classes = classesResult.data ?? [];\n',
+              '  const classObjectives = classObjectivesResult.data;\n': '  const classObjectives = classObjectivesResult.data ?? [];\n',
+              '  const timetableEntries = timetableResult.data;\n': '  const timetableEntries = timetableResult.data ?? [];\n',
+              '  const roleAssignments = roleAssignmentsResult.data;\n': '  const roleAssignments = roleAssignmentsResult.data ?? [];\n',
+              '  const memberships = membershipsResult.data;\n': '  const memberships = membershipsResult.data ?? [];\n',
+          }
+          original = page.read_text()
+          text = original
+          for old, new in replacements.items():
+              if old not in text:
+                  raise SystemExit(f'missing expected text: {old.strip()}')
+              text = text.replace(old, new)
+          page.write_text(text)
+          PY
           npx prettier --write \
-            docs/adr/0003-academic-lineage-and-branch-scoping.md \
-            src/app/__browser__/academic/layout.tsx \
-            src/app/__browser__/academic/page.tsx \
-            'src/app/workspace/[organizationSlug]/academic/academic.css' \
             'src/app/workspace/[organizationSlug]/academic/actions.ts' \
-            'src/app/workspace/[organizationSlug]/academic/page.tsx' \
-            src/app/workspace/page.tsx \
-            src/modules/academic/domain/academic-access.ts \
-            src/types/database.ts
-          if git diff --quiet -- \
-            docs/adr/0003-academic-lineage-and-branch-scoping.md \
-            src/app/__browser__/academic/layout.tsx \
-            src/app/__browser__/academic/page.tsx \
-            'src/app/workspace/[organizationSlug]/academic/academic.css' \
-            'src/app/workspace/[organizationSlug]/academic/actions.ts' \
-            'src/app/workspace/[organizationSlug]/academic/page.tsx' \
-            src/app/workspace/page.tsx \
-            src/modules/academic/domain/academic-access.ts \
-            src/types/database.ts; then
-            echo 'No formatting changes required.'
-            exit 0
-          fi
+            'src/app/workspace/[organizationSlug]/academic/page.tsx'
+          npm run typecheck
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add \
-            docs/adr/0003-academic-lineage-and-branch-scoping.md \
-            src/app/__browser__/academic/layout.tsx \
-            src/app/__browser__/academic/page.tsx \
-            'src/app/workspace/[organizationSlug]/academic/academic.css' \
             'src/app/workspace/[organizationSlug]/academic/actions.ts' \
-            'src/app/workspace/[organizationSlug]/academic/page.tsx' \
-            src/app/workspace/page.tsx \
-            src/modules/academic/domain/academic-access.ts \
-            src/types/database.ts
-          git commit -m 'style: format TASK-003 implementation'
+            'src/app/workspace/[organizationSlug]/academic/page.tsx'
+          git commit -m 'fix: satisfy strict TASK-003 type verification'
           git push origin HEAD:${{ github.head_ref }}
