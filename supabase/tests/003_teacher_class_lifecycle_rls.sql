@@ -150,10 +150,14 @@ insert into public.attendance_records (
   organization_membership_id, status, recorded_by
 )
 select class_row.organization_id, class_row.branch_id, class_row.id, session.id,
-       membership.id, 'present', '30000000-0000-0000-0000-000000000003'
+       enrollment.organization_membership_id, 'present', '30000000-0000-0000-0000-000000000003'
 from public.classes class_row
 join public.lesson_sessions session on session.class_id = class_row.id
-join public.organization_memberships membership on membership.user_id = '30000000-0000-0000-0000-000000000005'
+join public.class_enrollments enrollment
+  on enrollment.organization_id = class_row.organization_id
+ and enrollment.branch_id = class_row.branch_id
+ and enrollment.class_id = class_row.id
+ and enrollment.status = 'enrolled'
 where class_row.code = 'LIFE-MATH-A';
 
 select public.advance_lesson_session(
