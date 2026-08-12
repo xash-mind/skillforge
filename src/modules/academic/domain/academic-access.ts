@@ -44,10 +44,7 @@ export function getAcademicManagementScope(
   };
 }
 
-export function canManageAcademicBranch(
-  scope: AcademicManagementScope,
-  branchId: number,
-): boolean {
+export function canManageAcademicBranch(scope: AcademicManagementScope, branchId: number): boolean {
   return scope.canManageAllBranches || scope.managedBranchIds.includes(branchId);
 }
 
@@ -56,5 +53,8 @@ export function hasAcademicManagementAccess(scope: AcademicManagementScope): boo
 }
 
 export function weekdayLabel(weekday: number): string {
-  return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"][weekday - 1] ?? `Day ${weekday}`;
+  return (
+    ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"][weekday - 1] ??
+    `Day ${weekday}`
+  );
 }

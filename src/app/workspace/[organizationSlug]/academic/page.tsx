@@ -81,7 +81,9 @@ export default async function AcademicSetupPage({ params, searchParams }: PagePr
       .eq("organization_id", organizationId),
     context.supabase
       .from("timetable_entries")
-      .select("id, class_id, branch_id, weekday, starts_at, ends_at, room, effective_from, effective_to")
+      .select(
+        "id, class_id, branch_id, weekday, starts_at, ends_at, room, effective_from, effective_to",
+      )
       .eq("organization_id", organizationId)
       .eq("status", "active")
       .order("weekday"),
@@ -138,7 +140,9 @@ export default async function AcademicSetupPage({ params, searchParams }: PagePr
     throw new Error("Academic participant names could not be loaded.");
   }
 
-  const profileNameById = new Map(profilesResult.data.map((profile) => [profile.id, profile.display_name]));
+  const profileNameById = new Map(
+    profilesResult.data.map((profile) => [profile.id, profile.display_name]),
+  );
   const membershipById = new Map(memberships.map((membership) => [membership.id, membership]));
   const branchById = new Map(branches.map((branch) => [branch.id, branch]));
   const subjectById = new Map(subjects.map((subject) => [subject.id, subject]));
@@ -164,7 +168,9 @@ export default async function AcademicSetupPage({ params, searchParams }: PagePr
         branchId: assignment.branch_id,
         membershipId: assignment.organization_membership_id,
         role: assignment.role,
-        name: profileNameById.get(membership.user_id) ?? `Member ${assignment.organization_membership_id}`,
+        name:
+          profileNameById.get(membership.user_id) ??
+          `Member ${assignment.organization_membership_id}`,
       },
     ];
   });
@@ -185,19 +191,35 @@ export default async function AcademicSetupPage({ params, searchParams }: PagePr
         <p className="eyebrow">Academic operations · {context.organization.name}</p>
         <h1 id="academic-title">Build curriculum once, operate classes by branch.</h1>
         <p>
-          Subjects stay pinned to a published syllabus version. Every class is branch-scoped and keeps
-          an explicit objective and timetable lineage.
+          Subjects stay pinned to a published syllabus version. Every class is branch-scoped and
+          keeps an explicit objective and timetable lineage.
         </p>
         <div className="academic-metrics" aria-label="Academic configuration summary">
-          <span><strong>{manageableBranches.length}</strong> manageable branches</span>
-          <span><strong>{subjects.length}</strong> subjects</span>
-          <span><strong>{classes.length}</strong> classes</span>
-          <span><strong>{objectives.length}</strong> visible objectives</span>
+          <span>
+            <strong>{manageableBranches.length}</strong> manageable branches
+          </span>
+          <span>
+            <strong>{subjects.length}</strong> subjects
+          </span>
+          <span>
+            <strong>{classes.length}</strong> classes
+          </span>
+          <span>
+            <strong>{objectives.length}</strong> visible objectives
+          </span>
         </div>
       </section>
 
-      {notice ? <p className="academic-message academic-message--success" role="status">{notice}</p> : null}
-      {error ? <p className="academic-message academic-message--error" role="alert">{error}</p> : null}
+      {notice ? (
+        <p className="academic-message academic-message--success" role="status">
+          {notice}
+        </p>
+      ) : null}
+      {error ? (
+        <p className="academic-message academic-message--error" role="alert">
+          {error}
+        </p>
+      ) : null}
 
       {context.scope.canManageCurriculum ? (
         <section className="academic-section" aria-labelledby="curriculum-title">
@@ -206,37 +228,71 @@ export default async function AcademicSetupPage({ params, searchParams }: PagePr
               <p className="eyebrow">Organization curriculum</p>
               <h2 id="curriculum-title">Syllabuses and subjects</h2>
             </div>
-            <p>Organization owners can publish custom curriculum or reuse a visible library syllabus.</p>
+            <p>
+              Organization owners can publish custom curriculum or reuse a visible library syllabus.
+            </p>
           </div>
 
           <div className="academic-grid academic-grid--forms">
             <form className="academic-card academic-form" action={createCustomSyllabusAction}>
               <input type="hidden" name="organizationSlug" value={organizationSlug} />
               <h3>Publish a custom syllabus</h3>
-              <label>Code<input name="syllabusCode" placeholder="MATH-10" required /></label>
-              <label>Title<input name="syllabusTitle" placeholder="Grade 10 Mathematics" required /></label>
-              <label>Description<textarea name="syllabusDescription" rows={2} /></label>
-              <label>Version<input name="versionLabel" placeholder="2026-27" required /></label>
-              <label>First objective code<input name="objectiveCode" placeholder="ALG.1" required /></label>
-              <label>First objective<input name="objectiveTitle" placeholder="Solve linear equations" required /></label>
-              <label>Objective context<textarea name="objectiveDescription" rows={2} /></label>
-              <button className="button" type="submit">Publish syllabus</button>
+              <label>
+                Code
+                <input name="syllabusCode" placeholder="MATH-10" required />
+              </label>
+              <label>
+                Title
+                <input name="syllabusTitle" placeholder="Grade 10 Mathematics" required />
+              </label>
+              <label>
+                Description
+                <textarea name="syllabusDescription" rows={2} />
+              </label>
+              <label>
+                Version
+                <input name="versionLabel" placeholder="2026-27" required />
+              </label>
+              <label>
+                First objective code
+                <input name="objectiveCode" placeholder="ALG.1" required />
+              </label>
+              <label>
+                First objective
+                <input name="objectiveTitle" placeholder="Solve linear equations" required />
+              </label>
+              <label>
+                Objective context
+                <textarea name="objectiveDescription" rows={2} />
+              </label>
+              <button className="button" type="submit">
+                Publish syllabus
+              </button>
             </form>
 
             <form className="academic-card academic-form" action={createSubjectAction}>
               <input type="hidden" name="organizationSlug" value={organizationSlug} />
               <h3>Create a subject</h3>
-              <label>Code<input name="subjectCode" placeholder="MATH" required /></label>
-              <label>Name<input name="subjectName" placeholder="Mathematics" required /></label>
+              <label>
+                Code
+                <input name="subjectCode" placeholder="MATH" required />
+              </label>
+              <label>
+                Name
+                <input name="subjectName" placeholder="Mathematics" required />
+              </label>
               <label>
                 Published syllabus version
                 <select name="syllabusVersionId" required defaultValue="">
-                  <option value="" disabled>Select a version</option>
+                  <option value="" disabled>
+                    Select a version
+                  </option>
                   {versions.map((version) => {
                     const syllabus = syllabusById.get(version.syllabus_id);
                     return (
                       <option key={version.id} value={version.id}>
-                        {syllabus?.title ?? `Syllabus ${version.syllabus_id}`} · {version.version_label}
+                        {syllabus?.title ?? `Syllabus ${version.syllabus_id}`} ·{" "}
+                        {version.version_label}
                       </option>
                     );
                   })}
@@ -245,7 +301,9 @@ export default async function AcademicSetupPage({ params, searchParams }: PagePr
               <label>
                 Syllabus
                 <select name="syllabusId" required defaultValue="">
-                  <option value="" disabled>Select the matching syllabus</option>
+                  <option value="" disabled>
+                    Select the matching syllabus
+                  </option>
                   {syllabuses.map((syllabus) => (
                     <option key={syllabus.id} value={syllabus.id}>
                       {syllabus.code} · {syllabus.title}
@@ -253,8 +311,12 @@ export default async function AcademicSetupPage({ params, searchParams }: PagePr
                   ))}
                 </select>
               </label>
-              <p className="academic-form__hint">The database rejects a version that does not belong to the selected syllabus.</p>
-              <button className="button" type="submit">Create subject</button>
+              <p className="academic-form__hint">
+                The database rejects a version that does not belong to the selected syllabus.
+              </p>
+              <button className="button" type="submit">
+                Create subject
+              </button>
             </form>
           </div>
         </section>
@@ -270,33 +332,104 @@ export default async function AcademicSetupPage({ params, searchParams }: PagePr
         </div>
 
         {manageableBranches.length && subjects.length && objectives.length ? (
-          <form className="academic-card academic-form academic-form--wide" action={createClassAction}>
+          <form
+            className="academic-card academic-form academic-form--wide"
+            action={createClassAction}
+          >
             <input type="hidden" name="organizationSlug" value={organizationSlug} />
             <div className="academic-form__row">
-              <label>Branch<select name="branchId" required>{manageableBranches.map((branch) => <option key={branch.id} value={branch.id}>{branch.name} · {branch.code}</option>)}</select></label>
-              <label>Subject<select name="subjectId" required>{subjects.map((subject) => <option key={subject.id} value={subject.id}>{subject.name} · {subject.code}</option>)}</select></label>
-              <label>Objective<select name="objectiveId" required>{objectives.map((objective) => <option key={objective.id} value={objective.id}>{objective.code} · {objective.title}</option>)}</select></label>
+              <label>
+                Branch
+                <select name="branchId" required>
+                  {manageableBranches.map((branch) => (
+                    <option key={branch.id} value={branch.id}>
+                      {branch.name} · {branch.code}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Subject
+                <select name="subjectId" required>
+                  {subjects.map((subject) => (
+                    <option key={subject.id} value={subject.id}>
+                      {subject.name} · {subject.code}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Objective
+                <select name="objectiveId" required>
+                  {objectives.map((objective) => (
+                    <option key={objective.id} value={objective.id}>
+                      {objective.code} · {objective.title}
+                    </option>
+                  ))}
+                </select>
+              </label>
             </div>
             <div className="academic-form__row">
-              <label>Class code<input name="classCode" placeholder="MATH-10-A" required /></label>
-              <label>Class name<input name="className" placeholder="Grade 10 Mathematics A" required /></label>
-              <label>Academic year<input name="academicYear" placeholder="2026-27" required /></label>
+              <label>
+                Class code
+                <input name="classCode" placeholder="MATH-10-A" required />
+              </label>
+              <label>
+                Class name
+                <input name="className" placeholder="Grade 10 Mathematics A" required />
+              </label>
+              <label>
+                Academic year
+                <input name="academicYear" placeholder="2026-27" required />
+              </label>
             </div>
             <div className="academic-form__row">
-              <label>Weekday<select name="weekday" defaultValue="1">{[1,2,3,4,5,6,7].map((day) => <option key={day} value={day}>{weekdayLabel(day)}</option>)}</select></label>
-              <label>Starts<input type="time" name="startsAt" required /></label>
-              <label>Ends<input type="time" name="endsAt" required /></label>
-              <label>Room<input name="room" placeholder="Room 3" /></label>
+              <label>
+                Weekday
+                <select name="weekday" defaultValue="1">
+                  {[1, 2, 3, 4, 5, 6, 7].map((day) => (
+                    <option key={day} value={day}>
+                      {weekdayLabel(day)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Starts
+                <input type="time" name="startsAt" required />
+              </label>
+              <label>
+                Ends
+                <input type="time" name="endsAt" required />
+              </label>
+              <label>
+                Room
+                <input name="room" placeholder="Room 3" />
+              </label>
             </div>
             <div className="academic-form__row">
-              <label>Effective from<input type="date" name="effectiveFrom" required /></label>
-              <label>Effective to (optional)<input type="date" name="effectiveTo" /></label>
+              <label>
+                Effective from
+                <input type="date" name="effectiveFrom" required />
+              </label>
+              <label>
+                Effective to (optional)
+                <input type="date" name="effectiveTo" />
+              </label>
             </div>
-            <p className="academic-form__hint">The selected objective must belong to the subject&apos;s pinned syllabus version; mismatches are rejected atomically.</p>
-            <button className="button" type="submit">Create class and timetable</button>
+            <p className="academic-form__hint">
+              The selected objective must belong to the subject&apos;s pinned syllabus version;
+              mismatches are rejected atomically.
+            </p>
+            <button className="button" type="submit">
+              Create class and timetable
+            </button>
           </form>
         ) : (
-          <p className="academic-empty">A manageable branch, subject, and published objective are required before a class can be created.</p>
+          <p className="academic-empty">
+            A manageable branch, subject, and published objective are required before a class can be
+            created.
+          </p>
         )}
 
         <div className="academic-grid" aria-label="Configured classes">
@@ -304,21 +437,35 @@ export default async function AcademicSetupPage({ params, searchParams }: PagePr
             const branch = branchById.get(classRow.branch_id);
             const subject = subjectById.get(classRow.subject_id);
             const objectiveLink = classObjectiveByClassId.get(classRow.id);
-            const objective = objectiveLink ? objectiveById.get(objectiveLink.objective_id) : undefined;
+            const objective = objectiveLink
+              ? objectiveById.get(objectiveLink.objective_id)
+              : undefined;
             const entries = timetableByClassId.get(classRow.id) ?? [];
-            const teacherOptions = participantOptions.filter((option) => option.branchId === classRow.branch_id && option.role === "teacher");
-            const studentOptions = participantOptions.filter((option) => option.branchId === classRow.branch_id && option.role === "student");
+            const teacherOptions = participantOptions.filter(
+              (option) => option.branchId === classRow.branch_id && option.role === "teacher",
+            );
+            const studentOptions = participantOptions.filter(
+              (option) => option.branchId === classRow.branch_id && option.role === "student",
+            );
 
             return (
               <article className="academic-card" key={classRow.id}>
-                <span className="workspace-list__status">{branch?.name ?? `Branch ${classRow.branch_id}`}</span>
+                <span className="workspace-list__status">
+                  {branch?.name ?? `Branch ${classRow.branch_id}`}
+                </span>
                 <h3>{classRow.name}</h3>
-                <p>{subject?.name ?? `Subject ${classRow.subject_id}`} · {classRow.academic_year}</p>
-                <p className="academic-lineage">Objective: {objective ? `${objective.code} · ${objective.title}` : "Lineage unavailable"}</p>
+                <p>
+                  {subject?.name ?? `Subject ${classRow.subject_id}`} · {classRow.academic_year}
+                </p>
+                <p className="academic-lineage">
+                  Objective:{" "}
+                  {objective ? `${objective.code} · ${objective.title}` : "Lineage unavailable"}
+                </p>
                 <ul className="academic-schedule">
                   {entries.map((entry) => (
                     <li key={entry.id}>
-                      {weekdayLabel(entry.weekday)} · {entry.starts_at.slice(0, 5)}–{entry.ends_at.slice(0, 5)}
+                      {weekdayLabel(entry.weekday)} · {entry.starts_at.slice(0, 5)}–
+                      {entry.ends_at.slice(0, 5)}
                       {entry.room ? ` · ${entry.room}` : ""}
                     </li>
                   ))}
@@ -333,11 +480,23 @@ export default async function AcademicSetupPage({ params, searchParams }: PagePr
                       <label>
                         Teacher
                         <select name="membershipId" required defaultValue="">
-                          <option value="" disabled>Select teacher</option>
-                          {teacherOptions.map((option) => <option key={option.membershipId} value={option.membershipId}>{option.name}</option>)}
+                          <option value="" disabled>
+                            Select teacher
+                          </option>
+                          {teacherOptions.map((option) => (
+                            <option key={option.membershipId} value={option.membershipId}>
+                              {option.name}
+                            </option>
+                          ))}
                         </select>
                       </label>
-                      <button className="button button--quiet" type="submit" disabled={!teacherOptions.length}>Assign</button>
+                      <button
+                        className="button button--quiet"
+                        type="submit"
+                        disabled={!teacherOptions.length}
+                      >
+                        Assign
+                      </button>
                     </form>
                     <form action={enrollStudentAction}>
                       <input type="hidden" name="organizationSlug" value={organizationSlug} />
@@ -346,11 +505,23 @@ export default async function AcademicSetupPage({ params, searchParams }: PagePr
                       <label>
                         Student
                         <select name="membershipId" required defaultValue="">
-                          <option value="" disabled>Select student</option>
-                          {studentOptions.map((option) => <option key={option.membershipId} value={option.membershipId}>{option.name}</option>)}
+                          <option value="" disabled>
+                            Select student
+                          </option>
+                          {studentOptions.map((option) => (
+                            <option key={option.membershipId} value={option.membershipId}>
+                              {option.name}
+                            </option>
+                          ))}
                         </select>
                       </label>
-                      <button className="button button--quiet" type="submit" disabled={!studentOptions.length}>Enroll</button>
+                      <button
+                        className="button button--quiet"
+                        type="submit"
+                        disabled={!studentOptions.length}
+                      >
+                        Enroll
+                      </button>
                     </form>
                   </div>
                 ) : null}

@@ -26,7 +26,12 @@ const syllabusSchema = z.object({
   syllabusTitle: shortText,
   syllabusDescription: optionalText,
   versionLabel: z.string().trim().min(1).max(80),
-  objectiveCode: z.string().trim().min(1).max(50).transform((value) => value.toUpperCase()),
+  objectiveCode: z
+    .string()
+    .trim()
+    .min(1)
+    .max(50)
+    .transform((value) => value.toUpperCase()),
   objectiveTitle: z.string().trim().min(2).max(240),
   objectiveDescription: z.string().trim().max(4000).default(""),
 });
@@ -84,7 +89,8 @@ function fail(organizationSlug: string, error: unknown): never {
     const codeValue = String(error.code);
     if (codeValue === "23505") message = "That academic code or assignment already exists.";
     if (["23503", "23514", "42501", "PGRST301"].includes(codeValue)) {
-      message = "That change is outside the permitted organization, branch, role, or syllabus scope.";
+      message =
+        "That change is outside the permitted organization, branch, role, or syllabus scope.";
     }
   }
 
@@ -212,7 +218,10 @@ export async function createClassAction(formData: FormData) {
   });
 
   if (error) fail(organizationSlug, error);
-  succeed(organizationSlug, "Class created with objective traceability and its first timetable entry.");
+  succeed(
+    organizationSlug,
+    "Class created with objective traceability and its first timetable entry.",
+  );
 }
 
 async function managedClassContext(organizationSlug: string, branchId: number, classId: number) {
@@ -228,7 +237,8 @@ async function managedClassContext(organizationSlug: string, branchId: number, c
     .maybeSingle();
 
   if (error) fail(organizationSlug, error);
-  if (!classRow) fail(organizationSlug, Object.assign(new Error("Class outside branch."), { code: "42501" }));
+  if (!classRow)
+    fail(organizationSlug, Object.assign(new Error("Class outside branch."), { code: "42501" }));
   return context;
 }
 
