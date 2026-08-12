@@ -117,16 +117,16 @@ export default async function AcademicSetupPage({ params, searchParams }: PagePr
     throw new Error("The academic workspace could not be loaded safely.");
   }
 
-  const branches = branchesResult.data;
-  const syllabuses = syllabusesResult.data;
-  const versions = versionsResult.data;
-  const objectives = objectivesResult.data;
-  const subjects = subjectsResult.data;
-  const classes = classesResult.data;
-  const classObjectives = classObjectivesResult.data;
-  const timetableEntries = timetableResult.data;
-  const roleAssignments = roleAssignmentsResult.data;
-  const memberships = membershipsResult.data;
+  const branches = branchesResult.data ?? [];
+  const syllabuses = syllabusesResult.data ?? [];
+  const versions = versionsResult.data ?? [];
+  const objectives = objectivesResult.data ?? [];
+  const subjects = subjectsResult.data ?? [];
+  const classes = classesResult.data ?? [];
+  const classObjectives = classObjectivesResult.data ?? [];
+  const timetableEntries = timetableResult.data ?? [];
+  const roleAssignments = roleAssignmentsResult.data ?? [];
+  const memberships = membershipsResult.data ?? [];
   const manageableBranches = branches.filter((branch) =>
     canManageAcademicBranch(context.scope, branch.id),
   );

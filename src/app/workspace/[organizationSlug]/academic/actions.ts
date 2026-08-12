@@ -1,5 +1,6 @@
 "use server";
 
+import type { Route } from "next";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -76,8 +77,8 @@ function formObject(formData: FormData, names: readonly string[]): Record<string
   return Object.fromEntries(names.map((name) => [name, field(formData, name)]));
 }
 
-function academicPath(organizationSlug: string, kind: "error" | "notice", message: string): string {
-  return `/workspace/${organizationSlug}/academic?${new URLSearchParams({ [kind]: message })}`;
+function academicPath(organizationSlug: string, kind: "error" | "notice", message: string): Route {
+  return `/workspace/${organizationSlug}/academic?${new URLSearchParams({ [kind]: message })}` as Route;
 }
 
 function fail(organizationSlug: string, error: unknown): never {
