@@ -78,6 +78,9 @@ export default async function WorkspacePage() {
                 assignment.role === "organization_owner" ||
                 (assignment.role === "branch_manager" && assignment.branch_id !== null),
             );
+            const canTeach = organizationRoles.some(
+              (assignment) => assignment.role === "teacher" && assignment.branch_id !== null,
+            );
             return (
               <li key={organization.id}>
                 <div>
@@ -90,6 +93,14 @@ export default async function WorkspacePage() {
                       href={`/workspace/${organization.slug}/academic`}
                     >
                       Configure academics
+                    </Link>
+                  ) : null}
+                  {canTeach ? (
+                    <Link
+                      className="button button--quiet"
+                      href={`/workspace/${organization.slug}/teacher`}
+                    >
+                      Open teacher classes
                     </Link>
                   ) : null}
                 </div>

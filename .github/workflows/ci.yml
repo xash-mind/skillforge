@@ -90,3 +90,60 @@ jobs:
             /tmp/academic-admin-mobile.png
           if-no-files-found: error
           retention-days: 14
+
+      - name: Run teacher lifecycle mobile and keyboard smoke
+        env:
+          SKILLFORGE_BROWSER_SMOKE: "1"
+        run: |
+          npm start -- --hostname 127.0.0.1 --port 3000 > /tmp/skillforge-teacher-next.log 2>&1 &
+          APP_PID=$!
+          trap 'kill "$APP_PID" 2>/dev/null || true' EXIT
+
+          READY=0
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:3000/browser-smoke/teacher-lifecycle > /dev/null; then
+              READY=1
+              break
+            fi
+            sleep 1
+          done
+          if [ "$READY" -ne 1 ]; then cat /tmp/skillforge-teacher-next.log; exit 1; fi
+
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || true)"
+          if [ -z "$CHROME" ]; then echo "Chrome is unavailable on this runner."; exit 1; fi
+
+          "$CHROME" --headless=new --no-sandbox --disable-gpu \
+            --dump-dom http://127.0.0.1:3000/browser-smoke/teacher-lifecycle \
+            > /tmp/teacher-lifecycle.html
+          grep -q 'data-browser-smoke="teacher-lifecycle"' /tmp/teacher-lifecycle.html
+          grep -q 'Start Class' /tmp/teacher-lifecycle.html
+          grep -q 'Upload failed. Choose the file again and retry.' /tmp/teacher-lifecycle.html
+          grep -q 'AI review placeholder' /tmp/teacher-lifecycle.html
+          grep -q 'Publish class session' /tmp/teacher-lifecycle.html
+
+          "$CHROME" --headless=new --no-sandbox --disable-gpu \
+            --window-size=390,844 \
+            --screenshot=/tmp/teacher-lifecycle-mobile.png \
+            http://127.0.0.1:3000/browser-smoke/teacher-lifecycle
+          test -s /tmp/teacher-lifecycle-mobile.png
+
+          "$CHROME" --headless=new --no-sandbox --disable-gpu \
+            --remote-debugging-port=9222 --user-data-dir=/tmp/teacher-chrome \
+            about:blank > /tmp/teacher-chrome.log 2>&1 &
+          CHROME_PID=$!
+          trap 'kill "$CHROME_PID" "$APP_PID" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:9222/json/version > /dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/verify-teacher-keyboard.mjs http://127.0.0.1:3000/browser-smoke/teacher-lifecycle
+
+      - name: Upload teacher lifecycle browser evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: teacher-lifecycle-browser-evidence
+          path: |
+            /tmp/teacher-lifecycle.html
+            /tmp/teacher-lifecycle-mobile.png
+          if-no-files-found: error
+          retention-days: 14
