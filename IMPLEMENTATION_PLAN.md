@@ -4,33 +4,34 @@ Status: approved implementation plan
 
 ## Ordering
 
-TASK-001 establishes the only supported project structure. TASK-002 establishes trusted identity and tenant boundaries before any sensitive feature. TASK-003 and TASK-004 then build academic and classroom behavior. TASK-005 adds evidence lineage. TASK-006 adds AI only after evidence and approval states exist. TASK-007 exposes accepted domain behavior to each role. TASK-008 completes billing and governance. TASK-009 is the release gate.
+TASK-001 establishes the supported project structure. TASK-002 establishes trusted identity and tenant boundaries before sensitive feature work. TASK-003 and TASK-004 build academic/classroom behavior. TASK-005 adds evidence lineage. TASK-006 adds AI only after evidence and approval states exist. TASK-007 exposes accepted domain behavior to each role. TASK-008 completes billing and governance. TASK-009 is the release gate.
+
+The ordering is a dependency model, not authority to blindly resume the next numbered task. Every run must first reconcile current repository/runtime reality and may rewrite, split, merge or reprioritize tracked work when evidence shows the existing backlog is stale.
 
 ## Increment rules
 
-- One coherent task is active at a time.
-- Each task traces to charter IDs.
+- One coherent product outcome is active at a time unless tightly coupled work shares the same verification and rollback boundary.
+- Each outcome traces to requirements and success criteria in `docs/PRODUCT_SPEC.md`.
 - Migrations and RLS arrive with the domain behavior they protect.
-- UI work includes loading, empty, invalid, denied, failure, retry, and recovery states.
-- Sensitive data and secrets are excluded from logs, screenshots, fixtures, and evidence.
-- No production deployment occurs during ordinary iterations.
-- The completion gate is reread after every recorded iteration.
+- UI work includes loading, empty, invalid, denied, failure, retry and recovery states where relevant.
+- Sensitive data and secrets are excluded from logs, screenshots, fixtures and evidence.
+- Ordinary iterations do not require production deployment.
+- Hosted verification is deliberate: at most one preview and one production deploy per run when deployment is actually needed.
+- Completion is evidence-based and includes required human acceptance; passing automated checks alone is insufficient for subjective product criteria.
 
-## Planned issue mapping after charter approval
+## Issue tracking
 
-Each TASK entry becomes one tracking issue or a milestone epic with bounded child issues when the task cannot fit one reviewable increment. Issue titles and acceptance criteria are generated from `.loopforge/tasks.json`; no issue is created before charter approval to avoid locking stale scope.
+GitHub Issues are the current work ledger. TASK identifiers remain stable roadmap labels, while Issue bodies hold scoped acceptance criteria and links to `docs/PRODUCT_SPEC.md`, `ROADMAP.md` and current implementation PRs. The backlog is evidence, not authority: audit it against actual implementation and product behavior before work begins.
 
 ## Infrastructure sequence
 
-1. Explicitly choose the Supabase organization.
-2. Fetch and present the exact project cost.
-3. Receive the required cost confirmation.
-4. Create one Supabase project and record its non-secret reference.
-5. Develop schema locally through versioned migrations and verify policies.
-6. Create the single Vercel project when TASK-001 produces a deployable app.
-7. Use previews for browser verification.
-8. Promote only the accepted release commit to production.
+1. Preserve the single authorized Supabase project and version all schema changes as migrations.
+2. Keep authentication, RLS, storage and sensitive server actions behind trusted boundaries.
+3. Recover/reconcile access to the canonical Vercel identity rather than creating duplicates.
+4. Use deliberate previews only when hosted/browser evidence is materially required.
+5. Promote only an accepted release commit to production.
+6. Verify the canonical URL maps to that exact commit and preserve a rollback path.
 
 ## Release condition
 
-The project is complete only when all success criteria pass with bound evidence, required actual human acceptance is recorded, integrity locks verify, and https://skillforge-bay-three.vercel.app serves the exact accepted commit.
+The project is complete only when every mandatory success criterion in `docs/PRODUCT_SPEC.md` has the required evidence, owner acceptance is recorded where specified, no critical/high release blocker remains, and `https://skillforge-bay-three.vercel.app` serves the exact accepted commit with rollback documented.
