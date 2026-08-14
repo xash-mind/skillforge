@@ -75,4 +75,4 @@ A modular Next.js App Router application uses one Supabase project for Postgres,
 
 ## Definition of complete
 
-SkillForge is complete when every mandatory requirement and success criterion in `docs/PRODUCT_SPEC.md` is satisfied with evidence appropriate to its risk; required owner acceptance is recorded for the teacher lifecycle, role-dashboard clarity and governance behavior; the exact accepted release commit passes the full clean verification gate; and the canonical production URL `https://skillforge-bay-three.vercel.app` serves that accepted commit with a documented rollback path.
+SkillForge is complete when every mandatory requirement and success criterion in `docs/PRODUCT_SPEC.md` is satisfied with evidence appropriate to its risk; required owner acceptance is recorded for the teacher lifecycle, role-dashboard clarity and governance behavior; the exact accepted release commit passes the full clean verification gate; and the canonical production URL `https://skillforge-xash-mind0.vercel.app` serves that accepted commit with a documented rollback path.
