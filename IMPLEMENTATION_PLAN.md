@@ -34,4 +34,4 @@ GitHub Issues are the current work ledger. TASK identifiers remain stable roadma
 
 ## Release condition
 
-The project is complete only when every mandatory success criterion in `docs/PRODUCT_SPEC.md` has the required evidence, owner acceptance is recorded where specified, no critical/high release blocker remains, and `https://skillforge-bay-three.vercel.app` serves the exact accepted commit with rollback documented.
+The project is complete only when every mandatory success criterion in `docs/PRODUCT_SPEC.md` has the required evidence, owner acceptance is recorded where specified, no critical/high release blocker remains, and `https://skillforge-xash-mind0.vercel.app` serves the exact accepted commit with rollback documented.
