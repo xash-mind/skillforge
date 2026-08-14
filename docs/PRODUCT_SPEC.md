@@ -43,7 +43,7 @@ Platform Owner; Organization Owner; Branch Manager; Teacher; Student; Parent.
 - `REQ-017` — Use modular domain boundaries and an extensible AI pipeline so roadmap modules can be added without major rewrites.
 - `REQ-018` — Provide a mobile-first, responsive, accessible interface with clear next actions and usable failure recovery.
 - `REQ-019` — Version database schema, tenant policies, storage rules, background processing and configuration in the repository.
-- `REQ-020` — Deploy one canonical production identity at `https://skillforge-bay-three.vercel.app` when the release gate passes.
+- `REQ-020` — Deploy one canonical production identity at `https://skillforge-xash-mind0.vercel.app` when the release gate passes.
 - `REQ-021` — Support India-first, global-ready governance through versioned regional policy definitions; require every organization to select an allowed retention policy and consent basis before minor accounts or learning-evidence processing are enabled; provide export, deletion, residency and audit controls.
 - `REQ-022` — Use one Supabase backend with versioned Postgres migrations, RLS, storage policies, authentication integration and tenant-aware server boundaries.
 - `REQ-023` — Provide a stable AI adapter plug-in contract with multiple contract-tested adapters, tenant-scoped organization configuration, server-side secret references, capability metadata, observability, retries, normalized failures and teacher-controlled publication.
@@ -56,7 +56,7 @@ Platform Owner; Organization Owner; Branch Manager; Teacher; Student; Parent.
 - `CONSTRAINT-003` — Teachers are the final authority for academic publication and progress approval.
 - `CONSTRAINT-004` — Architecture uses modular feature boundaries, domain-driven organization, strong RBAC, audit logging and an extensible AI pipeline.
 - `CONSTRAINT-005` — Secrets and privileged credentials remain outside source code, logs, chat and evidence.
-- `CONSTRAINT-006` — Production uses exactly one Vercel project and the canonical URL `https://skillforge-bay-three.vercel.app`.
+- `CONSTRAINT-006` — Production uses exactly one Vercel project and the canonical URL `https://skillforge-xash-mind0.vercel.app`.
 - `CONSTRAINT-007` — Student-data behavior launches India first through versioned regional policy; there is no universal retention or consent default and every organization makes an allowed, auditable selection.
 - `CONSTRAINT-008` — Use exactly one authorized Supabase project for SkillForge; do not create duplicates to bypass access or workflow problems.
 - `CONSTRAINT-009` — Closed billing-period usage snapshots are immutable; later activation changes affect open/future periods unless an authorized adjustment is recorded.
