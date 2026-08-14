@@ -3,93 +3,98 @@
 **Updated:** 14 August 2026  
 **Repository:** `xash-mind/skillforge`  
 **Project status:** active, pre-release  
-**Current `main` before this status update:** `2a7d8076aad996c37b7f53ac354d3a1e98be8c78`  
-**Last verified application commit:** `632b418b00e7c953efb308bdc49480532a8877c7`  
 **Last accepted product milestone:** TASK-003 — academic structure and enrollment  
 **Current product objective:** Issue #10 / TASK-004 — reconcile and complete the guided teacher class lifecycle  
-**Immediate delivery blocker:** Issue #22 — restore the one canonical delivery foundation before hosted acceptance  
-**Current implementation PR:** draft PR #21 at `0829a8591628a2a7f53fd2e21664403eae80dd3a`; diverged from current `main` (`ahead 15 / behind 2`), not accepted or merged
+**Delivery-foundation recovery:** Issue #22 — provider repair completed except for the account-level GitHub Actions blocker  
+**Current implementation PR:** draft PR #21 at `0829a8591628a2a7f53fd2e21664403eae80dd3a`; unaccepted and outside the Issue #22 provider repair
 
 ## Executive state
 
-SkillForge has a real application foundation, trusted Supabase tenancy/RBAC boundary, and accepted TASK-003 academic structure/enrollment work. It is **not production-ready** and currently has no working canonical Vercel production deployment.
+SkillForge remains pre-release. This run repaired the Vercel delivery foundation without changing product behavior, Supabase schema/data, RLS, Storage policy, AI behavior, billing, governance, dashboards or Learning Graph behavior, and without creating a production release.
 
-The next product milestone remains TASK-004. Draft PR #21 contains substantial teacher-lifecycle work, but it is not acceptance-ready because repository/provider migration identity is divergent, the final PR quality gate is red, upload recovery is incomplete, and its browser evidence is a proxy rather than the real authenticated teacher workflow.
+The next product run remains Issue #10 / TASK-004 and must freshly reconcile draft PR #21. TASK-009 / Issue #15 remains the only production-release boundary.
 
-A fresh 14 August provider audit also found an earlier delivery-foundation blocker: the one existing Vercel project is visible again, but it is configured incorrectly for this Next.js repository and has never produced a working production deployment in the sampled TASK-001-through-current history. This is tracked in Issue #22 so it can be repaired without prematurely turning TASK-009 into a production release.
+## Canonical provider identities
 
-## Verified product/repository reality
+- **Supabase:** exactly one authorized SkillForge project remains: `qvrqitirdxmckdqmysqu` in `ap-south-1`, status `ACTIVE_HEALTHY`. It was inspected only far enough to preserve identity and was not mutated.
+- **Vercel:** exactly one canonical project remains: `prj_IWxn6mdD5LaB9hc4KtuMujtDoNQ8` under team `team_BPsOfcrNMh4WJBgbw8eMcXuN`. No replacement or duplicate project was created.
+- **Canonical Vercel URL:** repository truth is now `https://skillforge-xash-mind0.vercel.app`, which is a current domain of the existing canonical project. The former documented `https://skillforge-bay-three.vercel.app` was verified unattached and returned Vercel `404 NOT_FOUND`; it is no longer the canonical contract.
 
-- Current pre-status-update `main` is `2a7d8076aad996c37b7f53ac354d3a1e98be8c78`; the last two main commits after the accepted TASK-003 recovery are project-operations/status documentation changes rather than a new accepted product milestone.
-- Draft PR #21 remains diverged from main and must be reconciled rather than merged mechanically.
-- PR #21 final run `31574451675` genuinely fails during `npm run verify`: Prettier cannot parse temporary workflow `.github/workflows/task004-adversarial-test-fix2.yml`. The remaining lint/typecheck/tests/build and teacher mobile/keyboard steps are skipped. That branch-only workflow also grants `contents: write` and self-mutates the branch; it must not survive into an accepted candidate.
-- Current main run `31693959567` is **not a code-quality failure**. GitHub starts no runner, executes zero steps, and annotates the job: recent account payments failed or the spending limit needs increasing. Treat CI as an external verification blocker until account Actions capacity is restored; do not weaken the quality gate.
-- Main itself contains only the accepted workspace/academic surfaces. The real teacher lifecycle route exists only in draft PR #21 at present.
-- The public home source already communicates the intended class lifecycle and teacher authority, but its Start Class control is intentionally disabled and says interactive workflows arrive in a later milestone. A working deploy would therefore still represent a pre-release foundation, not a finished product.
+## Vercel delivery repair
 
-## TASK-004 database and failure-recovery boundary
+The root cause of the long-lived failed deployments was provider configuration, not a Next.js source regression. Before repair, the existing project reported `framework: null`, `live: false`, and sampled deployments failed after a successful application build because Vercel expected a static output directory named `public`.
 
-The canonical Supabase project already records TASK-004 migrations `teacher_class_lifecycle` and `teacher_class_lifecycle_hardening` as applied under versions `20260812072724` and `20260812072834`. Current main contains neither migration. PR #21 contains candidate files under different identities: `20260812065000_teacher_class_lifecycle.sql` and `20260812072000_teacher_class_lifecycle_hardening.sql`.
+Commit `3c60aceb6af2eb11ccc41088862580f1b55ee922` added the minimal repository-level provider override in `vercel.json`:
 
-Exact hosted statements must be reconciled to repository history before any further schema mutation. Replaying equivalent DDL under a second migration identity is not acceptable.
+- framework preset: `nextjs`;
+- output directory override: `null`, returning output handling to the framework default instead of `public`;
+- Git deployment policy: `deploymentEnabled: false`.
 
-The live canonical database currently contains zero auth users, profiles, organizations, branches, subjects, classes, enrollments, class teachers, lesson sessions, attendance records, lesson uploads and homework assignments; the `classroom-evidence` bucket also contains zero objects. This makes current reconciliation low-data-risk, but it does not remove migration-history risk.
+Vercel's project metadata still reports its stored dashboard framework value as `null`, but file-based Vercel configuration overrides those build settings for deployments. The deliberate preview below proved the effective configuration: Vercel detected Next.js 16.3.0, ran the repository's `npm run build`, completed the Next.js build into `/vercel/output`, deployed Lambda/static outputs, and did not emit the former `STATIC_BUILD_NO_OUT_DIR` / `public` failure.
 
-PR #21 also has a verified cross-provider recovery gap: if Storage succeeds but the database finalization update fails, the metadata row remains `pending` while the file exists in Storage. The route/UI only offers retry for rows already marked `failed`, so that path can become unrecoverable. TASK-004 must repair this before acceptance.
+## Deployment-trigger discipline
 
-Supabase is otherwise healthy: the one authorized SkillForge project is `qvrqitirdxmckdqmysqu` in `ap-south-1`, security advisor reports no findings, and the performance advisor's substantive TASK-004 note is an informational unindexed `attendance_records_enrollment_fkey`.
+Automatic Git deployment churn is now disabled in repository-controlled Vercel configuration.
 
-## Delivery/runtime reality
+Verified evidence:
 
-- **One Vercel identity still exists:** project `prj_IWxn6mdD5LaB9hc4KtuMujtDoNQ8` under team `team_BPsOfcrNMh4WJBgbw8eMcXuN`. Do not create a replacement project.
-- **Project configuration is wrong:** Vercel reports `framework: null`, `live: false`.
-- **Latest current-main production attempt is broken:** deployment `dpl_HDPHFRcKx9EpkYk1k7wBahzueLyU`, source SHA `2a7d8076aad996c37b7f53ac354d3a1e98be8c78`, ends `ERROR` because Vercel expects an output directory named `public` after the build. The TASK-001 production attempt shows the same error, proving this is a long-lived project configuration fault rather than a new source regression.
-- **Documented canonical URL is stale/broken:** repository truth currently names `https://skillforge-bay-three.vercel.app`, but the current Vercel project does not list that domain and the URL returns Vercel `NOT_FOUND` (404). Current listed project domains are `skillforge-xash-mind0.vercel.app` and `skillforge-git-main-xash-mind0.vercel.app`.
-- **Deployment churn is structural:** Vercel history shows ordinary main commits and many implementation/agent-branch commits automatically generating deployment attempts. The written “one preview / one deploy” rule is therefore not sufficient by itself; Git/Vercel trigger configuration must also be reconciled. This behavior contributed to the earlier >100-deploy free-tier exhaustion.
-- Full production release remains TASK-009. Issue #22 is only the prerequisite needed to make deliberate previews and later exact-build acceptance trustworthy.
+- the required config commit on `agent/restore-delivery-foundation` created zero Vercel deployments;
+- fast-forwarding `main` to that same commit created zero Vercel deployments;
+- subsequent canonical-identity/tracking commits on the safe branch created zero Vercel deployments;
+- resetting the one-off preview branch back to the safe config created zero additional deployments.
 
-## Product and acceptance boundary
+Ordinary implementation/docs commits therefore no longer automatically consume preview or production deployments. Deliberate preview/release work must intentionally opt into a deployment and must restore the safe policy afterward.
 
-TASK-004 remains:
+## One deliberate preview
 
-Start Class -> complete attendance -> upload transcript/resources with recoverable failure semantics -> assign homework -> explicit AI-review placeholder -> explicit teacher review -> Publish Class.
+Exactly one hosted preview was created for this run:
 
-TASK-004 owns only the classroom upload/failure-recovery subset of `REQ-007`. Transcript/note ingestion processing, normalization, idempotency and Learning Graph lineage remain TASK-005. Production AI adapters remain TASK-006. Teachers remain the final academic publication authority.
+- Vercel deployment: `dpl_Bzt1iQq6gGT2x9XFbMR4UmKEPYbw`;
+- preview URL: `https://skillforge-afdjbg7l9-xash-mind0.vercel.app`;
+- source branch: `preview/issue-22-delivery-foundation`;
+- exact source SHA: `6e24ae89ffecebe83bbf4bedadb8ffb28194a16b`;
+- target: preview (`target: null`), not production;
+- final state: `READY`;
+- build: Next.js 16.3.0 detected, `npm run build` succeeded, TypeScript completed, routes were generated, and Vercel reported `Build Completed in /vercel/output`;
+- runtime fetch: HTTP 200 served the expected current SkillForge landing surface, including `Every class becomes a clear next step.` and the teacher-authority statement `AI assists. Teachers decide.`.
 
-The current PR #21 browser smoke at `/browser-smoke/teacher-lifecycle` is useful rendering/tab-order evidence but is not `SUCCESS-001`. Acceptance requires the real authenticated teacher route on the exact candidate, representative 390x844 mobile and keyboard verification, failure/recovery paths, adversarial database/Storage isolation checks, and explicit owner acceptance.
+The preview-only SHA differs from the safe delivery config only by intentionally setting `git.deploymentEnabled` to `true` long enough to create this single preview. After verification, the preview branch ref was reset to the safe `3c60aceb...` configuration, so it cannot become a continuing deployment loophole.
 
-Until regional governance is implemented, verification must use synthetic/non-sensitive evidence. Real minor learning evidence must not be enabled before allowed versioned consent and retention selections exist.
+The served page includes the expected mobile viewport contract, and the exact candidate stylesheet remains mobile-first with larger-layout breakpoints beginning at 48rem and 68rem. A direct 390x844 headless Chromium screenshot could not be captured from the execution container because that container had no external DNS; this limitation is recorded rather than being misrepresented as visual product acceptance. Issue #22 used the hosted render only to prove provider delivery. TASK-004 still requires its own exact-route mobile/browser acceptance later.
 
-## Roadmap reconciliation
+## GitHub Actions blocker
+
+GitHub Actions remains an account/provider blocker and must not be interpreted as a code-quality failure.
+
+After the required delivery-config commit reached main, Quality gate run `31784022557` / job `94715794114` again:
+
+- obtained no runner (`runner_id: 0`);
+- executed zero steps;
+- concluded failure before repository verification began;
+- was annotated by GitHub: `The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings`.
+
+The canonical quality workflow is unchanged. No check was removed, weakened, bypassed or faked. Fresh GitHub-hosted quality evidence remains blocked until the account billing/spending-limit condition is fixed by a human/provider setting.
+
+## Product and safety boundary
+
+This delivery run did not absorb TASK-004 work from Issue #10 / PR #21. The known migration-history reconciliation, upload-finalization recovery, CI branch cleanup, authenticated teacher-route verification, adversarial tenant/branch/Storage evidence and owner acceptance remain TASK-004 work.
+
+Teacher authority, tenant isolation, branch isolation and governance constraints are unchanged. No real minor learning evidence was introduced. No sensitive learning data was placed in logs, screenshots, fixtures or provider metadata.
+
+## Roadmap
 
 1. TASK-001 — reproducible application foundation — complete.
 2. TASK-002 — tenancy, Auth, RBAC and audit — complete.
-3. TASK-003 — academic structure and enrollment — complete and verified.
-4. **BLOCKER #22 — canonical delivery foundation — immediate prerequisite for reliable hosted acceptance; not a production release.**
-5. TASK-004 — guided teacher class lifecycle — current product recovery/reconciliation objective; not accepted.
-6. TASK-005 — evidence ingestion and Learning Graph lineage — valid, blocked on accepted TASK-004 boundaries.
-7. TASK-006 — provider-independent AI adapters and teacher approval — valid, after evidence lineage.
-8. TASK-007 — role-specific dashboards — valid, after accepted underlying workflows.
-9. TASK-008 — billing snapshots and regional governance — valid but internally dependency-sensitive: governance must be established before any real minor evidence/pilot behavior; billing does not justify delaying that safety gate.
-10. TASK-009 — full release verification and operational recovery — valid; production remains deferred until the release gate.
-
-## Needs owner / human blockers
-
-- GitHub Actions currently cannot execute because of the account billing/spending-limit state. This is a human/provider blocker for fresh CI evidence; local verification can continue but must not be misrepresented as a passing GitHub quality gate.
-- Owner acceptance is required only after the real TASK-004 teacher journey passes automated/database/mobile/accessibility verification.
-- No new Supabase or Vercel project is authorized.
+3. TASK-003 — academic structure and enrollment — complete and accepted.
+4. Issue #22 — delivery foundation repaired; GitHub Actions remains a documented human/provider blocker.
+5. TASK-004 / Issue #10 — next product recovery objective; draft PR #21 remains unaccepted.
+6. TASK-005 through TASK-008 — remain downstream of accepted earlier boundaries.
+7. TASK-009 / Issue #15 — full release verification and production promotion; **no production release occurred in this run**.
 
 ## Next action
 
-Run one bounded delivery-foundation recovery against Issue #22 **before relying on hosted verification**:
+First fix the GitHub account billing/spending-limit condition so the canonical Quality gate can obtain a runner. Then, in a fresh TASK-004 run, return to Issue #10 / draft PR #21 and reconcile migration identity, remove self-mutating CI machinery, repair pending-upload recovery, verify tenant/branch/session boundaries and prove the real authenticated teacher lifecycle with synthetic evidence.
 
-1. Reconcile the existing Vercel project settings; fix the Next.js framework/output misconfiguration without creating another project.
-2. Reconcile the stale documented canonical URL with the one-project identity constraint.
-3. Stop automatic per-commit/agent-branch deployment churn so repository deployment discipline is actually enforceable.
-4. Re-check GitHub Actions availability; do not weaken CI if billing remains blocked.
-5. If provider verification requires a build, use at most one deliberate preview from an exact known main commit. Do not production-release unfinished SkillForge.
-6. Stop after the delivery foundation is proven or a human billing/identity blocker is reached.
+Production remains deferred to TASK-009. The canonical release URL is `https://skillforge-xash-mind0.vercel.app`, but it must not be promoted until the full release gate passes.
 
-Then resume Issue #10 / PR #21 as a separate product recovery: reconcile exact Supabase migration identity, remove self-mutating CI machinery, fix pending-upload recovery, verify tenant/branch/session boundaries, and prove the real authenticated teacher lifecycle with synthetic evidence.
-
-**Deployment discipline: only 1 preview and 1 deploy maximum for this run; do not create per-commit or agent-branch deployments.**
+**Deployment discipline:** automatic Git deployments are disabled; deliberate runs remain limited to at most one preview and one production deploy when genuinely required.
