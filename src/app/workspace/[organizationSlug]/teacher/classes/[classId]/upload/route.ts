@@ -26,6 +26,10 @@ function destination(
   return NextResponse.redirect(url, { status: 303 });
 }
 
+function uploadLabel(kind: ClassroomUploadKind) {
+  return kind === "transcript" ? "Transcript" : "Class resource";
+}
+
 export async function POST(request: Request, routeContext: RouteContext) {
   const { organizationSlug, classId: classIdRaw } = await routeContext.params;
   const classId = id.parse(classIdRaw);
@@ -34,16 +38,8 @@ export async function POST(request: Request, routeContext: RouteContext) {
   const kind = kindSchema.parse(formData.get("kind")) as ClassroomUploadKind;
   const retryUploadIdRaw = formData.get("retryUploadId");
   const retryUploadId = retryUploadIdRaw ? id.parse(retryUploadIdRaw) : null;
-  const fileValue = formData.get("file");
-
-  if (!(fileValue instanceof File)) {
-    return destination(request, organizationSlug, classId, "error", "Choose a file and try again.");
-  }
-
-  const validation = validateClassroomUpload(fileValue);
-  if (!validation.ok) {
-    return destination(request, organizationSlug, classId, "error", validation.message);
-  }
+  const recoverUploadIdRaw = formData.get("recoverUploadId");
+  const recoverUploadId = recoverUploadIdRaw ? id.parse(recoverUploadIdRaw) : null;
 
   const context = await requireTeacherClassContext(organizationSlug, classId);
   const { data: session, error: sessionError } = await context.supabase
@@ -60,6 +56,118 @@ export async function POST(request: Request, routeContext: RouteContext) {
       classId,
       "error",
       "Uploads are only available after attendance and before evidence confirmation.",
+    );
+  }
+
+  if (recoverUploadId) {
+    const { data: pendingUpload, error: pendingUploadError } = await context.supabase
+      .from("lesson_uploads")
+      .select("id, kind, status")
+      .eq("id", recoverUploadId)
+      .eq("lesson_session_id", sessionId)
+      .eq("class_id", classId)
+      .maybeSingle();
+
+    if (
+      pendingUploadError ||
+      !pendingUpload ||
+      pendingUpload.status !== "pending" ||
+      pendingUpload.kind !== kind
+    ) {
+      return destination(
+        request,
+        organizationSlug,
+        classId,
+        "error",
+        "That pending upload is no longer recoverable. Reload the class and review its current state.",
+      );
+    }
+
+    const { data: finalized, error: finalizeError } = await context.supabase
+      .from("lesson_uploads")
+      .update({ status: "uploaded", failure_message: null, uploaded_at: new Date().toISOString() })
+      .eq("id", pendingUpload.id)
+      .eq("status", "pending")
+      .select("id")
+      .single();
+
+    if (!finalizeError && finalized) {
+      return destination(
+        request,
+        organizationSlug,
+        classId,
+        "notice",
+        `${uploadLabel(kind)} recovered from its already stored file.`,
+      );
+    }
+
+    if (finalizeError?.message.includes("matching storage object")) {
+      const { error: markFailedError } = await context.supabase
+        .from("lesson_uploads")
+        .update({
+          status: "failed",
+          failure_message: "The interrupted attempt has no stored file. Choose the file again and retry.",
+          uploaded_at: null,
+        })
+        .eq("id", pendingUpload.id)
+        .eq("status", "pending");
+
+      return destination(
+        request,
+        organizationSlug,
+        classId,
+        "error",
+        markFailedError
+          ? "The interrupted upload is still pending. Reload and retry recovery before continuing."
+          : "The interrupted upload had no stored file. It is now ready for a normal retry.",
+      );
+    }
+
+    return destination(
+      request,
+      organizationSlug,
+      classId,
+      "error",
+      "The stored upload could not be finalized yet. Reload and retry recovery before continuing.",
+    );
+  }
+
+  const fileValue = formData.get("file");
+  if (!(fileValue instanceof File)) {
+    return destination(request, organizationSlug, classId, "error", "Choose a file and try again.");
+  }
+
+  const validation = validateClassroomUpload(fileValue);
+  if (!validation.ok) {
+    return destination(request, organizationSlug, classId, "error", validation.message);
+  }
+
+  const { data: existingPending, error: pendingLookupError } = await context.supabase
+    .from("lesson_uploads")
+    .select("id")
+    .eq("lesson_session_id", sessionId)
+    .eq("class_id", classId)
+    .eq("kind", kind)
+    .eq("status", "pending")
+    .limit(1)
+    .maybeSingle();
+
+  if (pendingLookupError) {
+    return destination(
+      request,
+      organizationSlug,
+      classId,
+      "error",
+      "The current upload state could not be checked safely. Reload the class and try again.",
+    );
+  }
+  if (existingPending) {
+    return destination(
+      request,
+      organizationSlug,
+      classId,
+      "error",
+      `Recover the pending ${kind} attempt before uploading another file of that kind.`,
     );
   }
 
@@ -159,29 +267,33 @@ export async function POST(request: Request, routeContext: RouteContext) {
         failure_message: "Upload failed. Choose the file again and retry.",
         uploaded_at: null,
       })
-      .eq("id", uploadId);
+      .eq("id", uploadId)
+      .eq("status", "pending");
 
     return destination(
       request,
       organizationSlug,
       classId,
       "error",
-      "Upload failed. The attempt is preserved so you can choose the file again and retry.",
+      "Upload failed. The attempt is preserved so you can recover it or choose the file again and retry.",
     );
   }
 
-  const { error: finalizeError } = await context.supabase
+  const { data: finalized, error: finalizeError } = await context.supabase
     .from("lesson_uploads")
     .update({ status: "uploaded", failure_message: null, uploaded_at: new Date().toISOString() })
-    .eq("id", uploadId);
+    .eq("id", uploadId)
+    .eq("status", "pending")
+    .select("id")
+    .single();
 
-  if (finalizeError) {
+  if (finalizeError || !finalized) {
     return destination(
       request,
       organizationSlug,
       classId,
       "error",
-      "The file reached storage but its class record could not be finalized. Reload before retrying.",
+      "The file reached storage but its class record could not be finalized. Reload and use Recover stored upload; do not upload a duplicate file.",
     );
   }
 
@@ -190,6 +302,6 @@ export async function POST(request: Request, routeContext: RouteContext) {
     organizationSlug,
     classId,
     "notice",
-    `${kind === "transcript" ? "Transcript" : "Class resource"} uploaded successfully.`,
+    `${uploadLabel(kind)} uploaded successfully.`,
   );
 }
