@@ -15,6 +15,12 @@ const recoveryMigrationPath = join(
   "migrations",
   "20260824110054_teacher_class_lifecycle_recovery.sql",
 );
+const storageRepairMigrationPath = join(
+  process.cwd(),
+  "supabase",
+  "migrations",
+  "20260824110447_teacher_class_lifecycle_storage_policy_repair.sql",
+);
 const adversarialTestPath = join(
   process.cwd(),
   "supabase",
@@ -43,6 +49,19 @@ describe("teacher lifecycle trusted-boundary hardening", () => {
     expect(sql).toContain("session.state = 'attendance_marked'");
     expect(sql).toContain("(storage.foldername(name))[4] ~ '^[0-9]+$'");
     expect(sql).not.toContain("create policy classroom_evidence_update_teacher");
+  });
+
+  it("allows authenticated Storage policies to evaluate their private security-definer helpers", async () => {
+    const sql = await readFile(storageRepairMigrationPath, "utf8");
+
+    expect(sql).toContain(
+      "grant execute on function private.can_read_classroom_evidence(bigint, bigint, bigint, bigint)",
+    );
+    expect(sql).toContain(
+      "grant execute on function private.can_write_classroom_evidence(bigint, bigint, bigint, bigint)",
+    );
+    expect(sql).toContain("to authenticated");
+    expect(sql).toContain("from public, anon, service_role");
   });
 
   it("makes pending upload recovery a database-enforced lifecycle invariant", async () => {
