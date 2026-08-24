@@ -165,7 +165,9 @@ export default async function TeacherClassPage({ params, searchParams }: PagePro
     ]),
   );
   const uploads = uploadsResult.data ?? [];
-  const pendingKinds = new Set(uploads.filter((upload) => upload.status === "pending").map((upload) => upload.kind));
+  const pendingKinds = new Set(
+    uploads.filter((upload) => upload.status === "pending").map((upload) => upload.kind),
+  );
   const homework = (homeworkResult.data ?? [])[0];
   const notice = first(query.notice);
   const error = first(query.error);
