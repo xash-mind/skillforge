@@ -85,7 +85,11 @@ export async function POST(request: Request, routeContext: RouteContext) {
 
     const { data: finalized, error: finalizeError } = await context.supabase
       .from("lesson_uploads")
-      .update({ status: "uploaded", failure_message: null, uploaded_at: new Date().toISOString() })
+      .update({
+        status: "uploaded",
+        failure_message: null,
+        uploaded_at: new Date().toISOString(),
+      })
       .eq("id", pendingUpload.id)
       .eq("status", "pending")
       .select("id")
@@ -106,7 +110,8 @@ export async function POST(request: Request, routeContext: RouteContext) {
         .from("lesson_uploads")
         .update({
           status: "failed",
-          failure_message: "The interrupted attempt has no stored file. Choose the file again and retry.",
+          failure_message:
+            "The interrupted attempt has no stored file. Choose the file again and retry.",
           uploaded_at: null,
         })
         .eq("id", pendingUpload.id)
@@ -281,7 +286,11 @@ export async function POST(request: Request, routeContext: RouteContext) {
 
   const { data: finalized, error: finalizeError } = await context.supabase
     .from("lesson_uploads")
-    .update({ status: "uploaded", failure_message: null, uploaded_at: new Date().toISOString() })
+    .update({
+      status: "uploaded",
+      failure_message: null,
+      uploaded_at: new Date().toISOString(),
+    })
     .eq("id", uploadId)
     .eq("status", "pending")
     .select("id")
