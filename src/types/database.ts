@@ -88,6 +88,71 @@ type ClassRow = {
   subject_id: number;
   updated_at: string;
 };
+type LessonSessionRow = {
+  id: number;
+  organization_id: number;
+  branch_id: number;
+  class_id: number;
+  state: string;
+  title: string | null;
+  session_date: string;
+  started_at: string | null;
+  attendance_marked_at: string | null;
+  evidence_uploaded_at: string | null;
+  homework_assigned_at: string | null;
+  ai_review_ready_at: string | null;
+  teacher_reviewed_at: string | null;
+  teacher_reviewed_by: string | null;
+  published_at: string | null;
+  created_by: string;
+  created_at: string;
+  updated_at: string;
+};
+type AttendanceRecordRow = {
+  id: number;
+  organization_id: number;
+  branch_id: number;
+  class_id: number;
+  lesson_session_id: number;
+  organization_membership_id: number;
+  status: string;
+  note: string | null;
+  recorded_by: string;
+  created_at: string;
+  updated_at: string;
+};
+type LessonUploadRow = {
+  id: number;
+  organization_id: number;
+  branch_id: number;
+  class_id: number;
+  lesson_session_id: number;
+  kind: string;
+  storage_path: string;
+  original_name: string;
+  mime_type: string;
+  size_bytes: number;
+  status: string;
+  failure_message: string | null;
+  retry_count: number;
+  uploaded_at: string | null;
+  created_by: string;
+  created_at: string;
+  updated_at: string;
+};
+type HomeworkAssignmentRow = {
+  id: number;
+  organization_id: number;
+  branch_id: number;
+  class_id: number;
+  lesson_session_id: number;
+  title: string;
+  instructions: string | null;
+  due_at: string | null;
+  created_by: string;
+  created_at: string;
+  updated_at: string;
+};
 type OrganizationMembershipRow = {
   created_at: string;
   created_by: string;
@@ -251,6 +316,84 @@ export type Database = {
           status?: string;
         }
       >;
+      attendance_records: Table<
+        AttendanceRecordRow,
+        Omit<AttendanceRecordRow, "id" | "created_at" | "updated_at" | "note"> & {
+          id?: never;
+          created_at?: string;
+          updated_at?: string;
+          note?: string | null;
+        }
+      >;
+      homework_assignments: Table<
+        HomeworkAssignmentRow,
+        Omit<
+          HomeworkAssignmentRow,
+          "id" | "created_at" | "updated_at" | "instructions" | "due_at"
+        > & {
+          id?: never;
+          created_at?: string;
+          updated_at?: string;
+          instructions?: string | null;
+          due_at?: string | null;
+        }
+      >;
+      lesson_sessions: Table<
+        LessonSessionRow,
+        Omit<
+          LessonSessionRow,
+          | "id"
+          | "state"
+          | "session_date"
+          | "started_at"
+          | "attendance_marked_at"
+          | "evidence_uploaded_at"
+          | "homework_assigned_at"
+          | "ai_review_ready_at"
+          | "teacher_reviewed_at"
+          | "teacher_reviewed_by"
+          | "published_at"
+          | "created_at"
+          | "updated_at"
+          | "title"
+        > & {
+          id?: never;
+          state?: string;
+          session_date?: string;
+          started_at?: string | null;
+          attendance_marked_at?: string | null;
+          evidence_uploaded_at?: string | null;
+          homework_assigned_at?: string | null;
+          ai_review_ready_at?: string | null;
+          teacher_reviewed_at?: string | null;
+          teacher_reviewed_by?: string | null;
+          published_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          title?: string | null;
+        }
+      >;
+      lesson_uploads: Table<
+        LessonUploadRow,
+        Omit<
+          LessonUploadRow,
+          | "id"
+          | "status"
+          | "failure_message"
+          | "retry_count"
+          | "uploaded_at"
+          | "created_at"
+          | "updated_at"
+        > & {
+          id?: never;
+          status?: string;
+          failure_message?: string | null;
+          retry_count?: number;
+          uploaded_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        }
+      >;
       organization_memberships: Table<
         OrganizationMembershipRow,
         Omit<
@@ -362,6 +505,18 @@ export type Database = {
     };
     Views: { [_ in never]: never };
     Functions: {
+      advance_lesson_session: {
+        Args: {
+          lesson_session_id_input: number;
+          expected_state_input: string;
+          next_state_input: string;
+        };
+        Returns: string;
+      };
+      start_lesson_session: {
+        Args: { class_id_input: number; title_input?: string | null };
+        Returns: number;
+      };
       create_class_bundle: {
         Args: {
           academic_year_input: string;
