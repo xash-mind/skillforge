@@ -1,4 +1,4 @@
--- TASK-004 rollback-safe teacher lifecycle, transition, retry, and branch-isolation proof.
+-- TASK-004 rollback-safe teacher lifecycle, transition, retry, recovery, and branch-isolation proof.
 begin;
 
 insert into auth.users (id, email, raw_user_meta_data)
@@ -185,14 +185,14 @@ begin
   begin
     insert into public.lesson_uploads (
       organization_id, branch_id, class_id, lesson_session_id, kind, storage_path,
-      original_name, mime_type, size_bytes, status, uploaded_at, created_by
+      original_name, mime_type, size_bytes, status, created_by
     ) values (
       current_setting('app.lifecycle.organization_id')::bigint,
       current_setting('app.lifecycle.branch_id')::bigint,
       current_setting('app.lifecycle.class_id')::bigint,
       current_setting('app.lifecycle.session_id')::bigint,
       'transcript', 'forged/path/forged.txt', 'forged.txt', 'text/plain', 10,
-      'uploaded', statement_timestamp(), '30000000-0000-0000-0000-000000000004'
+      'pending', '30000000-0000-0000-0000-000000000004'
     );
     raise exception 'west teacher inserted main upload metadata';
   exception when insufficient_privilege then null;
@@ -215,24 +215,33 @@ $$;
 
 select set_config('request.jwt.claim.sub', '30000000-0000-0000-0000-000000000003', true);
 
+insert into public.lesson_uploads (
+  organization_id, branch_id, class_id, lesson_session_id, kind, storage_path,
+  original_name, mime_type, size_bytes, status, created_by
+)
+select session.organization_id, session.branch_id, session.class_id, session.id,
+       'transcript',
+       session.organization_id || '/' || session.branch_id || '/' || session.class_id || '/' || session.id || '/forged.txt',
+       'forged.txt', 'text/plain', 10, 'pending',
+       '30000000-0000-0000-0000-000000000003'
+from public.lesson_sessions session;
+
 do $$
 begin
   begin
-    insert into public.lesson_uploads (
-      organization_id, branch_id, class_id, lesson_session_id, kind, storage_path,
-      original_name, mime_type, size_bytes, status, uploaded_at, created_by
-    )
-    select session.organization_id, session.branch_id, session.class_id, session.id,
-           'transcript',
-           session.organization_id || '/' || session.branch_id || '/' || session.class_id || '/' || session.id || '/forged.txt',
-           'forged.txt', 'text/plain', 10, 'uploaded', statement_timestamp(),
-           '30000000-0000-0000-0000-000000000003'
-    from public.lesson_sessions session;
+    update public.lesson_uploads
+    set status = 'uploaded', uploaded_at = statement_timestamp()
+    where original_name = 'forged.txt';
     raise exception 'teacher forged uploaded metadata without a storage object';
   exception when check_violation then null;
   end;
 end;
 $$;
+
+update public.lesson_uploads
+set status = 'failed',
+    failure_message = 'The interrupted attempt has no stored file. Choose the file again and retry.'
+where original_name = 'forged.txt';
 
 insert into public.lesson_uploads (
   organization_id, branch_id, class_id, lesson_session_id, kind, storage_path,
@@ -245,6 +254,37 @@ select session.organization_id, session.branch_id, session.class_id, session.id,
 from public.lesson_sessions session
 cross join (values ('transcript', 'transcript.txt', 'text/plain'), ('resource', 'notes.pdf', 'application/pdf')) as fixture(kind, filename, mime_type);
 
+do $$
+begin
+  begin
+    insert into public.lesson_uploads (
+      organization_id, branch_id, class_id, lesson_session_id, kind, storage_path,
+      original_name, mime_type, size_bytes, status, created_by
+    )
+    select session.organization_id, session.branch_id, session.class_id, session.id,
+           'transcript',
+           session.organization_id || '/' || session.branch_id || '/' || session.class_id || '/' || session.id || '/second-pending.txt',
+           'second-pending.txt', 'text/plain', 100, 'pending',
+           '30000000-0000-0000-0000-000000000003'
+    from public.lesson_sessions session;
+    raise exception 'second pending upload for the same kind was accepted';
+  exception when unique_violation then null;
+  end;
+end;
+$$;
+
+do $$
+declare session_id bigint;
+begin
+  select id into session_id from public.lesson_sessions limit 1;
+  begin
+    perform public.advance_lesson_session(session_id, 'attendance_marked', 'evidence_uploaded');
+    raise exception 'pending upload did not block evidence confirmation';
+  exception when check_violation then null;
+  end;
+end;
+$$;
+
 insert into storage.objects (bucket_id, name, owner_id)
 select 'classroom-evidence', upload.storage_path, '30000000-0000-0000-0000-000000000003'
 from public.lesson_uploads upload
@@ -253,6 +293,37 @@ where upload.original_name in ('transcript.txt', 'notes.pdf');
 update public.lesson_uploads
 set status = 'uploaded', uploaded_at = statement_timestamp()
 where original_name in ('transcript.txt', 'notes.pdf');
+
+insert into public.lesson_uploads (
+  organization_id, branch_id, class_id, lesson_session_id, kind, storage_path,
+  original_name, mime_type, size_bytes, status, created_by
+)
+select session.organization_id, session.branch_id, session.class_id, session.id, 'resource',
+       session.organization_id || '/' || session.branch_id || '/' || session.class_id || '/' || session.id || '/recover-stored.pdf',
+       'recover-stored.pdf', 'application/pdf', 100, 'pending',
+       '30000000-0000-0000-0000-000000000003'
+from public.lesson_sessions session;
+
+insert into storage.objects (bucket_id, name, owner_id)
+select 'classroom-evidence', upload.storage_path, '30000000-0000-0000-0000-000000000003'
+from public.lesson_uploads upload
+where upload.original_name = 'recover-stored.pdf';
+
+do $$
+declare session_id bigint;
+begin
+  select id into session_id from public.lesson_sessions limit 1;
+  begin
+    perform public.advance_lesson_session(session_id, 'attendance_marked', 'evidence_uploaded');
+    raise exception 'stored-but-pending upload did not block evidence confirmation';
+  exception when check_violation then null;
+  end;
+end;
+$$;
+
+update public.lesson_uploads
+set status = 'uploaded', uploaded_at = statement_timestamp()
+where original_name = 'recover-stored.pdf';
 
 insert into public.lesson_uploads (
   organization_id, branch_id, class_id, lesson_session_id, kind, storage_path,
@@ -365,15 +436,17 @@ end;
 $$;
 
 do $$
-declare final_state text; review_user uuid; retry_count_value integer;
+declare final_state text; review_user uuid; retry_count_value integer; recovery_state text;
 begin
   select state, teacher_reviewed_by into final_state, review_user
   from public.lesson_sessions
   where class_id = (select id from public.classes where code = 'LIFE-MATH-A');
   select retry_count into retry_count_value from public.lesson_uploads where original_name = 'retry.pdf';
+  select status into recovery_state from public.lesson_uploads where original_name = 'recover-stored.pdf';
   if final_state <> 'published' then raise exception 'lifecycle did not publish'; end if;
   if review_user <> '30000000-0000-0000-0000-000000000003' then raise exception 'teacher review attribution failed'; end if;
   if retry_count_value <> 1 then raise exception 'upload retry state was not preserved'; end if;
+  if recovery_state <> 'uploaded' then raise exception 'stored pending upload was not recoverable'; end if;
 end;
 $$;
 
