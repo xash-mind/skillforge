@@ -165,6 +165,7 @@ export default async function TeacherClassPage({ params, searchParams }: PagePro
     ]),
   );
   const uploads = uploadsResult.data ?? [];
+  const pendingKinds = new Set(uploads.filter((upload) => upload.status === "pending").map((upload) => upload.kind));
   const homework = (homeworkResult.data ?? [])[0];
   const notice = first(query.notice);
   const error = first(query.error);
@@ -316,39 +317,46 @@ export default async function TeacherClassPage({ params, searchParams }: PagePro
               <p className="eyebrow">Step 3</p>
               <h2 id="evidence-title">Transcript & resources</h2>
               <p>
-                Both a transcript and a class resource must upload successfully. Failed uploads
-                remain visible and retryable.
+                Both a transcript and a class resource must upload successfully. Failed uploads are
+                retryable, and interrupted pending uploads remain recoverable without duplicating
+                the stored file.
               </p>
             </div>
             {sessionState === "attendance_marked" ? (
               <div className="teacher-upload-grid">
-                {(["transcript", "resource"] as const).map((kind) => (
-                  <form
-                    key={kind}
-                    action={`/workspace/${organizationSlug}/teacher/classes/${classId}/upload`}
-                    method="post"
-                    encType="multipart/form-data"
-                  >
-                    <input type="hidden" name="sessionId" value={session.id} />
-                    <input type="hidden" name="kind" value={kind} />
-                    <label>
-                      {kind === "transcript" ? "Transcript file" : "Class resource"}
-                      <input
-                        type="file"
-                        name="file"
-                        required
-                        accept={
-                          kind === "transcript"
-                            ? ".txt,.pdf,.docx,.mp3,.wav,.m4a,audio/*"
-                            : ".pdf,.docx,.pptx,.txt,.jpg,.jpeg,.png"
-                        }
-                      />
-                    </label>
-                    <button className="button button--quiet" type="submit">
-                      Upload {kind}
-                    </button>
-                  </form>
-                ))}
+                {(["transcript", "resource"] as const).map((kind) =>
+                  pendingKinds.has(kind) ? (
+                    <div key={kind} className="teacher-summary" role="status">
+                      Recover the pending {kind} attempt below before choosing another file.
+                    </div>
+                  ) : (
+                    <form
+                      key={kind}
+                      action={`/workspace/${organizationSlug}/teacher/classes/${classId}/upload`}
+                      method="post"
+                      encType="multipart/form-data"
+                    >
+                      <input type="hidden" name="sessionId" value={session.id} />
+                      <input type="hidden" name="kind" value={kind} />
+                      <label>
+                        {kind === "transcript" ? "Transcript file" : "Class resource"}
+                        <input
+                          type="file"
+                          name="file"
+                          required
+                          accept={
+                            kind === "transcript"
+                              ? ".txt,.pdf,.docx,.mp3,.wav,.m4a,audio/*"
+                              : ".pdf,.docx,.pptx,.txt,.jpg,.jpeg,.png"
+                          }
+                        />
+                      </label>
+                      <button className="button button--quiet" type="submit">
+                        Upload {kind}
+                      </button>
+                    </form>
+                  ),
+                )}
               </div>
             ) : null}
             <ul className="teacher-upload-list" aria-label="Class uploads">
@@ -362,10 +370,28 @@ export default async function TeacherClassPage({ params, searchParams }: PagePro
                       {upload.status}
                       {upload.retry_count ? ` · ${upload.retry_count} retries` : ""}
                     </span>
+                    {upload.status === "pending" ? (
+                      <span role="status">
+                        This attempt was interrupted. Recover it before uploading a duplicate.
+                      </span>
+                    ) : null}
                     {upload.failure_message ? (
                       <span role="alert">{upload.failure_message}</span>
                     ) : null}
                   </div>
+                  {upload.status === "pending" && sessionState === "attendance_marked" ? (
+                    <form
+                      action={`/workspace/${organizationSlug}/teacher/classes/${classId}/upload`}
+                      method="post"
+                    >
+                      <input type="hidden" name="sessionId" value={session.id} />
+                      <input type="hidden" name="kind" value={upload.kind} />
+                      <input type="hidden" name="recoverUploadId" value={upload.id} />
+                      <button className="button button--quiet" type="submit">
+                        Recover stored upload
+                      </button>
+                    </form>
+                  ) : null}
                   {upload.status === "failed" && sessionState === "attendance_marked" ? (
                     <form
                       action={`/workspace/${organizationSlug}/teacher/classes/${classId}/upload`}
