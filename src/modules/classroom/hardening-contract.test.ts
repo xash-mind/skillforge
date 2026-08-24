@@ -7,7 +7,13 @@ const hardeningMigrationPath = join(
   process.cwd(),
   "supabase",
   "migrations",
-  "20260812072000_teacher_class_lifecycle_hardening.sql",
+  "20260812072834_teacher_class_lifecycle_hardening.sql",
+);
+const recoveryMigrationPath = join(
+  process.cwd(),
+  "supabase",
+  "migrations",
+  "20260824110054_teacher_class_lifecycle_recovery.sql",
 );
 const adversarialTestPath = join(
   process.cwd(),
@@ -39,12 +45,23 @@ describe("teacher lifecycle trusted-boundary hardening", () => {
     expect(sql).not.toContain("create policy classroom_evidence_update_teacher");
   });
 
-  it("extends adversarial proof to the direct Data API and storage bypass paths", async () => {
+  it("makes pending upload recovery a database-enforced lifecycle invariant", async () => {
+    const sql = await readFile(recoveryMigrationPath, "utf8");
+
+    expect(sql).toContain("attendance_records_enrollment_scope_idx");
+    expect(sql).toContain("lesson_uploads_one_pending_per_kind_idx");
+    expect(sql).toContain("where status = 'pending'");
+    expect(sql).toContain("resolve pending class evidence before confirming class evidence");
+  });
+
+  it("extends adversarial proof to direct Data API, storage, and interrupted-upload paths", async () => {
     const sql = await readFile(adversarialTestPath, "utf8");
 
     expect(sql).toContain("teacher inserted a pre-published lesson session");
     expect(sql).toContain("west teacher wrote into main classroom storage");
     expect(sql).toContain("teacher forged uploaded metadata without a storage object");
+    expect(sql).toContain("pending upload did not block evidence confirmation");
+    expect(sql).toContain("second pending upload for the same kind was accepted");
     expect(sql).toContain("attendance changed after evidence progression");
     expect(sql).toContain("lesson evidence changed after homework progression");
     expect(sql).toContain("homework changed after review progression");
