@@ -7,7 +7,7 @@ const migrationPath = join(
   process.cwd(),
   "supabase",
   "migrations",
-  "20260812065000_teacher_class_lifecycle.sql",
+  "20260812072724_teacher_class_lifecycle.sql",
 );
 const testPath = join(process.cwd(), "supabase", "tests", "003_teacher_class_lifecycle_rls.sql");
 
@@ -43,11 +43,13 @@ describe("teacher class lifecycle database contract", () => {
     expect(sql).toContain("private.is_class_teacher");
   });
 
-  it("commits rollback-safe adversarial transition, branch, and retry proof", async () => {
+  it("commits rollback-safe adversarial transition, branch, retry, and recovery proof", async () => {
     const sql = await readFile(testPath, "utf8");
     expect(sql).toContain("west teacher could read main lesson session");
     expect(sql).toContain("invalid started-to-published transition succeeded");
     expect(sql).toContain("attendance completed without every enrolled student");
+    expect(sql).toContain("pending upload did not block evidence confirmation");
+    expect(sql).toContain("second pending upload for the same kind was accepted");
     expect(sql).toContain("publish bypassed teacher review");
     expect(sql).toContain("upload retry state was not preserved");
     expect(sql).toContain("rollback;");
