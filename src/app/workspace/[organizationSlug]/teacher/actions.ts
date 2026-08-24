@@ -46,6 +46,8 @@ function fail(organizationSlug: string, classId: number, error: unknown): never 
     const databaseMessage = String(error.message);
     if (databaseMessage.includes("attendance for every")) {
       message = "Record attendance for every enrolled student before continuing.";
+    } else if (databaseMessage.includes("pending class evidence")) {
+      message = "Recover every interrupted pending upload before confirming class evidence.";
     } else if (databaseMessage.includes("transcript")) {
       message = "Upload a transcript successfully before confirming class evidence.";
     } else if (databaseMessage.includes("class resource")) {
